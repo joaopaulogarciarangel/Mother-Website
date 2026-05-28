@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>MARTA® — Design System</title>
+<meta content="Sistema de design experimental — tipografia, cores, componentes e animações." name="description"/>
+
+<!-- fonts: Geist + Geist Mono (jonathan), Inter + Google Sans Flex (nexus), Tailwind/luxury -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="jonathanfernandes.aura.build/assets/css2_19fd9cc6b396.css" rel="stylesheet"/>
+<link href="jonathanfernandes.aura.build/assets/css2_62759cd015bd.css" rel="stylesheet"/>
+<link href="jonathanfernandes.aura.build/assets/css2_86e10c4bcbd4.css" rel="stylesheet"/>
+<link href="nexus-architecture.aura.build/assets/css2_66f3f89ececa.css" rel="stylesheet"/>
+<link href="nexus-architecture.aura.build/assets/css2_bd407d5ceb4b.css" rel="stylesheet"/>
+<link href="luxury-real-estate-22.aura.build/assets/71de0c11c987f278_css2.css" rel="stylesheet"/>
+
+<!-- shared CSS modules reused from the three reference projects -->
+<link href="jonathanfernandes.aura.build/assets/css/base.css" rel="stylesheet"/>
+<link href="luxury-real-estate-22.aura.build/assets/css/animations.css" rel="stylesheet"/>
+<link href="nexus-architecture.aura.build/assets/css/typography.css" rel="stylesheet"/>
+
+<!-- head-only js: tailwind runtime, three.js, iconify, lucide, gsap -->
+<script src="jonathanfernandes.aura.build/assets/resource_3fa48481346f.es"></script>
+<script src="jonathanfernandes.aura.build/assets/three_1aecfa5aa56f.js"></script>
+<script src="jonathanfernandes.aura.build/assets/lucide_latest_2eebd0ebe8c2.es"></script>
+<script src="luxury-real-estate-22.aura.build/assets/851bed7af266f96a_iconify-icon.min.js"></script>
+<script src="luxury-real-estate-22.aura.build/assets/efc85c7eb1418197_gsap.min.js"></script>
+<script src="luxury-real-estate-22.aura.build/assets/65f6c13748b0c8d8_ScrollTrigger.min.js"></script>
+
+<style>
+  :root {
+    --ink:        #0a0a0a;
+    --paper:      #ffffff;
+    --cream:      #f5f1ea;
+    --gold:       #D4AF37;
+    --gold-soft:  #c9a96b;
+    --stone-50:   #fafaf9;
+    --stone-100:  #f5f4f1;
+    --stone-200:  #e7e5e0;
+    --stone-300:  #d4d2cb;
+    --stone-400:  #a09c92;
+    --stone-500:  #6b6760;
+    --stone-700:  #3b3631;
+    --stone-900:  #1a1815;
+  }
+  body { font-family: 'Geist', Inter, ui-sans-serif, system-ui, sans-serif; background: #ffffff; }
+  .font-display    { font-family: 'Google Sans Flex', 'Geist', sans-serif !important; }
+  .font-mono-ds    { font-family: 'Geist Mono', ui-monospace, monospace !important; }
+  .font-sans-ds    { font-family: 'Geist', Inter, sans-serif !important; }
+
+  /* GHOST LETTERING — the signature of this DS */
+  .ghost-letter {
+    font-family: 'Google Sans Flex', 'Geist', sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.06em;
+    line-height: 0.78;
+    color: transparent;
+    -webkit-text-stroke: 1.2px rgba(10,10,10,0.10);
+  }
+  .ghost-letter-fill {
+    font-family: 'Google Sans Flex', 'Geist', sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.06em;
+    line-height: 0.78;
+    color: rgba(10,10,10,0.045);
+  }
+  .ghost-letter-gold {
+    font-family: 'Google Sans Flex', 'Geist', sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.06em;
+    line-height: 0.78;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(212,175,55,0.35);
+  }
+
+  /* Golden pulse used on hero CTA + status dots */
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212,175,55,0.45), 0 0 40px 8px rgba(212,175,55,0.10); }
+    50%      { box-shadow: 0 0 0 14px rgba(212,175,55,0),  0 0 60px 20px rgba(212,175,55,0.22); }
+  }
+  .glow-pulse { animation: pulse-glow 3.5s ease-in-out infinite; }
+
+  /* Shimmer text */
+  @keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position:  200% 0; }
+  }
+  .shimmer-text {
+    background: linear-gradient(90deg, #0a0a0a 0%, #0a0a0a 40%, #D4AF37 50%, #0a0a0a 60%, #0a0a0a 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 5s linear infinite;
+  }
+
+  /* Soft float */
+  @keyframes float-y {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+  }
+  .float-y { animation: float-y 6s ease-in-out infinite; }
+
+  /* Gradient border button glow */
+  .btn-glow { position: relative; isolation: isolate; }
+  .btn-glow::before {
+    content: ''; position: absolute; inset: -2px;
+    background: linear-gradient(135deg, #D4AF37 0%, #c9a96b 40%, #ffffff 60%, #D4AF37 100%);
+    border-radius: inherit; z-index: -1; opacity: 0; filter: blur(14px);
+    transition: opacity .5s ease;
+  }
+  .btn-glow:hover::before { opacity: .75; }
+
+  /* Underline reveal */
+  .link-reveal { position: relative; }
+  .link-reveal::after {
+    content: ''; position: absolute; left: 0; bottom: -3px;
+    width: 100%; height: 1px; background: currentColor;
+    transform: scaleX(0); transform-origin: right;
+    transition: transform .6s cubic-bezier(.7,0,.3,1);
+  }
+  .link-reveal:hover::after { transform: scaleX(1); transform-origin: left; }
+
+  /* Card glow on hover */
+  .card-lift { transition: transform .55s cubic-bezier(.16,1,.3,1), box-shadow .55s ease, border-color .4s ease; }
+  .card-lift:hover { transform: translateY(-6px); box-shadow: 0 30px 60px -28px rgba(10,10,10,.18); border-color: #0a0a0a; }
+
+  /* Color swatch */
+  .swatch { transition: transform .55s cubic-bezier(.16,1,.3,1); }
+  .swatch:hover { transform: translateY(-6px); }
+
+  /* Tooltip */
+  .ds-tooltip { position: relative; }
+  .ds-tooltip > .tip {
+    position: absolute; bottom: calc(100% + 10px); left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    opacity: 0; pointer-events: none;
+    transition: all .35s cubic-bezier(.16,1,.3,1);
+    white-space: nowrap;
+  }
+  .ds-tooltip:hover > .tip { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* Modal */
+  .modal-backdrop { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+
+  /* Marquee scroll variant + slow drift */
+  @keyframes drift-x {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .drift-track { display: flex; width: max-content; animation: drift-x 60s linear infinite; }
+
+  /* Vertical reel */
+  @keyframes vertical-scroll {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+  }
+  .vertical-reel { animation: vertical-scroll 22s linear infinite; }
+
+  /* Icon spin */
+  @keyframes slow-spin {
+    from { transform: rotate(0deg); } to { transform: rotate(360deg); }
+  }
+  .slow-spin { animation: slow-spin 28s linear infinite; }
+
+  /* Type ramp dotted guide */
+  .type-row { position: relative; }
+  .type-row::before {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+    height: 1px; background: repeating-linear-gradient(90deg, #e7e5e0 0 6px, transparent 6px 12px);
+  }
+
+  /* Animated grid background */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(10,10,10,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10,10,10,0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* Reveal mask */
+  @keyframes reveal-up {
+    0% { clip-path: inset(100% 0 0 0); }
+    100% { clip-path: inset(0 0 0 0); }
+  }
+  .reveal-up { animation: reveal-up 1.4s cubic-bezier(.7,0,.3,1) .2s both; }
+
+  /* Cursor */
+  .cursor-blink::after {
+    content: '|';
+    margin-left: 4px;
+    animation: cursor-blink 1.1s steps(1) infinite;
+  }
+  @keyframes cursor-blink { 50% { opacity: 0; } }
+
+  /* Section divider with label */
+  .section-divider {
+    position: relative; display: flex; justify-content: center; align-items: center;
+  }
+  .section-divider::before, .section-divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, #e7e5e0 40%, #e7e5e0 60%, transparent);
+  }
+
+  /* Hero badge ring */
+  @keyframes ring-rotate { to { transform: rotate(360deg); } }
+  .ring-rotate { animation: ring-rotate 22s linear infinite; }
+
+  /* Parallax field — Three.js editorial scene (lápis, canetas, bandeiras, livros, papéis, caracteres)
+     Copiado integralmente do design_system_fundobom para reusar o "fundo aura". */
+  #aura-canvas, #aura-demo-canvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: .55;
+  }
+  /* hero soft fog overlay: clareia o topo e adiciona aura quente embaixo */
+  .hero-noise::after {
+    content: ""; position: absolute; inset: 0;
+    pointer-events: none; z-index: 2;
+    background:
+      radial-gradient(1200px 600px at 50% 0%, rgba(255,255,255,0) 0%, rgba(255,255,255,.55) 60%, #ffffff 100%),
+      radial-gradient(900px 500px at 80% 90%, rgba(212,175,55,0.18) 0%, transparent 60%);
+  }
+  /* demo box fog (suave) */
+  .aura-demo-fog::after {
+    content: ""; position: absolute; inset: 0;
+    pointer-events: none; z-index: 2;
+    background:
+      radial-gradient(600px 320px at 50% 0%, rgba(255,255,255,0) 0%, rgba(255,255,255,.45) 70%, rgba(255,255,255,.85) 100%),
+      radial-gradient(400px 280px at 80% 90%, rgba(212,175,55,0.16) 0%, transparent 65%);
+  }
+
+  /* Soft entrance for hero items */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(28px); filter: blur(8px); }
+    to   { opacity: 1; transform: translateY(0);   filter: blur(0); }
+  }
+  .rise-1 { animation: rise .9s cubic-bezier(.16,1,.3,1) .15s both; }
+  .rise-2 { animation: rise .9s cubic-bezier(.16,1,.3,1) .30s both; }
+  .rise-3 { animation: rise .9s cubic-bezier(.16,1,.3,1) .45s both; }
+  .rise-4 { animation: rise .9s cubic-bezier(.16,1,.3,1) .60s both; }
+  .rise-5 { animation: rise .9s cubic-bezier(.16,1,.3,1) .75s both; }
+  .rise-6 { animation: rise .9s cubic-bezier(.16,1,.3,1) .90s both; }
+</style>
+</head>
+<body class="bg-white text-neutral-900 antialiased selection:bg-neutral-900 selection:text-white">
+
+<!-- ===================== HERO ===================== -->
+<header class="relative w-full min-h-screen overflow-hidden bg-white hero-noise">
+  <!-- Three.js parallax editorial — lápis, canetas, bandeiras, livros, papéis, caracteres em 3 camadas -->
+  <canvas id="aura-canvas"></canvas>
+
+  <!-- Background grid (sutil, atrás do fog) -->
+  <div class="absolute inset-0 grid-bg opacity-40 pointer-events-none z-[1]"></div>
+
+  <!-- GHOST LETTERING — the centerpiece -->
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-[2] overflow-hidden">
+    <h1 class="ghost-letter reveal-up text-center select-none" style="font-size: 28vw;">MARTA<sup class="ghost-letter-gold align-top" style="font-size: 7vw;">®</sup></h1>
+  </div>
+  <div class="absolute bottom-[-4vw] left-1/2 -translate-x-1/2 pointer-events-none z-[2] overflow-hidden w-full text-center">
+    <span class="ghost-letter-fill block" style="font-size: 16vw;">SISTEMA</span>
+  </div>
+
+  <!-- top nav -->
+  <nav id="navbar" class="relative z-30 flex items-center justify-between px-6 sm:px-12 py-6 pointer-events-auto transition-colors duration-500">
+    <a class="text-base font-bold tracking-tight text-black flex items-center gap-2" href="#">
+      <span class="w-2 h-2 rounded-full bg-[#D4AF37] glow-pulse"></span> marta<span class="text-neutral-400">/ds</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-xs font-medium uppercase tracking-widest text-neutral-500">
+      <a class="link-reveal hover:text-black transition-colors" href="#typography">Tipografia</a>
+      <a class="link-reveal hover:text-black transition-colors" href="#colors">Cores</a>
+      <a class="link-reveal hover:text-black transition-colors" href="#components">Componentes</a>
+      <a class="link-reveal hover:text-black transition-colors" href="#icons">Ícones</a>
+      <a class="link-reveal hover:text-black transition-colors" href="#animations">Animações</a>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-neutral-200 bg-white/70 backdrop-blur-sm text-[10px] uppercase tracking-widest font-medium text-neutral-700">
+        <span class="relative flex h-1.5 w-1.5">
+          <span class="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping"></span>
+          <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500"></span>
+        </span>
+        v1.0 · live
+      </span>
+      <button class="btn-glow group relative px-5 py-2.5 rounded-full bg-black text-white text-xs uppercase tracking-widest font-semibold hover:bg-neutral-800 transition-all">
+        <span class="flex items-center gap-2">Explorar <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- hero content -->
+  <div class="relative z-20 px-6 sm:px-12 mx-auto max-w-[1400px] pointer-events-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start pt-10 lg:pt-16">
+
+      <!-- left: copy + CTA -->
+      <div class="lg:col-span-7">
+        <div class="rise-1 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-neutral-200 bg-white/70 backdrop-blur-sm text-[10px] uppercase tracking-widest font-medium text-neutral-700 mb-8">
+          <iconify-icon icon="solar:stars-line-linear" class="text-[#D4AF37]"></iconify-icon>
+          Design System Marta · 2026
+        </div>
+
+        <h2 class="rise-2 font-display font-normal text-5xl sm:text-7xl lg:text-[7.5rem] leading-[0.86] tracking-tighter text-black max-w-4xl">
+          Um sistema <span class="shimmer-text">vivo</span><br/>
+          para construir <span class="italic font-display">experiências</span><br/>
+          que <span class="ghost-letter" style="-webkit-text-stroke: 1.4px #0a0a0a;">duram</span>.
+        </h2>
+
+        <p class="rise-3 mt-8 max-w-md text-base text-neutral-600 leading-relaxed font-mono-ds">
+          Tipografia, cor, componentes e movimento — orquestrados em um único framework de design. Tudo o que você vê aqui é código pronto pra colar no seu próximo projeto.
+        </p>
+
+        <div class="rise-4 flex flex-wrap items-center gap-4 mt-10">
+          <a href="#typography" class="btn-glow group inline-flex items-center gap-3 px-7 py-4 rounded-full bg-black text-white text-xs font-semibold uppercase tracking-widest hover:bg-neutral-900 transition-all">
+            Comece pelo básico
+            <span class="flex h-6 w-6 items-center justify-center rounded-full bg-white/10 group-hover:bg-[#D4AF37] group-hover:text-black transition-all">
+              <i data-lucide="arrow-down" class="w-3.5 h-3.5"></i>
+            </span>
+          </a>
+          <a href="#components" class="link-reveal inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-black border border-neutral-300 px-6 py-4 rounded-full hover:bg-neutral-50 transition-colors">
+            Ver componentes
+            <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+          </a>
+        </div>
+
+        <!-- stat row -->
+        <div class="rise-5 grid grid-cols-3 gap-6 mt-16 max-w-2xl">
+          <div class="border-t border-neutral-200 pt-4">
+            <p class="font-display text-4xl tracking-tighter font-normal">42<span class="text-[#D4AF37]">+</span></p>
+            <p class="text-[10px] uppercase tracking-widest text-neutral-500 font-mono-ds mt-1">Tokens</p>
+          </div>
+          <div class="border-t border-neutral-200 pt-4">
+            <p class="font-display text-4xl tracking-tighter font-normal">16</p>
+            <p class="text-[10px] uppercase tracking-widest text-neutral-500 font-mono-ds mt-1">Componentes</p>
+          </div>
+          <div class="border-t border-neutral-200 pt-4">
+            <p class="font-display text-4xl tracking-tighter font-normal">∞</p>
+            <p class="text-[10px] uppercase tracking-widest text-neutral-500 font-mono-ds mt-1">Combinações</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- right: floating card + vertical reel -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
+        <div class="rise-3 relative">
+          <div class="absolute -inset-4 bg-gradient-to-br from-[#D4AF37]/10 via-transparent to-transparent rounded-3xl blur-2xl"></div>
+          <div class="relative aspect-[4/5] rounded-2xl overflow-hidden border border-neutral-200 bg-neutral-100 float-y">
+            <img alt="Retrato editorial" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                 src="jonathanfernandes.aura.build/assets/27df3787-21a9-4fa7-b980-f3d42a_2f7357724dba.png"/>
+            <!-- top-left chip -->
+            <div class="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-white text-[10px] uppercase tracking-widest font-semibold text-neutral-700">
+              <iconify-icon icon="solar:eye-linear"></iconify-icon> Preview · Hero
+            </div>
+            <!-- bottom-right chip -->
+            <div class="absolute bottom-4 right-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md text-white text-[10px] uppercase tracking-widest font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></span> 60 FPS
+            </div>
+            <!-- corner ring -->
+            <div class="absolute -bottom-6 -right-6 w-24 h-24 rounded-full border border-dashed border-[#D4AF37]/40 ring-rotate flex items-center justify-center">
+              <div class="w-2 h-2 rounded-full bg-[#D4AF37] glow-pulse"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- vertical reel of micro-cards -->
+        <div class="rise-5 relative h-44 overflow-hidden rounded-2xl border border-neutral-200 bg-white/70 backdrop-blur-sm">
+          <div class="vertical-reel space-y-2 p-3">
+            <!-- repeat list twice for seamless -->
+            <div class="flex items-center gap-3 p-3 bg-neutral-50 rounded-xl border border-neutral-100">
+              <div class="w-9 h-9 rounded-lg bg-black text-white grid place-items-center"><iconify-icon icon="solar:bolt-linear"></iconify-icon></div>
+              <div class="flex-1">
+                <p class="text-xs font-semibold text-neutral-900">Motion</p>
+                <p class="text-[10px] text-neutral-500 font-mono-ds">cubic-bezier(.16,1,.3,1)</p>
+              </div>
+              <iconify-icon icon="solar:arrow-right-linear" class="text-neutral-400"></iconify-icon>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-neutral-50 rounded-xl border border-neutral-100">
+              <div class="w-9 h-9 rounded-lg bg-[#D4AF37] text-black grid place-items-center"><iconify-icon icon="solar:palette-linear"></iconify-icon></div>
+              <div class="flex-1">
+                <p class="text-xs font-semibold text-neutral-900">Tokens</p>
+                <p class="text-[10px] text-neutral-500 font-mono-ds">9 escalas / 4 semânticas</p>
+              </div>
+              <iconify-icon icon="solar:arrow-right-linear" class="text-neutral-400"></iconify-icon>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-neutral-50 rounded-xl border border-neutral-100">
+              <div class="w-9 h-9 rounded-lg border border-black text-black grid place-items-center"><iconify-icon icon="solar:text-square-linear"></iconify-icon></div>
+              <div class="flex-1">
+                <p class="text-xs font-semibold text-neutral-900">Tipografia</p>
+                <p class="text-[10px] text-neutral-500 font-mono-ds">Geist · Google Sans · Mono</p>
+              </div>
+              <iconify-icon icon="solar:arrow-right-linear" class="text-neutral-400"></iconify-icon>
+            </div>
+            <!-- repeat -->
+            <div class="flex items-center gap-3 p-3 bg-neutral-50 rounded-xl border border-neutral-100">
+              <div class="w-9 h-9 rounded-lg bg-black text-white grid place-items-center"><iconify-icon icon="solar:bolt-linear"></iconify-icon></div>
+              <div class="flex-1">
+                <p class="text-xs font-semibold text-neutral-900">Motion</p>
+                <p class="text-[10px] text-neutral-500 font-mono-ds">cubic-bezier(.16,1,.3,1)</p>
+              </div>
+              <iconify-icon icon="solar:arrow-right-linear" class="text-neutral-400"></iconify-icon>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-neutral-50 rounded-xl border border-neutral-100">
+              <div class="w-9 h-9 rounded-lg bg-[#D4AF37] text-black grid place-items-center"><iconify-icon icon="solar:palette-linear"></iconify-icon></div>
+              <div class="flex-1">
+                <p class="text-xs font-semibold text-neutral-900">Tokens</p>
+                <p class="text-[10px] text-neutral-500 font-mono-ds">9 escalas / 4 semânticas</p>
+              </div>
+              <iconify-icon icon="solar:arrow-right-linear" class="text-neutral-400"></iconify-icon>
+            </div>
+            <div class="flex items-center gap-3 p-3 bg-neutral-50 rounded-xl border border-neutral-100">
+              <div class="w-9 h-9 rounded-lg border border-black text-black grid place-items-center"><iconify-icon icon="solar:text-square-linear"></iconify-icon></div>
+              <div class="flex-1">
+                <p class="text-xs font-semibold text-neutral-900">Tipografia</p>
+                <p class="text-[10px] text-neutral-500 font-mono-ds">Geist · Google Sans · Mono</p>
+              </div>
+              <iconify-icon icon="solar:arrow-right-linear" class="text-neutral-400"></iconify-icon>
+            </div>
+          </div>
+          <div class="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white to-transparent pointer-events-none"></div>
+          <div class="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- bottom marquee — pulled from luxury ref -->
+    <div class="mt-20 mb-10 border-y border-neutral-200 py-4 overflow-hidden marquee-container">
+      <div class="marquee-track flex gap-10 md:gap-16 items-center text-xs uppercase tracking-widest font-medium text-neutral-500 font-mono-ds">
+        <span>· Sistema desenhado em Geist</span><span class="w-1 h-1 rounded-full bg-[#D4AF37]"></span>
+        <span>· 9 anos de iteração</span><span class="w-1 h-1 rounded-full bg-[#D4AF37]"></span>
+        <span>· Acessibilidade AA &amp; AAA</span><span class="w-1 h-1 rounded-full bg-[#D4AF37]"></span>
+        <span>· Built for Marta</span><span class="w-1 h-1 rounded-full bg-[#D4AF37]"></span>
+        <span>· Sistema desenhado em Geist</span><span class="w-1 h-1 rounded-full bg-[#D4AF37]"></span>
+        <span>· 9 anos de iteração</span><span class="w-1 h-1 rounded-full bg-[#D4AF37]"></span>
+        <span>· Acessibilidade AA &amp; AAA</span><span class="w-1 h-1 rounded-full bg-[#D4AF37]"></span>
+        <span>· Built for Marta</span><span class="w-1 h-1 rounded-full bg-[#D4AF37]"></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== TYPOGRAPHY ===================== -->
+<section id="typography" class="relative bg-white border-t border-neutral-200 overflow-hidden">
+  <!-- ghost letter background -->
+  <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+    <span class="ghost-letter-fill" style="font-size: 36vw;">Aa</span>
+  </div>
+
+  <div class="relative max-w-[1400px] mx-auto px-6 sm:px-12 py-28 lg:py-40 gsap-section">
+    <!-- section header -->
+    <div class="grid grid-cols-12 gap-8 mb-20 items-end">
+      <div class="col-span-12 lg:col-span-4">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="text-[10px] font-bold text-[#D4AF37] uppercase tracking-widest font-mono-ds">02 — Tipografia</span>
+          <div class="h-px flex-1 bg-neutral-200"></div>
+        </div>
+        <h2 class="font-display text-5xl md:text-6xl tracking-tighter leading-[0.9] font-normal text-black">
+          A escala<br/>
+          que <span class="italic">respira</span>.
+        </h2>
+      </div>
+      <div class="col-span-12 lg:col-span-5 lg:col-start-8">
+        <p class="text-base text-neutral-600 leading-relaxed font-mono-ds">
+          Três famílias trabalhando em harmonia. <b class="text-black">Google Sans Flex</b> para displays editoriais, <b class="text-black">Geist</b> para UI e <b class="text-black">Geist Mono</b> para detalhes técnicos. Pesos numéricos, line-height calibrado em alturas-x e tracking apertado em escalas grandes.
+        </p>
+      </div>
+    </div>
+
+    <!-- font families card -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-16">
+      <div class="card-lift bg-white border border-neutral-200 rounded-2xl p-7">
+        <div class="flex items-center justify-between mb-6">
+          <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds">Display / Primária</span>
+          <iconify-icon icon="solar:text-bold-circle-linear" class="text-neutral-300 text-xl"></iconify-icon>
+        </div>
+        <p class="font-display text-7xl font-normal tracking-tighter text-black leading-none">Aa</p>
+        <p class="font-display font-normal mt-4 text-lg text-neutral-900">Google Sans Flex</p>
+        <p class="text-xs text-neutral-500 font-mono-ds mt-1">CDN · pesos 300 / 400 / 500</p>
+        <div class="mt-6 pt-6 border-t border-neutral-100 grid grid-cols-2 gap-3 text-[11px] font-mono-ds text-neutral-500">
+          <span>letter-spacing</span><span class="text-neutral-900 text-right">-0.04em</span>
+          <span>tracking</span><span class="text-neutral-900 text-right">tight</span>
+        </div>
+      </div>
+      <div class="card-lift bg-white border border-neutral-200 rounded-2xl p-7">
+        <div class="flex items-center justify-between mb-6">
+          <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds">UI / Texto corrido</span>
+          <iconify-icon icon="solar:text-square-linear" class="text-neutral-300 text-xl"></iconify-icon>
+        </div>
+        <p class="font-sans-ds text-7xl font-semibold tracking-tight text-black leading-none">Bb</p>
+        <p class="font-sans-ds font-semibold mt-4 text-lg text-neutral-900">Geist</p>
+        <p class="text-xs text-neutral-500 font-mono-ds mt-1">Local · pesos 400 / 500 / 600 / 700</p>
+        <div class="mt-6 pt-6 border-t border-neutral-100 grid grid-cols-2 gap-3 text-[11px] font-mono-ds text-neutral-500">
+          <span>line-height</span><span class="text-neutral-900 text-right">1.5 corpo</span>
+          <span>fallback</span><span class="text-neutral-900 text-right">Inter, system-ui</span>
+        </div>
+      </div>
+      <div class="card-lift bg-black text-white border border-black rounded-2xl p-7">
+        <div class="flex items-center justify-between mb-6">
+          <span class="text-[10px] uppercase tracking-widest text-neutral-500 font-mono-ds">Mono / Labels técnicos</span>
+          <iconify-icon icon="solar:code-square-linear" class="text-neutral-600 text-xl"></iconify-icon>
+        </div>
+        <p class="font-mono-ds text-7xl font-medium tracking-tight text-white leading-none">Cc</p>
+        <p class="font-mono-ds mt-4 text-lg">Geist Mono</p>
+        <p class="text-xs text-neutral-400 font-mono-ds mt-1">Local · peso 400 / 500</p>
+        <div class="mt-6 pt-6 border-t border-neutral-800 grid grid-cols-2 gap-3 text-[11px] font-mono-ds text-neutral-400">
+          <span>uso</span><span class="text-[#D4AF37] text-right">tokens · code · meta</span>
+          <span>letter-spacing</span><span class="text-white text-right">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- type scale table -->
+    <div class="bg-white border border-neutral-200 rounded-3xl overflow-hidden">
+      <div class="flex items-center justify-between px-8 py-5 bg-neutral-50 border-b border-neutral-200">
+        <span class="text-[10px] uppercase tracking-widest font-bold text-neutral-700 font-mono-ds">Escala completa · H1 → caption</span>
+        <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds">role / size / line / weight</span>
+      </div>
+
+      <div class="divide-y divide-neutral-100">
+        <!-- H1 -->
+        <div class="type-row grid grid-cols-12 items-center gap-4 px-8 py-8 hover:bg-neutral-50 transition-colors">
+          <div class="col-span-12 md:col-span-7"><span class="font-display text-6xl md:text-7xl tracking-tighter leading-[0.95] text-black font-normal">Heading 01</span></div>
+          <div class="col-span-12 md:col-span-5 grid grid-cols-4 gap-3 text-[10px] font-mono-ds text-neutral-500 uppercase tracking-widest">
+            <span class="text-neutral-900">h1</span>
+            <span>72 / 1.0</span>
+            <span>400</span>
+            <span class="text-right">tight</span>
+          </div>
+        </div>
+        <!-- H2 -->
+        <div class="type-row grid grid-cols-12 items-center gap-4 px-8 py-7 hover:bg-neutral-50 transition-colors">
+          <div class="col-span-12 md:col-span-7"><span class="font-display text-5xl tracking-tighter leading-[1.05] text-black font-normal">Heading 02</span></div>
+          <div class="col-span-12 md:col-span-5 grid grid-cols-4 gap-3 text-[10px] font-mono-ds text-neutral-500 uppercase tracking-widest">
+            <span class="text-neutral-900">h2</span>
+            <span>56 / 1.05</span>
+            <span>400</span>
+            <span class="text-right">tight</span>
+          </div>
+        </div>
+        <!-- H3 -->
+        <div class="type-row grid grid-cols-12 items-center gap-4 px-8 py-6 hover:bg-neutral-50 transition-colors">
+          <div class="col-span-12 md:col-span-7"><span class="text-4xl tracking-tight leading-[1.1] text-black font-semibold">Heading 03</span></div>
+          <div class="col-span-12 md:col-span-5 grid grid-cols-4 gap-3 text-[10px] font-mono-ds text-neutral-500 uppercase tracking-widest">
+            <span class="text-neutral-900">h3</span>
+            <span>36 / 1.1</span>
+            <span>600</span>
+            <span class="text-right">tight</span>
+          </div>
+        </div>
+        <!-- H4 -->
+        <div class="type-row grid grid-cols-12 items-center gap-4 px-8 py-5 hover:bg-neutral-50 transition-colors">
+          <div class="col-span-12 md:col-span-7"><span class="text-2xl tracking-tight leading-[1.2] text-black font-semibold">Heading 04</span></div>
+          <div class="col-span-12 md:col-span-5 grid grid-cols-4 gap-3 text-[10px] font-mono-ds text-neutral-500 uppercase tracking-widest">
+            <span class="text-neutral-900">h4</span>
+            <span>24 / 1.2</span>
+            <span>600</span>
+            <span class="text-right">tight</span>
+          </div>
+        </div>
+        <!-- H5 -->
+        <div class="type-row grid grid-cols-12 items-center gap-4 px-8 py-5 hover:bg-neutral-50 transition-colors">
+          <div class="col-span-12 md:col-span-7"><span class="text-xl tracking-tight leading-[1.3] text-black font-semibold">Heading 05</span></div>
+          <div class="col-span-12 md:col-span-5 grid grid-cols-4 gap-3 text-[10px] font-mono-ds text-neutral-500 uppercase tracking-widest">
+            <span class="text-neutral-900">h5</span>
+            <span>20 / 1.3</span>
+            <span>600</span>
+            <span class="text-right">normal</span>
+          </div>
+        </div>
+        <!-- H6 -->
+        <div class="type-row grid grid-cols-12 items-center gap-4 px-8 py-5 hover:bg-neutral-50 transition-colors">
+          <div class="col-span-12 md:col-span-7"><span class="text-base uppercase tracking-widest text-black font-bold font-mono-ds">Heading 06 / EYEBROW</span></div>
+          <div class="col-span-12 md:col-span-5 grid grid-cols-4 gap-3 text-[10px] font-mono-ds text-neutral-500 uppercase tracking-widest">
+            <span class="text-neutral-900">h6</span>
+            <span>16 / 1.4</span>
+            <span>700</span>
+            <span class="text-right">widest</span>
+          </div>
+        </div>
+        <!-- body-lg -->
+        <div class="type-row grid grid-cols-12 items-center gap-4 px-8 py-5 hover:bg-neutral-50 transition-colors">
+          <div class="col-span-12 md:col-span-7"><p class="text-lg leading-relaxed text-neutral-700 font-normal">Body LG · Use para introduções de seção e citações em destaque.</p></div>
+          <div class="col-span-12 md:col-span-5 grid grid-cols-4 gap-3 text-[10px] font-mono-ds text-neutral-500 uppercase tracking-widest">
+            <span class="text-neutral-900">body-lg</span>
+            <span>18 / 1.6</span>
+            <span>400</span>
+            <span class="text-right">normal</span>
+          </div>
+        </div>
+        <!-- body -->
+        <div class="type-row grid grid-cols-12 items-center gap-4 px-8 py-5 hover:bg-neutral-50 transition-colors">
+          <div class="col-span-12 md:col-span-7"><p class="text-base leading-relaxed text-neutral-700 font-normal">Body · Padrão para parágrafos, cards e listas. Boa legibilidade até 70 caracteres por linha.</p></div>
+          <div class="col-span-12 md:col-span-5 grid grid-cols-4 gap-3 text-[10px] font-mono-ds text-neutral-500 uppercase tracking-widest">
+            <span class="text-neutral-900">body</span>
+            <span>16 / 1.55</span>
+            <span>400</span>
+            <span class="text-right">normal</span>
+          </div>
+        </div>
+        <!-- body-sm -->
+        <div class="type-row grid grid-cols-12 items-center gap-4 px-8 py-5 hover:bg-neutral-50 transition-colors">
+          <div class="col-span-12 md:col-span-7"><p class="text-sm leading-relaxed text-neutral-700 font-normal">Body SM · Para informação auxiliar, descrições curtas e notas.</p></div>
+          <div class="col-span-12 md:col-span-5 grid grid-cols-4 gap-3 text-[10px] font-mono-ds text-neutral-500 uppercase tracking-widest">
+            <span class="text-neutral-900">body-sm</span>
+            <span>14 / 1.5</span>
+            <span>400</span>
+            <span class="text-right">normal</span>
+          </div>
+        </div>
+        <!-- label -->
+        <div class="type-row grid grid-cols-12 items-center gap-4 px-8 py-5 hover:bg-neutral-50 transition-colors">
+          <div class="col-span-12 md:col-span-7"><span class="text-xs uppercase tracking-widest text-black font-bold font-mono-ds">LABEL · INPUT NAME</span></div>
+          <div class="col-span-12 md:col-span-5 grid grid-cols-4 gap-3 text-[10px] font-mono-ds text-neutral-500 uppercase tracking-widest">
+            <span class="text-neutral-900">label</span>
+            <span>12 / 1.4</span>
+            <span>700</span>
+            <span class="text-right">widest+upper</span>
+          </div>
+        </div>
+        <!-- caption -->
+        <div class="type-row grid grid-cols-12 items-center gap-4 px-8 py-5 hover:bg-neutral-50 transition-colors">
+          <div class="col-span-12 md:col-span-7"><span class="text-[11px] text-neutral-500 font-mono-ds">caption / 11px · meta data, file paths, timestamps</span></div>
+          <div class="col-span-12 md:col-span-5 grid grid-cols-4 gap-3 text-[10px] font-mono-ds text-neutral-500 uppercase tracking-widest">
+            <span class="text-neutral-900">caption</span>
+            <span>11 / 1.4</span>
+            <span>400</span>
+            <span class="text-right">mono</span>
+          </div>
+        </div>
+        <!-- helper -->
+        <div class="grid grid-cols-12 items-center gap-4 px-8 py-5 hover:bg-neutral-50 transition-colors">
+          <div class="col-span-12 md:col-span-7"><span class="text-xs italic text-neutral-400 font-normal">Helper text · feedback abaixo de inputs ou tooltips contextuais.</span></div>
+          <div class="col-span-12 md:col-span-5 grid grid-cols-4 gap-3 text-[10px] font-mono-ds text-neutral-500 uppercase tracking-widest">
+            <span class="text-neutral-900">helper</span>
+            <span>12 / 1.5</span>
+            <span>400</span>
+            <span class="text-right">italic</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COLORS ===================== -->
+<section id="colors" class="relative bg-[#fafaf9] border-t border-neutral-200 overflow-hidden">
+  <!-- ghost letter background -->
+  <div class="absolute -top-10 right-0 pointer-events-none">
+    <span class="ghost-letter-fill block" style="font-size: 22vw;">COR</span>
+  </div>
+
+  <div class="relative max-w-[1400px] mx-auto px-6 sm:px-12 py-28 lg:py-40 gsap-section">
+    <div class="grid grid-cols-12 gap-8 mb-20 items-end">
+      <div class="col-span-12 lg:col-span-6">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="text-[10px] font-bold text-[#D4AF37] uppercase tracking-widest font-mono-ds">03 — Sistema de cores</span>
+          <div class="h-px flex-1 bg-neutral-200"></div>
+        </div>
+        <h2 class="font-display text-5xl md:text-6xl tracking-tighter leading-[0.9] font-normal text-black">
+          Preto, papel<br/>
+          e um toque de <span class="text-[#D4AF37]">ouro</span>.
+        </h2>
+      </div>
+      <div class="col-span-12 lg:col-span-5 lg:col-start-8">
+        <p class="text-base text-neutral-600 leading-relaxed font-mono-ds">
+          Paleta editorial e neutra, ancorada em <b class="text-black">ink #0a0a0a</b> e <b class="text-black">paper #ffffff</b>. Ouro como acento decorativo único — usado em status, focus rings e detalhes que pedem hierarquia.
+        </p>
+      </div>
+    </div>
+
+    <!-- primary swatches -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <!-- Ink -->
+      <div class="swatch group rounded-2xl border border-neutral-200 overflow-hidden bg-white">
+        <div class="aspect-square bg-[#0a0a0a] relative">
+          <span class="absolute top-3 left-3 text-[10px] uppercase tracking-widest text-white/60 font-mono-ds">Primary · Ink</span>
+          <span class="absolute bottom-3 right-3 text-[10px] uppercase tracking-widest text-white/60 font-mono-ds">AAA</span>
+        </div>
+        <div class="p-5">
+          <p class="font-mono-ds text-sm text-black">--ink</p>
+          <div class="mt-3 space-y-1 text-[11px] font-mono-ds text-neutral-500">
+            <p>HEX <span class="text-neutral-900 float-right">#0A0A0A</span></p>
+            <p>RGB <span class="text-neutral-900 float-right">10·10·10</span></p>
+            <p>HSL <span class="text-neutral-900 float-right">0·0%·4%</span></p>
+          </div>
+        </div>
+      </div>
+      <!-- Paper -->
+      <div class="swatch group rounded-2xl border border-neutral-200 overflow-hidden bg-white">
+        <div class="aspect-square bg-[#ffffff] relative border-b border-neutral-100">
+          <span class="absolute top-3 left-3 text-[10px] uppercase tracking-widest text-neutral-500 font-mono-ds">Background · Paper</span>
+          <span class="absolute bottom-3 right-3 text-[10px] uppercase tracking-widest text-neutral-500 font-mono-ds">surface</span>
+        </div>
+        <div class="p-5">
+          <p class="font-mono-ds text-sm text-black">--paper</p>
+          <div class="mt-3 space-y-1 text-[11px] font-mono-ds text-neutral-500">
+            <p>HEX <span class="text-neutral-900 float-right">#FFFFFF</span></p>
+            <p>RGB <span class="text-neutral-900 float-right">255·255·255</span></p>
+            <p>HSL <span class="text-neutral-900 float-right">0·0%·100%</span></p>
+          </div>
+        </div>
+      </div>
+      <!-- Gold -->
+      <div class="swatch group rounded-2xl border border-neutral-200 overflow-hidden bg-white">
+        <div class="aspect-square bg-[#D4AF37] relative">
+          <span class="absolute top-3 left-3 text-[10px] uppercase tracking-widest text-black/60 font-mono-ds">Accent · Gold</span>
+          <span class="absolute bottom-3 right-3 text-[10px] uppercase tracking-widest text-black/60 font-mono-ds">AA*</span>
+          <div class="absolute inset-0 grid place-items-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <span class="px-3 py-1.5 rounded-full bg-black text-white text-[10px] uppercase tracking-widest">copy hex</span>
+          </div>
+        </div>
+        <div class="p-5">
+          <p class="font-mono-ds text-sm text-black">--gold</p>
+          <div class="mt-3 space-y-1 text-[11px] font-mono-ds text-neutral-500">
+            <p>HEX <span class="text-neutral-900 float-right">#D4AF37</span></p>
+            <p>RGB <span class="text-neutral-900 float-right">212·175·55</span></p>
+            <p>HSL <span class="text-neutral-900 float-right">46·65%·52%</span></p>
+          </div>
+        </div>
+      </div>
+      <!-- Cream -->
+      <div class="swatch group rounded-2xl border border-neutral-200 overflow-hidden bg-white">
+        <div class="aspect-square bg-[#f5f1ea] relative">
+          <span class="absolute top-3 left-3 text-[10px] uppercase tracking-widest text-neutral-700 font-mono-ds">Secondary · Cream</span>
+          <span class="absolute bottom-3 right-3 text-[10px] uppercase tracking-widest text-neutral-700 font-mono-ds">surface alt</span>
+        </div>
+        <div class="p-5">
+          <p class="font-mono-ds text-sm text-black">--cream</p>
+          <div class="mt-3 space-y-1 text-[11px] font-mono-ds text-neutral-500">
+            <p>HEX <span class="text-neutral-900 float-right">#F5F1EA</span></p>
+            <p>RGB <span class="text-neutral-900 float-right">245·241·234</span></p>
+            <p>HSL <span class="text-neutral-900 float-right">38·31%·94%</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- stone scale -->
+    <div class="bg-white border border-neutral-200 rounded-3xl p-7 mb-6">
+      <div class="flex items-center justify-between mb-6">
+        <span class="text-[10px] uppercase tracking-widest font-bold text-neutral-700 font-mono-ds">Stone · escala neutra</span>
+        <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds">50 → 900</span>
+      </div>
+      <div class="grid grid-cols-9 gap-2">
+        <div class="rounded-lg aspect-square bg-[#fafaf9] border border-neutral-100 flex items-end p-2"><span class="text-[10px] font-mono-ds text-neutral-500">50</span></div>
+        <div class="rounded-lg aspect-square bg-[#f5f4f1] flex items-end p-2"><span class="text-[10px] font-mono-ds text-neutral-500">100</span></div>
+        <div class="rounded-lg aspect-square bg-[#e7e5e0] flex items-end p-2"><span class="text-[10px] font-mono-ds text-neutral-500">200</span></div>
+        <div class="rounded-lg aspect-square bg-[#d4d2cb] flex items-end p-2"><span class="text-[10px] font-mono-ds text-neutral-700">300</span></div>
+        <div class="rounded-lg aspect-square bg-[#a09c92] flex items-end p-2"><span class="text-[10px] font-mono-ds text-white">400</span></div>
+        <div class="rounded-lg aspect-square bg-[#6b6760] flex items-end p-2"><span class="text-[10px] font-mono-ds text-white">500</span></div>
+        <div class="rounded-lg aspect-square bg-[#4d4843] flex items-end p-2"><span class="text-[10px] font-mono-ds text-white">600</span></div>
+        <div class="rounded-lg aspect-square bg-[#3b3631] flex items-end p-2"><span class="text-[10px] font-mono-ds text-white">700</span></div>
+        <div class="rounded-lg aspect-square bg-[#1a1815] flex items-end p-2"><span class="text-[10px] font-mono-ds text-white">900</span></div>
+      </div>
+    </div>
+
+    <!-- semantic + opacity + gradients -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <!-- semantic -->
+      <div class="bg-white border border-neutral-200 rounded-3xl p-7">
+        <span class="text-[10px] uppercase tracking-widest font-bold text-neutral-700 font-mono-ds">Feedback / Semantic</span>
+        <div class="mt-6 space-y-3">
+          <div class="flex items-center gap-3 p-3 rounded-xl bg-green-50 border border-green-100">
+            <span class="w-8 h-8 rounded-lg bg-green-500"></span>
+            <div class="flex-1">
+              <p class="text-xs font-bold text-neutral-900">Success · #10B981</p>
+              <p class="text-[10px] text-neutral-500 font-mono-ds">confirmação, save, online</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-xl bg-amber-50 border border-amber-100">
+            <span class="w-8 h-8 rounded-lg bg-amber-500"></span>
+            <div class="flex-1">
+              <p class="text-xs font-bold text-neutral-900">Warning · #F59E0B</p>
+              <p class="text-[10px] text-neutral-500 font-mono-ds">atenção, ações reversíveis</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-xl bg-red-50 border border-red-100">
+            <span class="w-8 h-8 rounded-lg bg-red-500"></span>
+            <div class="flex-1">
+              <p class="text-xs font-bold text-neutral-900">Danger · #EF4444</p>
+              <p class="text-[10px] text-neutral-500 font-mono-ds">erro, destruição, alerta</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-3 rounded-xl bg-blue-50 border border-blue-100">
+            <span class="w-8 h-8 rounded-lg bg-blue-500"></span>
+            <div class="flex-1">
+              <p class="text-xs font-bold text-neutral-900">Info · #3B82F6</p>
+              <p class="text-[10px] text-neutral-500 font-mono-ds">links, callouts, banners</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- opacity -->
+      <div class="bg-white border border-neutral-200 rounded-3xl p-7">
+        <span class="text-[10px] uppercase tracking-widest font-bold text-neutral-700 font-mono-ds">Opacity / Layer system</span>
+        <div class="mt-6">
+          <div class="relative h-44 bg-[radial-gradient(circle_at_20%_20%,#D4AF37_0,transparent_60%),radial-gradient(circle_at_80%_80%,#0a0a0a_0,transparent_60%)] rounded-2xl overflow-hidden">
+            <div class="absolute inset-3 bg-white/95 backdrop-blur-md rounded-xl flex items-center px-4 text-[11px] font-mono-ds text-neutral-700">white/95 · backdrop-blur</div>
+            <div class="absolute inset-x-3 bottom-3 h-10 bg-black/70 backdrop-blur-md rounded-xl flex items-center px-4 text-[11px] font-mono-ds text-white">black/70 · overlay</div>
+          </div>
+        </div>
+        <div class="mt-5 grid grid-cols-5 gap-2 text-[10px] font-mono-ds text-neutral-500 text-center">
+          <span class="py-1 rounded bg-black/5">/5</span>
+          <span class="py-1 rounded bg-black/10">/10</span>
+          <span class="py-1 rounded bg-black/30 text-white">/30</span>
+          <span class="py-1 rounded bg-black/60 text-white">/60</span>
+          <span class="py-1 rounded bg-black/90 text-white">/90</span>
+        </div>
+      </div>
+      <!-- gradients -->
+      <div class="bg-white border border-neutral-200 rounded-3xl p-7">
+        <span class="text-[10px] uppercase tracking-widest font-bold text-neutral-700 font-mono-ds">Decorative · Gradients</span>
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <div class="aspect-[5/4] rounded-xl bg-gradient-to-br from-[#D4AF37] via-[#f5f1ea] to-white border border-neutral-100"></div>
+          <div class="aspect-[5/4] rounded-xl bg-gradient-to-tr from-[#0a0a0a] via-[#3b3631] to-[#D4AF37]"></div>
+          <div class="aspect-[5/4] rounded-xl bg-gradient-to-r from-[#fafaf9] via-[#e7e5e0] to-[#a09c92] border border-neutral-100"></div>
+          <div class="aspect-[5/4] rounded-xl bg-[conic-gradient(at_top_left,_#D4AF37,_#0a0a0a,_#f5f1ea,_#D4AF37)]"></div>
+        </div>
+        <p class="text-[11px] text-neutral-500 font-mono-ds mt-4">Use gradients para hero overlays e decoração — nunca em texto longo.</p>
+      </div>
+    </div>
+
+    <!-- contextual usage matrix -->
+    <div class="bg-white border border-neutral-200 rounded-3xl p-7">
+      <div class="flex items-center justify-between mb-6">
+        <span class="text-[10px] uppercase tracking-widest font-bold text-neutral-700 font-mono-ds">Usage matrix · regras contextuais</span>
+        <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds">text · bg · border · state</span>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3 text-xs">
+        <div class="p-4 rounded-xl bg-neutral-50 border border-neutral-200">
+          <p class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds mb-2">Text default</p>
+          <p class="text-neutral-900 font-semibold">#0A0A0A</p>
+          <p class="text-[10px] font-mono-ds text-neutral-500 mt-1">contrast AAA</p>
+        </div>
+        <div class="p-4 rounded-xl bg-neutral-50 border border-neutral-200">
+          <p class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds mb-2">Text muted</p>
+          <p class="text-neutral-500 font-semibold">#6B6760</p>
+          <p class="text-[10px] font-mono-ds text-neutral-500 mt-1">contrast AA</p>
+        </div>
+        <div class="p-4 rounded-xl bg-neutral-50 border border-neutral-200">
+          <p class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds mb-2">Border</p>
+          <p class="text-neutral-900 font-semibold">#E7E5E0</p>
+          <p class="text-[10px] font-mono-ds text-neutral-500 mt-1">divisores 1px</p>
+        </div>
+        <div class="p-4 rounded-xl bg-black text-white">
+          <p class="text-[10px] uppercase tracking-widest text-white/60 font-mono-ds mb-2">Hover · primary</p>
+          <p class="font-semibold">#1A1815</p>
+          <p class="text-[10px] font-mono-ds text-white/50 mt-1">btn:hover</p>
+        </div>
+        <div class="p-4 rounded-xl bg-neutral-100 border border-neutral-200">
+          <p class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds mb-2">Disabled</p>
+          <p class="text-neutral-400 font-semibold">#A09C92</p>
+          <p class="text-[10px] font-mono-ds text-neutral-400 mt-1">opacity .6</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COMPONENTS ===================== -->
+<section id="components" class="relative bg-white border-t border-neutral-200 overflow-hidden">
+  <!-- ghost letter background -->
+  <div class="absolute bottom-0 left-0 pointer-events-none w-full text-center">
+    <span class="ghost-letter-fill block" style="font-size: 28vw;">UI</span>
+  </div>
+
+  <div class="relative max-w-[1400px] mx-auto px-6 sm:px-12 py-28 lg:py-40 gsap-section">
+    <div class="grid grid-cols-12 gap-8 mb-20 items-end">
+      <div class="col-span-12 lg:col-span-6">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="text-[10px] font-bold text-[#D4AF37] uppercase tracking-widest font-mono-ds">04 — Componentes</span>
+          <div class="h-px flex-1 bg-neutral-200"></div>
+        </div>
+        <h2 class="font-display text-5xl md:text-6xl tracking-tighter leading-[0.9] font-normal text-black">
+          Peças que <br/>
+          se <span class="italic">encaixam</span>.
+        </h2>
+      </div>
+      <div class="col-span-12 lg:col-span-5 lg:col-start-8">
+        <p class="text-base text-neutral-600 leading-relaxed font-mono-ds">
+          Cada componente foi calibrado para coexistir com os demais. Estados (default, hover, focus, disabled), micro-interações e variantes documentadas — todas referenciando os mesmos tokens.
+        </p>
+      </div>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="mb-12">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="font-display text-2xl tracking-tight font-normal flex items-center gap-3">
+          <iconify-icon icon="solar:cursor-square-linear" class="text-neutral-400"></iconify-icon> Buttons
+        </h3>
+        <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds">/btn-* · transition .3s</span>
+      </div>
+      <div class="bg-neutral-50 border border-neutral-200 rounded-3xl p-8 flex flex-wrap items-center gap-4">
+        <button class="btn-glow px-6 py-3 rounded-full bg-black text-white text-xs font-semibold uppercase tracking-widest hover:bg-neutral-900 transition-all">Primary</button>
+        <button class="px-6 py-3 rounded-full border border-black text-black text-xs font-semibold uppercase tracking-widest hover:bg-black hover:text-white transition-all">Secondary</button>
+        <button class="px-6 py-3 rounded-full text-black text-xs font-semibold uppercase tracking-widest hover:bg-neutral-100 transition-all">Ghost</button>
+        <button class="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#D4AF37] text-black text-xs font-semibold uppercase tracking-widest hover:bg-[#c9a96b] transition-all">
+          Gold <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+        </button>
+        <button class="link-reveal text-xs font-semibold uppercase tracking-widest text-black flex items-center gap-2">
+          Link <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+        </button>
+        <button class="px-6 py-3 rounded-full bg-neutral-200 text-neutral-400 text-xs font-semibold uppercase tracking-widest cursor-not-allowed" disabled>Disabled</button>
+        <!-- icon button -->
+        <button class="w-11 h-11 rounded-full bg-black text-white grid place-items-center hover:bg-[#D4AF37] hover:text-black transition-all">
+          <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+        </button>
+        <!-- pill with count -->
+        <button class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neutral-300 bg-white text-xs font-semibold text-neutral-900">
+          Filtros <span class="grid place-items-center w-5 h-5 rounded-full bg-black text-white text-[10px] font-mono-ds">3</span>
+        </button>
+      </div>
+      <div class="mt-3 grid grid-cols-2 md:grid-cols-4 gap-2 text-[10px] font-mono-ds text-neutral-500">
+        <span>· height: 44px</span>
+        <span>· radius: 9999px</span>
+        <span>· hover: bg shift</span>
+        <span>· focus: ring-2 ring-[#D4AF37]/40</span>
+      </div>
+    </div>
+
+    <!-- INPUTS -->
+    <div class="mb-12">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="font-display text-2xl tracking-tight font-normal flex items-center gap-3">
+          <iconify-icon icon="solar:keyboard-linear" class="text-neutral-400"></iconify-icon> Inputs
+        </h3>
+        <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds">labels uppercase · border-b focus</span>
+      </div>
+      <div class="bg-neutral-50 border border-neutral-200 rounded-3xl p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- bordered input -->
+        <div>
+          <label class="text-xs font-bold uppercase tracking-widest text-neutral-700 font-mono-ds">E-mail</label>
+          <input type="email" placeholder="hello@marta.studio" class="mt-2 w-full px-4 py-3 rounded-lg border border-neutral-300 bg-white text-sm placeholder:text-neutral-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-[#D4AF37]/30 transition-all"/>
+          <p class="text-[11px] text-neutral-400 font-mono-ds mt-2 italic">Usamos seu email apenas para contato.</p>
+        </div>
+        <!-- underlined input -->
+        <div>
+          <label class="text-xs font-bold uppercase tracking-widest text-neutral-700 font-mono-ds">Endereço</label>
+          <input type="text" placeholder="Rua, número, complemento" class="mt-2 w-full bg-transparent border-b border-neutral-300 py-2 text-sm placeholder:text-neutral-400 focus:outline-none focus:border-black transition-colors"/>
+        </div>
+        <!-- search -->
+        <div>
+          <label class="text-xs font-bold uppercase tracking-widest text-neutral-700 font-mono-ds">Buscar</label>
+          <div class="mt-2 relative">
+            <iconify-icon icon="solar:magnifer-linear" class="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400"></iconify-icon>
+            <input type="search" placeholder="O que você procura?" class="w-full pl-11 pr-4 py-3 rounded-full bg-white border border-neutral-300 text-sm placeholder:text-neutral-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-[#D4AF37]/30 transition-all"/>
+          </div>
+        </div>
+        <!-- select -->
+        <div>
+          <label class="text-xs font-bold uppercase tracking-widest text-neutral-700 font-mono-ds">Categoria</label>
+          <div class="mt-2 relative">
+            <select class="w-full appearance-none pl-4 pr-10 py-3 rounded-lg border border-neutral-300 bg-white text-sm focus:outline-none focus:border-black focus:ring-2 focus:ring-[#D4AF37]/30 transition-all">
+              <option>Selecione...</option>
+              <option>Tipografia</option>
+              <option>Cores</option>
+              <option>Componentes</option>
+            </select>
+            <iconify-icon icon="solar:alt-arrow-down-linear" class="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none"></iconify-icon>
+          </div>
+        </div>
+        <!-- textarea -->
+        <div class="md:col-span-2">
+          <label class="text-xs font-bold uppercase tracking-widest text-neutral-700 font-mono-ds">Mensagem</label>
+          <textarea rows="3" placeholder="Escreva uma mensagem..." class="mt-2 w-full px-4 py-3 rounded-lg border border-neutral-300 bg-white text-sm placeholder:text-neutral-400 focus:outline-none focus:border-black focus:ring-2 focus:ring-[#D4AF37]/30 transition-all resize-none"></textarea>
+        </div>
+        <!-- checkbox + radio + toggle -->
+        <div class="flex flex-wrap items-center gap-8 md:col-span-2">
+          <label class="flex items-center gap-3 cursor-pointer">
+            <span class="relative w-5 h-5 rounded border border-neutral-400 bg-white grid place-items-center transition-colors peer-checked:bg-black">
+              <input type="checkbox" class="peer absolute inset-0 opacity-0 cursor-pointer" checked/>
+              <iconify-icon icon="solar:check-read-linear" class="text-white peer-checked:opacity-100 opacity-0 transition-opacity"></iconify-icon>
+            </span>
+            <span class="text-xs text-neutral-900 font-medium">Checkbox</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <span class="relative w-5 h-5 rounded-full border border-neutral-400 bg-white grid place-items-center">
+              <span class="w-2.5 h-2.5 rounded-full bg-black"></span>
+            </span>
+            <span class="text-xs text-neutral-900 font-medium">Radio · selected</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <span class="relative w-10 h-5 rounded-full bg-black">
+              <span class="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-white shadow"></span>
+            </span>
+            <span class="text-xs text-neutral-900 font-medium">Toggle · on</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="mb-12">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="font-display text-2xl tracking-tight font-normal flex items-center gap-3">
+          <iconify-icon icon="solar:cards-minimalistic-linear" class="text-neutral-400"></iconify-icon> Cards
+        </h3>
+        <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds">card-lift · hover translate-y</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- image card -->
+        <article class="card-lift bg-white border border-neutral-200 rounded-2xl overflow-hidden group">
+          <div class="aspect-[4/3] overflow-hidden bg-neutral-100 relative">
+            <img alt="Imóvel" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" src="luxury-real-estate-22.aura.build/assets/585a27183f42ba3e_917d6f93-fb36-439a-8c48-884b67.jpg"/>
+            <span class="absolute top-3 right-3 px-3 py-1 rounded-full bg-white text-[10px] uppercase tracking-widest font-semibold text-black">Featured</span>
+          </div>
+          <div class="p-6">
+            <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds">Card · Image</span>
+            <h4 class="text-lg font-semibold mt-2 tracking-tight">Vertex Residences</h4>
+            <p class="text-sm text-neutral-500 mt-2 leading-relaxed font-mono-ds">Cards básicos com imagem topo, label e título.</p>
+            <div class="flex items-center justify-between mt-5 pt-5 border-t border-neutral-100">
+              <span class="text-xs font-semibold text-neutral-900">R$ 2.400/mês</span>
+              <a href="#" class="link-reveal text-xs font-semibold uppercase tracking-widest text-neutral-900 flex items-center gap-1">Ver mais <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- stat card -->
+        <article class="card-lift bg-black text-white border border-black rounded-2xl p-6 relative overflow-hidden">
+          <div class="absolute -top-12 -right-12 w-40 h-40 rounded-full bg-[#D4AF37]/15 blur-3xl pointer-events-none"></div>
+          <div class="flex items-start justify-between">
+            <span class="text-[10px] uppercase tracking-widest text-white/60 font-mono-ds">Card · Stat</span>
+            <iconify-icon icon="solar:graph-up-linear" class="text-[#D4AF37] text-xl"></iconify-icon>
+          </div>
+          <p class="font-display text-7xl tracking-tighter font-normal mt-6 leading-none">98<span class="text-[#D4AF37]">%</span></p>
+          <p class="text-sm text-neutral-300 mt-4">Sucesso médio em entregas — medido em sprints corridos no último ano.</p>
+          <div class="mt-6 flex items-center justify-between text-[11px] font-mono-ds text-white/50 pt-5 border-t border-white/10">
+            <span>quarter</span><span>Q4 · 2025</span>
+          </div>
+        </article>
+
+        <!-- testimonial card -->
+        <article class="card-lift bg-[#f5f1ea] border border-neutral-200 rounded-2xl p-6 group hover:border-[#D4AF37] transition-colors">
+          <iconify-icon icon="solar:quote-right-linear" class="text-[#D4AF37] text-3xl opacity-50 group-hover:opacity-100 transition-opacity"></iconify-icon>
+          <p class="text-base text-neutral-800 leading-relaxed mt-6 italic">"Um sistema que realmente respeita a marca — não engessa, orienta."</p>
+          <div class="mt-6 flex items-center gap-3 pt-5 border-t border-neutral-200">
+            <img alt="Cliente" class="w-10 h-10 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all" src="jonathanfernandes.aura.build/assets/cf795bec-e9bc-4ecf-9989-d83620_ccbbbebd346b.jpg"/>
+            <div>
+              <p class="text-xs font-bold text-neutral-900">Victor G.</p>
+              <p class="text-[10px] uppercase tracking-widest text-neutral-500 font-mono-ds">CDO · Verity</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- NAVBAR + TABS -->
+    <div class="mb-12">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="font-display text-2xl tracking-tight font-normal flex items-center gap-3">
+          <iconify-icon icon="solar:menu-dots-square-linear" class="text-neutral-400"></iconify-icon> Navbars &amp; Tabs
+        </h3>
+        <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds">fixed · backdrop-blur · scroll-aware</span>
+      </div>
+      <div class="space-y-4">
+        <!-- light navbar -->
+        <div class="bg-white border border-neutral-200 rounded-2xl px-6 py-4 flex items-center justify-between">
+          <div class="flex items-center gap-2 font-bold tracking-tight">
+            <span class="w-2 h-2 rounded-full bg-[#D4AF37]"></span> marta<span class="text-neutral-400">/ds</span>
+          </div>
+          <div class="hidden md:flex items-center gap-7 text-[10px] uppercase tracking-widest text-neutral-500 font-medium">
+            <a class="hover:text-black transition-colors" href="#">Início</a>
+            <a class="hover:text-black transition-colors" href="#">Trabalho</a>
+            <a class="text-black" href="#">Sobre</a>
+            <a class="hover:text-black transition-colors" href="#">Contato</a>
+          </div>
+          <button class="px-4 py-2 rounded-full bg-black text-white text-[10px] uppercase tracking-widest font-semibold">Falar</button>
+        </div>
+        <!-- dark navbar -->
+        <div class="bg-black text-white rounded-2xl px-6 py-4 flex items-center justify-between">
+          <div class="flex items-center gap-2 font-bold tracking-tight">
+            <span class="w-2 h-2 rounded-full bg-[#D4AF37]"></span> marta<span class="text-neutral-500">/ds</span>
+          </div>
+          <div class="hidden md:flex items-center gap-7 text-[10px] uppercase tracking-widest text-white/60 font-medium">
+            <a class="hover:text-white transition-colors" href="#">Estúdio</a>
+            <a class="hover:text-white transition-colors" href="#">Projetos</a>
+            <a class="text-white" href="#">Diário</a>
+            <a class="hover:text-white transition-colors" href="#">Contato</a>
+          </div>
+          <button class="px-4 py-2 rounded-full bg-[#D4AF37] text-black text-[10px] uppercase tracking-widest font-semibold">Login</button>
+        </div>
+        <!-- tabs -->
+        <div class="bg-neutral-50 border border-neutral-200 rounded-2xl p-1 inline-flex">
+          <button class="px-5 py-2 rounded-xl bg-white shadow-sm text-xs font-semibold text-black uppercase tracking-widest">Visão</button>
+          <button class="px-5 py-2 rounded-xl text-xs font-semibold text-neutral-500 hover:text-black uppercase tracking-widest">Atividade</button>
+          <button class="px-5 py-2 rounded-xl text-xs font-semibold text-neutral-500 hover:text-black uppercase tracking-widest">Equipe</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BADGES + TOOLTIPS -->
+    <div class="mb-12 grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- badges -->
+      <div>
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="font-display text-2xl tracking-tight font-normal flex items-center gap-3">
+            <iconify-icon icon="solar:tag-linear" class="text-neutral-400"></iconify-icon> Badges
+          </h3>
+        </div>
+        <div class="bg-neutral-50 border border-neutral-200 rounded-3xl p-8 flex flex-wrap items-center gap-3">
+          <span class="px-3 py-1 rounded-full bg-black text-white text-[10px] uppercase tracking-widest font-semibold">Default</span>
+          <span class="px-3 py-1 rounded-full border border-black text-black text-[10px] uppercase tracking-widest font-semibold">Outline</span>
+          <span class="px-3 py-1 rounded-full bg-[#D4AF37] text-black text-[10px] uppercase tracking-widest font-semibold">Gold</span>
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 text-green-700 border border-green-100 text-[10px] uppercase tracking-widest font-semibold">
+            <span class="relative flex h-1.5 w-1.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500"></span></span>
+            Online
+          </span>
+          <span class="px-3 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-100 text-[10px] uppercase tracking-widest font-semibold">Warning</span>
+          <span class="px-3 py-1 rounded-full bg-red-50 text-red-700 border border-red-100 text-[10px] uppercase tracking-widest font-semibold">Error</span>
+          <span class="px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-100 text-[10px] uppercase tracking-widest font-semibold">Info</span>
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 text-neutral-700 border border-neutral-200 text-[10px] uppercase tracking-widest font-semibold">
+            <iconify-icon icon="solar:star-linear"></iconify-icon> Premium
+          </span>
+        </div>
+      </div>
+      <!-- tooltips -->
+      <div>
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="font-display text-2xl tracking-tight font-normal flex items-center gap-3">
+            <iconify-icon icon="solar:chat-square-linear" class="text-neutral-400"></iconify-icon> Tooltips
+          </h3>
+        </div>
+        <div class="bg-neutral-50 border border-neutral-200 rounded-3xl p-8 flex flex-wrap items-center gap-8 min-h-[140px]">
+          <div class="ds-tooltip">
+            <button class="w-11 h-11 rounded-full bg-black text-white grid place-items-center hover:bg-[#D4AF37] hover:text-black transition-all">
+              <iconify-icon icon="solar:bell-linear"></iconify-icon>
+            </button>
+            <span class="tip bg-neutral-900 text-white text-[10px] px-2 py-1 rounded font-mono-ds uppercase tracking-widest">Notificações</span>
+          </div>
+          <div class="ds-tooltip">
+            <button class="w-11 h-11 rounded-full bg-white border border-neutral-200 text-black grid place-items-center hover:bg-neutral-100 transition-all">
+              <iconify-icon icon="solar:settings-linear"></iconify-icon>
+            </button>
+            <span class="tip bg-white text-black text-[10px] px-2 py-1 rounded border border-neutral-200 shadow-lg font-mono-ds uppercase tracking-widest">Configurações</span>
+          </div>
+          <div class="ds-tooltip">
+            <button class="px-4 py-2 rounded-full border border-neutral-300 text-xs uppercase tracking-widest font-semibold text-neutral-700">
+              Hover me
+            </button>
+            <span class="tip bg-[#D4AF37] text-black text-[10px] px-2.5 py-1 rounded font-mono-ds uppercase tracking-widest font-semibold">Olá!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="mb-4">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="font-display text-2xl tracking-tight font-normal flex items-center gap-3">
+          <iconify-icon icon="solar:dialog-2-linear" class="text-neutral-400"></iconify-icon> Modal
+        </h3>
+        <button onclick="document.getElementById('demo-modal').classList.remove('hidden')" class="link-reveal text-xs font-semibold uppercase tracking-widest text-black">Abrir modal →</button>
+      </div>
+      <!-- inline preview -->
+      <div class="relative bg-neutral-100 border border-neutral-200 rounded-3xl p-8 min-h-[420px] overflow-hidden">
+        <div class="absolute inset-0 modal-backdrop bg-white/40"></div>
+        <div class="relative max-w-md mx-auto bg-white border border-neutral-200 rounded-2xl p-8 shadow-2xl">
+          <div class="flex items-start justify-between">
+            <div class="w-12 h-12 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/30 grid place-items-center text-[#D4AF37]">
+              <iconify-icon icon="solar:stars-line-linear" class="text-xl"></iconify-icon>
+            </div>
+            <button class="text-neutral-400 hover:text-black"><iconify-icon icon="solar:close-circle-linear"></iconify-icon></button>
+          </div>
+          <h4 class="font-display text-2xl tracking-tight font-normal text-black mt-6">Pronto para começar?</h4>
+          <p class="text-sm text-neutral-500 leading-relaxed mt-3 font-mono-ds">Conheça os tokens, componentes e padrões que sustentam o sistema. Um dia, um sprint, uma marca consistente.</p>
+          <div class="mt-7 flex gap-3">
+            <button class="btn-glow flex-1 py-3 rounded-full bg-black text-white text-xs font-semibold uppercase tracking-widest hover:bg-neutral-900 transition-all">Aceitar &amp; iniciar</button>
+            <button class="px-5 py-3 rounded-full border border-neutral-300 text-xs font-semibold uppercase tracking-widest text-neutral-700 hover:bg-neutral-50 transition-all">Depois</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive modal (hidden by default) -->
+      <div id="demo-modal" class="hidden fixed inset-0 z-50 grid place-items-center p-6 modal-backdrop bg-black/40">
+        <div class="max-w-md w-full bg-white border border-neutral-200 rounded-2xl p-8 shadow-2xl">
+          <div class="flex items-start justify-between">
+            <div class="w-12 h-12 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/30 grid place-items-center text-[#D4AF37]">
+              <iconify-icon icon="solar:stars-line-linear" class="text-xl"></iconify-icon>
+            </div>
+            <button onclick="document.getElementById('demo-modal').classList.add('hidden')" class="text-neutral-400 hover:text-black"><iconify-icon icon="solar:close-circle-linear"></iconify-icon></button>
+          </div>
+          <h4 class="font-display text-2xl tracking-tight font-normal text-black mt-6">Modal vivo</h4>
+          <p class="text-sm text-neutral-500 leading-relaxed mt-3 font-mono-ds">Este é um exemplo funcional. Fecha no botão acima ou clicando fora.</p>
+          <div class="mt-7 flex gap-3">
+            <button onclick="document.getElementById('demo-modal').classList.add('hidden')" class="btn-glow flex-1 py-3 rounded-full bg-black text-white text-xs font-semibold uppercase tracking-widest">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTIONS / LAYOUTS -->
+    <div class="mb-4">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="font-display text-2xl tracking-tight font-normal flex items-center gap-3">
+          <iconify-icon icon="solar:widget-linear" class="text-neutral-400"></iconify-icon> Sections
+        </h3>
+        <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds">padding 6vw · max-w 1400</span>
+      </div>
+      <!-- 50/50 with image -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 bg-neutral-50 border border-neutral-200 rounded-3xl p-8 mb-4 image-anim-container relative overflow-hidden">
+        <div class="md:col-span-5">
+          <span class="text-[10px] uppercase tracking-widest text-[#D4AF37] font-mono-ds font-bold">Layout · 50/50</span>
+          <h4 class="font-display text-3xl tracking-tight font-normal mt-3">Texto à esquerda, imagem à direita.</h4>
+          <p class="text-sm text-neutral-500 leading-relaxed mt-4 font-mono-ds">Padrão clássico editorial. Funciona em about, hero e quotes longos.</p>
+        </div>
+        <div class="md:col-span-7">
+          <img alt="Bairro" class="w-full h-64 object-cover rounded-xl" src="luxury-real-estate-22.aura.build/assets/18d854bcc0982cd4_photo-1512917774080-9991f1c4c7.avif"/>
+        </div>
+      </div>
+      <!-- centered statement -->
+      <div class="bg-black text-white rounded-3xl p-12 text-center relative overflow-hidden">
+        <span class="absolute inset-0 pointer-events-none flex items-center justify-center">
+          <span class="ghost-letter" style="font-size: 18vw; -webkit-text-stroke: 1px rgba(255,255,255,0.08);">MARTA</span>
+        </span>
+        <span class="relative text-[10px] uppercase tracking-widest text-white/60 font-mono-ds">Layout · Statement</span>
+        <h4 class="relative font-display text-4xl md:text-5xl tracking-tighter font-normal mt-3 max-w-2xl mx-auto">Uma frase, centrada e respirada. Use com moderação.</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ICONS ===================== -->
+<section id="icons" class="relative bg-[#f5f1ea] border-t border-neutral-200 overflow-hidden">
+  <div class="absolute inset-0 grid-bg opacity-50 pointer-events-none"></div>
+  <div class="relative max-w-[1400px] mx-auto px-6 sm:px-12 py-28 lg:py-40 gsap-section">
+    <div class="grid grid-cols-12 gap-8 mb-20 items-end">
+      <div class="col-span-12 lg:col-span-6">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="text-[10px] font-bold text-[#D4AF37] uppercase tracking-widest font-mono-ds">05 — Ícones</span>
+          <div class="h-px flex-1 bg-neutral-300"></div>
+        </div>
+        <h2 class="font-display text-5xl md:text-6xl tracking-tighter leading-[0.9] font-normal text-black">
+          Dois sistemas, <br/>uma <span class="italic">gramática</span>.
+        </h2>
+      </div>
+      <div class="col-span-12 lg:col-span-5 lg:col-start-8">
+        <p class="text-base text-neutral-700 leading-relaxed font-mono-ds">
+          <b class="text-black">Lucide</b> para gestos finos de UI e <b class="text-black">Solar (Iconify)</b> para conceitos editoriais. Stroke-width 1.5 padrão, alinhamento óptico ao texto, tamanhos pares (16, 20, 24, 32).
+        </p>
+      </div>
+    </div>
+
+    <!-- icon grid -->
+    <div class="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-10 gap-3">
+      <!-- lucide -->
+      <div class="aspect-square bg-white border border-neutral-200 rounded-xl grid place-items-center hover:bg-black hover:text-white transition-colors relative group">
+        <i data-lucide="home" class="w-5 h-5"></i>
+        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[9px] font-mono-ds text-neutral-500 opacity-0 group-hover:opacity-100 transition-opacity translate-y-3 group-hover:translate-y-0">home</span>
+      </div>
+      <div class="aspect-square bg-white border border-neutral-200 rounded-xl grid place-items-center hover:bg-black hover:text-white transition-colors"><i data-lucide="briefcase" class="w-5 h-5"></i></div>
+      <div class="aspect-square bg-white border border-neutral-200 rounded-xl grid place-items-center hover:bg-black hover:text-white transition-colors"><i data-lucide="user" class="w-5 h-5"></i></div>
+      <div class="aspect-square bg-white border border-neutral-200 rounded-xl grid place-items-center hover:bg-black hover:text-white transition-colors"><i data-lucide="mail" class="w-5 h-5"></i></div>
+      <div class="aspect-square bg-white border border-neutral-200 rounded-xl grid place-items-center hover:bg-black hover:text-white transition-colors"><i data-lucide="search" class="w-5 h-5"></i></div>
+      <div class="aspect-square bg-white border border-neutral-200 rounded-xl grid place-items-center hover:bg-black hover:text-white transition-colors"><i data-lucide="settings" class="w-5 h-5"></i></div>
+      <div class="aspect-square bg-white border border-neutral-200 rounded-xl grid place-items-center hover:bg-black hover:text-white transition-colors"><i data-lucide="bell" class="w-5 h-5"></i></div>
+      <div class="aspect-square bg-white border border-neutral-200 rounded-xl grid place-items-center hover:bg-black hover:text-white transition-colors"><i data-lucide="heart" class="w-5 h-5"></i></div>
+      <div class="aspect-square bg-white border border-neutral-200 rounded-xl grid place-items-center hover:bg-black hover:text-white transition-colors"><i data-lucide="arrow-up-right" class="w-5 h-5"></i></div>
+      <div class="aspect-square bg-white border border-neutral-200 rounded-xl grid place-items-center hover:bg-black hover:text-white transition-colors"><i data-lucide="sparkles" class="w-5 h-5"></i></div>
+      <!-- solar / iconify -->
+      <div class="aspect-square bg-black text-white border border-black rounded-xl grid place-items-center hover:bg-[#D4AF37] hover:text-black transition-colors"><iconify-icon icon="solar:bolt-linear" class="text-xl"></iconify-icon></div>
+      <div class="aspect-square bg-black text-white border border-black rounded-xl grid place-items-center hover:bg-[#D4AF37] hover:text-black transition-colors"><iconify-icon icon="solar:gallery-linear" class="text-xl"></iconify-icon></div>
+      <div class="aspect-square bg-black text-white border border-black rounded-xl grid place-items-center hover:bg-[#D4AF37] hover:text-black transition-colors"><iconify-icon icon="solar:map-point-linear" class="text-xl"></iconify-icon></div>
+      <div class="aspect-square bg-black text-white border border-black rounded-xl grid place-items-center hover:bg-[#D4AF37] hover:text-black transition-colors"><iconify-icon icon="solar:eye-linear" class="text-xl"></iconify-icon></div>
+      <div class="aspect-square bg-black text-white border border-black rounded-xl grid place-items-center hover:bg-[#D4AF37] hover:text-black transition-colors"><iconify-icon icon="solar:palette-linear" class="text-xl"></iconify-icon></div>
+      <div class="aspect-square bg-black text-white border border-black rounded-xl grid place-items-center hover:bg-[#D4AF37] hover:text-black transition-colors"><iconify-icon icon="solar:text-square-linear" class="text-xl"></iconify-icon></div>
+      <div class="aspect-square bg-black text-white border border-black rounded-xl grid place-items-center hover:bg-[#D4AF37] hover:text-black transition-colors"><iconify-icon icon="solar:hexagon-linear" class="text-xl"></iconify-icon></div>
+      <div class="aspect-square bg-black text-white border border-black rounded-xl grid place-items-center hover:bg-[#D4AF37] hover:text-black transition-colors"><iconify-icon icon="solar:quote-right-linear" class="text-xl"></iconify-icon></div>
+      <div class="aspect-square bg-black text-white border border-black rounded-xl grid place-items-center hover:bg-[#D4AF37] hover:text-black transition-colors"><iconify-icon icon="solar:stars-line-linear" class="text-xl"></iconify-icon></div>
+      <div class="aspect-square bg-black text-white border border-black rounded-xl grid place-items-center hover:bg-[#D4AF37] hover:text-black transition-colors"><iconify-icon icon="solar:arrow-right-up-linear" class="text-xl"></iconify-icon></div>
+    </div>
+
+    <!-- icon usage rules -->
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="bg-white border border-neutral-200 rounded-2xl p-6">
+        <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds">Regra · tamanho</span>
+        <p class="text-sm text-neutral-900 mt-2 leading-relaxed">14 · 16 · 20 · 24 · 32px — sempre pares e alinhados à altura-x do texto adjacente.</p>
+      </div>
+      <div class="bg-white border border-neutral-200 rounded-2xl p-6">
+        <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds">Regra · stroke</span>
+        <p class="text-sm text-neutral-900 mt-2 leading-relaxed">Stroke 1.5 padrão. Use 2 apenas para tamanhos &lt; 14px em interfaces densas.</p>
+      </div>
+      <div class="bg-white border border-neutral-200 rounded-2xl p-6">
+        <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-mono-ds">Regra · cor</span>
+        <p class="text-sm text-neutral-900 mt-2 leading-relaxed">Herda <code class="font-mono-ds text-[#D4AF37]">currentColor</code>. Nunca colora um ícone em vermelho sem motivo semântico.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ANIMATIONS ===================== -->
+<section id="animations" class="relative bg-white border-t border-neutral-200 overflow-hidden">
+  <div class="absolute top-0 right-0 pointer-events-none">
+    <span class="ghost-letter-fill block leading-none" style="font-size: 30vw;">M</span>
+  </div>
+
+  <div class="relative max-w-[1400px] mx-auto px-6 sm:px-12 py-28 lg:py-40 gsap-section">
+    <div class="grid grid-cols-12 gap-8 mb-20 items-end">
+      <div class="col-span-12 lg:col-span-6">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="text-[10px] font-bold text-[#D4AF37] uppercase tracking-widest font-mono-ds">06 — Animações</span>
+          <div class="h-px flex-1 bg-neutral-200"></div>
+        </div>
+        <h2 class="font-display text-5xl md:text-6xl tracking-tighter leading-[0.9] font-normal text-black">
+          Movimento <br/>
+          que <span class="italic">conduz</span>.
+        </h2>
+      </div>
+      <div class="col-span-12 lg:col-span-5 lg:col-start-8">
+        <p class="text-base text-neutral-600 leading-relaxed font-mono-ds">
+          Toda animação serve a um propósito: <b class="text-black">orientar atenção</b>, <b class="text-black">indicar estado</b> ou <b class="text-black">revelar hierarquia</b>. Easings inspirados em movimento natural. Duração média 350–600ms.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- pulse -->
+      <div class="bg-white border border-neutral-200 rounded-2xl p-8 flex flex-col items-center text-center">
+        <div class="w-20 h-20 rounded-full bg-black glow-pulse"></div>
+        <p class="font-display text-xl tracking-tight mt-6">pulse-glow</p>
+        <p class="text-[11px] text-neutral-500 font-mono-ds mt-2">3.5s · ease-in-out · infinite</p>
+        <p class="text-xs text-neutral-700 mt-4 leading-relaxed">Status ativos, focos, CTAs primários.</p>
+      </div>
+      <!-- float -->
+      <div class="bg-white border border-neutral-200 rounded-2xl p-8 flex flex-col items-center text-center">
+        <div class="w-20 h-20 rounded-2xl bg-[#D4AF37] float-y"></div>
+        <p class="font-display text-xl tracking-tight mt-6">float-y</p>
+        <p class="text-[11px] text-neutral-500 font-mono-ds mt-2">6s · ease-in-out · infinite</p>
+        <p class="text-xs text-neutral-700 mt-4 leading-relaxed">Hero cards, ilustrações flutuantes.</p>
+      </div>
+      <!-- ring rotate -->
+      <div class="bg-white border border-neutral-200 rounded-2xl p-8 flex flex-col items-center text-center">
+        <div class="relative w-20 h-20">
+          <div class="absolute inset-0 rounded-full border border-dashed border-black/40 ring-rotate"></div>
+          <div class="absolute inset-3 rounded-full bg-black"></div>
+        </div>
+        <p class="font-display text-xl tracking-tight mt-6">ring-rotate</p>
+        <p class="text-[11px] text-neutral-500 font-mono-ds mt-2">22s · linear · infinite</p>
+        <p class="text-xs text-neutral-700 mt-4 leading-relaxed">Indicadores decorativos, badges premium.</p>
+      </div>
+      <!-- shimmer -->
+      <div class="bg-white border border-neutral-200 rounded-2xl p-8 flex flex-col items-center text-center">
+        <p class="font-display text-4xl tracking-tight shimmer-text">Shimmer</p>
+        <p class="font-display text-xl tracking-tight mt-6">shimmer-text</p>
+        <p class="text-[11px] text-neutral-500 font-mono-ds mt-2">5s · linear · infinite</p>
+        <p class="text-xs text-neutral-700 mt-4 leading-relaxed">Palavra-chave editorial, destaques.</p>
+      </div>
+      <!-- reveal -->
+      <div class="bg-white border border-neutral-200 rounded-2xl p-8">
+        <div class="aspect-[5/3] overflow-hidden rounded-xl bg-neutral-100 image-anim-container relative">
+          <img alt="Reveal" class="w-full h-full object-cover" src="nexus-architecture.aura.build/assets/e4514c63-6bbd-4f90-a84b-21d568_0e16692701f2.jpg"/>
+        </div>
+        <p class="font-display text-xl tracking-tight mt-6">image-anim-container</p>
+        <p class="text-[11px] text-neutral-500 font-mono-ds mt-2">4 colunas · parallax + blur</p>
+        <p class="text-xs text-neutral-700 mt-4 leading-relaxed">Hero images, transições entre seções (GSAP ScrollTrigger).</p>
+      </div>
+      <!-- marquee mini -->
+      <div class="bg-white border border-neutral-200 rounded-2xl p-8 flex flex-col">
+        <div class="overflow-hidden border border-neutral-200 rounded-xl bg-neutral-50 py-3 marquee-container">
+          <div class="marquee-track flex gap-6 items-center text-[11px] uppercase tracking-widest font-mono-ds text-neutral-600">
+            <span>· Design with intent</span><span class="w-1 h-1 rounded-full bg-[#D4AF37]"></span>
+            <span>· Tokens before screens</span><span class="w-1 h-1 rounded-full bg-[#D4AF37]"></span>
+            <span>· Motion as content</span><span class="w-1 h-1 rounded-full bg-[#D4AF37]"></span>
+            <span>· Design with intent</span><span class="w-1 h-1 rounded-full bg-[#D4AF37]"></span>
+            <span>· Tokens before screens</span><span class="w-1 h-1 rounded-full bg-[#D4AF37]"></span>
+            <span>· Motion as content</span><span class="w-1 h-1 rounded-full bg-[#D4AF37]"></span>
+          </div>
+        </div>
+        <p class="font-display text-xl tracking-tight mt-6">marquee-track</p>
+        <p class="text-[11px] text-neutral-500 font-mono-ds mt-2">45s · linear · pausa em hover</p>
+        <p class="text-xs text-neutral-700 mt-4 leading-relaxed">Banners de prova social, frases-âncora, divisores de seção.</p>
+      </div>
+    </div>
+
+    <!-- Parallax Field — Tradução & Revisão (showcase card spanning full width) -->
+    <div class="mt-6">
+      <div class="bg-white border border-neutral-200 rounded-3xl overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12">
+          <!-- copy + specs -->
+          <div class="lg:col-span-5 p-8 lg:p-10 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-3 mb-4">
+                <iconify-icon icon="solar:layers-minimalistic-linear" class="text-[#D4AF37]"></iconify-icon>
+                <span class="text-[10px] uppercase tracking-widest font-bold text-neutral-700 font-mono-ds">Pattern · Parallax Field</span>
+              </div>
+              <h4 class="font-display text-3xl tracking-tight font-normal text-black">Tradução &amp; revisão<br/>em camadas.</h4>
+              <p class="text-sm text-neutral-600 leading-relaxed mt-4 font-mono-ds">
+                Pequenos objetos editoriais — canetas, cadernos, papéis, códigos de país e glifos — flutuam em três planos de profundidade. Cada plano responde ao scroll e ao mouse em velocidades diferentes, criando a sensação de espaço sem competir com o conteúdo.
+              </p>
+            </div>
+            <!-- specs -->
+            <div class="grid grid-cols-3 gap-3 mt-8 pt-6 border-t border-neutral-100 text-[10px] font-mono-ds uppercase tracking-widest">
+              <div>
+                <p class="text-neutral-400">Foreground · 8</p>
+                <p class="text-black mt-1">scroll ×8 · radial</p>
+                <p class="text-neutral-500">spin .002–.005</p>
+              </div>
+              <div>
+                <p class="text-neutral-400">Midground · 20</p>
+                <p class="text-black mt-1">scroll ×4 · spread</p>
+                <p class="text-neutral-500">spin .0015–.0035</p>
+              </div>
+              <div>
+                <p class="text-neutral-400">Background · 34</p>
+                <p class="text-black mt-1">scroll ×1.5 · far</p>
+                <p class="text-neutral-500">opacity .14–.28</p>
+              </div>
+            </div>
+            <!-- motion stack -->
+            <div class="mt-5 flex flex-wrap gap-1.5">
+              <span class="px-2 py-1 rounded bg-neutral-100 text-[9px] font-mono-ds text-neutral-700 uppercase tracking-widest">Three.js · 3 grupos</span>
+              <span class="px-2 py-1 rounded bg-neutral-100 text-[9px] font-mono-ds text-neutral-700 uppercase tracking-widest">22 ícones Solar</span>
+              <span class="px-2 py-1 rounded bg-neutral-100 text-[9px] font-mono-ds text-neutral-700 uppercase tracking-widest">12 country codes</span>
+              <span class="px-2 py-1 rounded bg-neutral-100 text-[9px] font-mono-ds text-neutral-700 uppercase tracking-widest">10 glifos editoriais</span>
+              <span class="px-2 py-1 rounded bg-neutral-100 text-[9px] font-mono-ds text-neutral-700 uppercase tracking-widest">Spin + sine float</span>
+              <span class="px-2 py-1 rounded bg-[#D4AF37]/15 text-[9px] font-mono-ds text-[#8c7b1f] uppercase tracking-widest">Ink · Gold</span>
+            </div>
+            <!-- vocabulary chips -->
+            <div class="mt-6 flex flex-wrap gap-2">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-neutral-200 text-[10px] uppercase tracking-widest text-neutral-700 font-mono-ds"><iconify-icon icon="solar:pen-linear"></iconify-icon> Canetas</span>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-neutral-200 text-[10px] uppercase tracking-widest text-neutral-700 font-mono-ds"><iconify-icon icon="solar:notebook-linear"></iconify-icon> Cadernos</span>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-neutral-200 text-[10px] uppercase tracking-widest text-neutral-700 font-mono-ds"><iconify-icon icon="solar:document-text-linear"></iconify-icon> Papéis</span>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-neutral-200 text-[10px] uppercase tracking-widest text-neutral-700 font-mono-ds"><iconify-icon icon="solar:flag-linear"></iconify-icon> Bandeirinhas</span>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-neutral-200 text-[10px] uppercase tracking-widest text-neutral-700 font-mono-ds">A→B Glifos</span>
+            </div>
+          </div>
+          <!-- live demo -->
+          <div class="lg:col-span-7 relative bg-gradient-to-br from-[#fafaf9] via-white to-[#f5f1ea] border-t lg:border-t-0 lg:border-l border-neutral-200 min-h-[420px] overflow-hidden aura-demo-fog">
+            <!-- Three.js mini scene — mesma engine da hero, escala reduzida -->
+            <canvas id="aura-demo-canvas"></canvas>
+            <!-- ghost letter inside demo (acima do fog) -->
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-[3]">
+              <span class="ghost-letter-fill" style="font-size: 20vw;">A→B</span>
+            </div>
+            <!-- bottom-left meta -->
+            <div class="absolute bottom-4 left-4 z-[4] inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/85 backdrop-blur-md border border-neutral-200 text-[10px] uppercase tracking-widest font-semibold text-neutral-700">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#D4AF37] glow-pulse"></span>
+              Three.js · 3 camadas · 60 FPS
+            </div>
+            <!-- top-right code -->
+            <div class="absolute top-4 right-4 z-[4] inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/85 backdrop-blur-md text-white text-[10px] uppercase tracking-widest font-mono-ds">
+              MeshBasicMaterial · CanvasTexture
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Motion specs -->
+    <div class="mt-10 bg-black text-white rounded-3xl p-8 md:p-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <span class="text-[10px] uppercase tracking-widest text-white/50 font-mono-ds">Easing default</span>
+          <p class="font-mono-ds text-sm mt-2 text-[#D4AF37]">cubic-bezier(.16,1,.3,1)</p>
+        </div>
+        <div>
+          <span class="text-[10px] uppercase tracking-widest text-white/50 font-mono-ds">Easing entrance</span>
+          <p class="font-mono-ds text-sm mt-2 text-[#D4AF37]">power3.out · GSAP</p>
+        </div>
+        <div>
+          <span class="text-[10px] uppercase tracking-widest text-white/50 font-mono-ds">Duração padrão</span>
+          <p class="font-mono-ds text-sm mt-2 text-[#D4AF37]">350ms — 600ms</p>
+        </div>
+        <div>
+          <span class="text-[10px] uppercase tracking-widest text-white/50 font-mono-ds">Reveal threshold</span>
+          <p class="font-mono-ds text-sm mt-2 text-[#D4AF37]">top 85% (ScrollTrigger)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="relative bg-black text-white overflow-hidden">
+  <div class="absolute inset-x-0 bottom-[-8vw] pointer-events-none flex justify-center">
+    <span class="ghost-letter block" style="font-size: 24vw; -webkit-text-stroke: 1px rgba(255,255,255,0.08);">MARTA</span>
+  </div>
+  <div class="relative max-w-[1400px] mx-auto px-6 sm:px-12 py-20">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+      <div class="md:col-span-2">
+        <a class="text-2xl font-display tracking-tight font-normal text-white flex items-center gap-2" href="#">
+          <span class="w-2 h-2 rounded-full bg-[#D4AF37] glow-pulse"></span> MARTA<sup class="text-[#D4AF37]">®</sup>
+        </a>
+        <p class="mt-6 text-sm text-white/60 leading-relaxed max-w-md">Sistema de design editorial e mínimo. Construído para Maria Marta. Inspirado em Geist, Google Sans Flex e em décadas de tipografia suíça.</p>
+        <div class="mt-8 flex items-center gap-3">
+          <a class="w-10 h-10 rounded-full border border-white/20 grid place-items-center hover:bg-white hover:text-black transition-all" href="#"><iconify-icon icon="ri:instagram-line"></iconify-icon></a>
+          <a class="w-10 h-10 rounded-full border border-white/20 grid place-items-center hover:bg-white hover:text-black transition-all" href="#"><iconify-icon icon="ri:linkedin-fill"></iconify-icon></a>
+          <a class="w-10 h-10 rounded-full border border-white/20 grid place-items-center hover:bg-white hover:text-black transition-all" href="#"><iconify-icon icon="solar:figma-linear"></iconify-icon></a>
+        </div>
+      </div>
+      <div>
+        <h5 class="text-[10px] uppercase tracking-widest font-bold mb-6 font-mono-ds">Sistema</h5>
+        <ul class="space-y-3 text-sm text-white/70">
+          <li><a href="#typography" class="hover:text-white transition-colors">Tipografia</a></li>
+          <li><a href="#colors" class="hover:text-white transition-colors">Cores</a></li>
+          <li><a href="#components" class="hover:text-white transition-colors">Componentes</a></li>
+          <li><a href="#icons" class="hover:text-white transition-colors">Ícones</a></li>
+          <li><a href="#animations" class="hover:text-white transition-colors">Animações</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="text-[10px] uppercase tracking-widest font-bold mb-6 font-mono-ds">Recursos</h5>
+        <ul class="space-y-3 text-sm text-white/70">
+          <li><a href="#" class="hover:text-white transition-colors">Guia de marca</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Tokens (JSON)</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Figma library</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Changelog</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] uppercase tracking-widest font-mono-ds text-white/50">
+      <span>© 2026 MARTA Studio · todos os direitos reservados</span>
+      <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></span> v1.0 — last update 2026.05.19</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===================== JS ===================== -->
+<!-- jonathan: lucide.createIcons + three.js torus knot scene with golden sparks -->
+<script src="jonathanfernandes.aura.build/assets/js/three-hero.js"></script>
+<!-- luxury: gsap fade-in for .gsap-section + (search tab handler — harmless here) -->
+<script src="luxury-real-estate-22.aura.build/assets/js/interactions.js"></script>
+<!-- nexus: gsap-fade-up + image-anim-container column slide & blur parallax -->
+<script src="nexus-architecture.aura.build/assets/js/scroll-animations.js"></script>
+
+<!-- Aura Three.js parallax — engine 3D (3 camadas, scroll/mouse parallax, spin + sine float)
+     herdada do design_system_fundobom; OBJETOS são meus (ícones Solar, country codes, glifos editoriais)
+     pintados na paleta INK/GOLD do DS Marta. -->
+<script>
+function initAuraScene(canvasId, opts){
+  if (!window.THREE) return;
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const host = canvas.parentElement;
+  opts = opts || {};
+  const useScroll = opts.scroll !== false;
+  const densFG    = opts.densityFG || 8;
+  const densMG    = opts.densityMG || 20;
+  const densBG    = opts.densityBG || 34;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  const scene    = new THREE.Scene();
+  const camera   = new THREE.PerspectiveCamera(70, host.clientWidth / host.clientHeight, 0.1, 1000);
+  camera.position.z = 16;
+
+  const resize = () => {
+    const w = host.clientWidth, h = host.clientHeight;
+    renderer.setSize(w, h, false);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  };
+  resize();
+  window.addEventListener('resize', resize);
+
+  // 3 camadas parallax
+  const layers = [new THREE.Group(), new THREE.Group(), new THREE.Group()];
+  layers.forEach(g => scene.add(g));
+
+  // ─── paleta MARTA ───
+  const INK  = '#0a0a0a';
+  const GOLD = '#D4AF37';
+
+  // ─── vocabulário (meu): ícones Solar + códigos de país + glifos ───
+  const ICONS = [
+    'solar:pen-linear','solar:pen-2-linear','solar:pen-new-square-linear',
+    'solar:pencil-linear','solar:pencil-square-linear',
+    'solar:notebook-linear','solar:notebook-bookmark-linear','solar:notebook-minimalistic-linear',
+    'solar:book-linear','solar:book-2-linear','solar:book-bookmark-linear','solar:book-open-linear',
+    'solar:document-text-linear','solar:documents-linear',
+    'solar:bookmark-linear','solar:translation-2-linear','solar:globe-linear','solar:flag-linear',
+    'solar:checklist-linear','solar:clipboard-text-linear','solar:letter-linear','solar:spellchecker-linear'
+  ];
+  const CODES  = ['br','us','es','fr','de','it','jp','pt','zh','ar','ru','en'];
+  const GLYPHS = ['A→B','¶','§','¿','¡','×','‹›','—','Aa','01'];
+
+  // ─── ícone Solar via Iconify CDN, desenhado em canvas → CanvasTexture ───
+  const iconCache = {};
+  function iconTexture(name, color){
+    const key = name + '|' + color;
+    if (iconCache[key]) return iconCache[key];
+    const c = document.createElement('canvas');
+    c.width = c.height = 256;
+    const tex = new THREE.CanvasTexture(c);
+    tex.minFilter = THREE.LinearFilter;
+    tex.anisotropy = 4;
+    iconCache[key] = tex;
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const ctx = c.getContext('2d');
+      ctx.clearRect(0, 0, 256, 256);
+      const pad = 28;
+      ctx.drawImage(img, pad, pad, 256 - 2*pad, 256 - 2*pad);
+      tex.needsUpdate = true;
+    };
+    img.src = `https://api.iconify.design/${name.replace(':', '/')}.svg?color=%23${color.replace('#','')}`;
+    return tex;
+  }
+
+  // ─── glifo / caractere: canvas + Geist ───
+  const glyphCache = {};
+  function glyphTexture(text, color){
+    const key = text + '|' + color;
+    if (glyphCache[key]) return glyphCache[key];
+    const c = document.createElement('canvas');
+    c.width = c.height = 256;
+    const ctx = c.getContext('2d');
+    // glyphs maiores para "A→B" (2-3 chars) usam fonte menor pra caber
+    const fontSize = text.length > 2 ? 130 : 200;
+    ctx.font = `700 ${fontSize}px "Google Sans Flex","Geist","Inter",sans-serif`;
+    ctx.fillStyle = color;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, 128, 136);
+    const tex = new THREE.CanvasTexture(c);
+    tex.minFilter = THREE.LinearFilter;
+    tex.anisotropy = 4;
+    glyphCache[key] = tex;
+    return tex;
+  }
+
+  // ─── chip de código de país (texto mono + borda arredondada) ───
+  const codeCache = {};
+  function codeTexture(code, color){
+    const key = code + '|' + color;
+    if (codeCache[key]) return codeCache[key];
+    const c = document.createElement('canvas');
+    c.width = 384; c.height = 192;
+    const ctx = c.getContext('2d');
+    // borda arredondada
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 10;
+    const inset = 22, r = 38;
+    const x = inset, y = inset, ww = 384 - 2*inset, hh = 192 - 2*inset;
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + ww - r, y);
+    ctx.quadraticCurveTo(x + ww, y, x + ww, y + r);
+    ctx.lineTo(x + ww, y + hh - r);
+    ctx.quadraticCurveTo(x + ww, y + hh, x + ww - r, y + hh);
+    ctx.lineTo(x + r, y + hh);
+    ctx.quadraticCurveTo(x, y + hh, x, y + hh - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.stroke();
+    // texto
+    ctx.font = '700 120px "Geist Mono","JetBrains Mono",monospace';
+    ctx.fillStyle = color;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(code.toUpperCase(), 192, 110);
+    const tex = new THREE.CanvasTexture(c);
+    tex.minFilter = THREE.LinearFilter;
+    tex.anisotropy = 4;
+    codeCache[key] = tex;
+    return tex;
+  }
+
+  // ─── factory: cria um plano texturizado com um dos 3 tipos ───
+  const rand = (a,b) => a + Math.random()*(b-a);
+  const pick = arr => arr[Math.floor(Math.random()*arr.length)];
+
+  function makeItem(scale, opacity, color){
+    let map, w, h;
+    const r = Math.random();
+    if (r < 0.58) {
+      map = iconTexture(pick(ICONS), color);
+      w = h = 0.95 * scale;
+    } else if (r < 0.80) {
+      map = codeTexture(pick(CODES), color);
+      w = 1.05 * scale;
+      h = 0.52 * scale;
+    } else {
+      map = glyphTexture(pick(GLYPHS), color);
+      w = h = 0.95 * scale;
+    }
+    return new THREE.Mesh(
+      new THREE.PlaneGeometry(w, h),
+      new THREE.MeshBasicMaterial({ map, transparent: true, side: THREE.DoubleSide, opacity })
+    );
+  }
+
+  const items = [];
+
+  // ── FOREGROUND — radial (mesma geometria do fundobom) ──
+  for (let i = 0; i < densFG; i++) {
+    const color = Math.random() < 0.18 ? GOLD : INK;
+    const m = makeItem(rand(0.95, 1.55), rand(0.55, 0.85), color);
+    const angle = (i / densFG) * Math.PI * 2 + rand(-0.4, 0.4);
+    const radius = rand(6, 11);
+    m.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius * 0.65, rand(4, 8));
+    m.rotation.set(rand(-0.4, 0.4), rand(-1, 1), rand(-0.5, 0.5));
+    layers[0].add(m);
+    items.push({ m, spin: rand(0.002, 0.005) * (Math.random() < 0.5 ? -1 : 1) });
+  }
+
+  // ── MIDGROUND — spread amplo ──
+  for (let i = 0; i < densMG; i++) {
+    const color = Math.random() < 0.10 ? GOLD : INK;
+    const m = makeItem(rand(0.60, 1.00), rand(0.30, 0.55), color);
+    m.position.set(rand(-22, 22), rand(-12, 12), rand(-2, 4));
+    m.rotation.set(rand(-0.5, 0.5), rand(-Math.PI, Math.PI), rand(-0.5, 0.5));
+    layers[1].add(m);
+    items.push({ m, spin: rand(0.0015, 0.0035) * (Math.random() < 0.5 ? -1 : 1) });
+  }
+
+  // ── BACKGROUND — denso, longe, fundo dimmed ──
+  for (let i = 0; i < densBG; i++) {
+    const color = INK;
+    const m = makeItem(rand(0.45, 0.90), rand(0.14, 0.28), color);
+    m.position.set(rand(-30, 30), rand(-18, 18), rand(-16, -4));
+    m.rotation.set(rand(-0.6, 0.6), rand(-Math.PI, Math.PI), rand(-0.6, 0.6));
+    layers[2].add(m);
+    items.push({ m, spin: rand(0.0008, 0.002) * (Math.random() < 0.5 ? -1 : 1) });
+  }
+
+  // ─── mouse + scroll (igual ao fundobom) ───
+  let mx = 0, my = 0, scrollP = 0;
+  window.addEventListener('mousemove', (e) => {
+    mx = (e.clientX / window.innerWidth) * 2 - 1;
+    my = -(e.clientY / window.innerHeight) * 2 + 1;
+  });
+  if (useScroll) {
+    window.addEventListener('scroll', () => {
+      const r = host.getBoundingClientRect();
+      scrollP = Math.min(1, Math.max(0, -r.top / r.height));
+    }, { passive: true });
+  }
+
+  const tick = () => {
+    requestAnimationFrame(tick);
+    if (useScroll) {
+      layers[0].position.y =  scrollP * 8;
+      layers[1].position.y =  scrollP * 4;
+      layers[2].position.y =  scrollP * 1.5;
+    }
+    layers[0].rotation.x += (my * 0.10 - layers[0].rotation.x) * 0.05;
+    layers[0].rotation.y += (mx * 0.10 - layers[0].rotation.y) * 0.05;
+    layers[1].rotation.x += (my * 0.05 - layers[1].rotation.x) * 0.05;
+    layers[1].rotation.y += (mx * 0.05 - layers[1].rotation.y) * 0.05;
+    layers[2].rotation.x += (my * 0.025 - layers[2].rotation.x) * 0.05;
+    layers[2].rotation.y += (mx * 0.025 - layers[2].rotation.y) * 0.05;
+    const t = Date.now() * 0.0007;
+    items.forEach((s, i) => {
+      s.m.rotation.y += s.spin;
+      s.m.rotation.x += s.spin * 0.4;
+      s.m.position.y += Math.sin(t + i * 0.7) * 0.004;
+    });
+    renderer.render(scene, camera);
+  };
+  tick();
+}
+
+// Boot — hero (cena cheia) + demo (cena reduzida sem scroll parallax)
+function bootAura() {
+  initAuraScene('aura-canvas',      { scroll: true,  densityFG: 8, densityMG: 20, densityBG: 34 });
+  initAuraScene('aura-demo-canvas', { scroll: false, densityFG: 5, densityMG: 12, densityBG: 18 });
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootAura);
+} else {
+  bootAura();
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+/* ============================================================================
+   tokens.css — single source of truth
+   ----------------------------------------------------------------------------
+   Every value below is lifted verbatim from the MARTA® design system
+   (./design_system.html — its :root palette, the documented type scale table,
+   the button spec, the focus ring and the motion specs). Nothing here is
+   invented: this file just makes the system's values addressable as custom
+   properties so the rest of the CSS can compose them instead of inlining them.
+
+   If a future phase needs a value that isn't here, add the token in this file
+   first (with a justifying comment), then reference it. Never inline.
+   ========================================================================== */
+
+:root {
+
+  /* --- Brand palette --------------------------------------------------------
+     Sourced 1:1 from design_system.html :root. */
+  --ink:        #0a0a0a;
+  --paper:      #ffffff;
+  --cream:      #f5f1ea;
+  --gold:       #d4af37;
+  --gold-soft:  #c9a96b;
+
+  /* Stone — neutral scale (design_system.html :root + the "Stone" swatch row) */
+  --stone-50:   #fafaf9;
+  --stone-100:  #f5f4f1;
+  --stone-200:  #e7e5e0;
+  --stone-300:  #d4d2cb;
+  --stone-400:  #a09c92;
+  --stone-500:  #6b6760;
+  --stone-600:  #4d4843;
+  --stone-700:  #3b3631;
+  --stone-900:  #1a1815;
+
+  /* Channel triples — for composing translucent rings / shadows from brand
+     colors without re-typing hex. */
+  --ink-rgb:    10, 10, 10;
+  --gold-rgb:   212, 175, 55;
+  --coral-rgb:  226, 110, 84;   /* warm portrait light — echoes the photo's backdrop */
+
+  /* --- Semantic colour roles ------------------------------------------------
+     Mapped from the "Usage matrix · regras contextuais" block. */
+  --text-primary:   var(--ink);        /* default text — contrast AAA        */
+  --text-body:      var(--stone-700);  /* long-form body, slightly relaxed    */
+  --text-muted:     var(--stone-500);  /* secondary text — contrast AA        */
+  --text-faint:     var(--stone-400);  /* meta / disabled / hints             */
+
+  --surface:        var(--paper);      /* page background                     */
+  --surface-alt:    var(--stone-50);   /* raised / hover surface              */
+  --surface-cream:  var(--cream);      /* warm alternate surface              */
+
+  --border:         var(--stone-200);  /* 1px dividers                        */
+  --border-faint:   var(--stone-300);  /* dashed placeholders                 */
+  --border-strong:  var(--ink);        /* outlined controls                   */
+
+  --accent:         var(--gold);
+  --accent-hover:   var(--gold-soft);
+  --primary-hover:  var(--stone-900);  /* btn:hover (usage matrix)            */
+
+  /* Availability badge — the DS semantic "success" green (#10B981). */
+  --success:        #10b981;
+  --success-rgb:    16, 185, 129;
+  --success-text:   #047857;
+
+  /* --- Typography -----------------------------------------------------------
+     Families exactly as declared in design_system.html (.font-display /
+     .font-sans-ds / .font-mono-ds) and base.css (--font-sans). */
+  --font-display: 'Google Sans Flex', 'Geist', ui-sans-serif, system-ui, sans-serif;
+  --font-sans:    'Geist', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono:    'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --fw-light:     300;
+  --fw-regular:   400;
+  --fw-medium:    500;
+  --fw-semibold:  600;
+  --fw-bold:      700;
+
+  /* Type scale — from the documented "Escala completa" table.
+     The display size is made fluid so it lands inside the brief's three
+     target bands: ~40–48px mobile · ~52–60px tablet · ~64–72px desktop. */
+  --fs-display:   clamp(2.75rem, 2.2rem + 2.7vw, 4.375rem); /* 44 → 70px      */
+  --fs-h2:        clamp(1.875rem, 1.3rem + 1.9vw, 2.75rem);  /* 30 → 44px — section titles */
+  --fs-quote:     clamp(1.5rem, 1.15rem + 1.2vw, 2.125rem);  /* 24 → 34px — pull quote */
+  --fs-lead:      clamp(1.125rem, 1.06rem + 0.32vw, 1.25rem); /* 18 → 20px    */
+  --fs-body:      1.125rem;  /* 18px — body-lg                                */
+  --fs-base:      1rem;      /* 16px — body                                   */
+  --fs-sm:        0.875rem;  /* 14px — body-sm                                */
+  --fs-label:     0.75rem;   /* 12px — label / nav / button (uppercase mono)  */
+  --fs-wordmark:  1.25rem;   /* 20px — header wordmark (h5 step)              */
+
+  --lh-display:   1.04;      /* h1 ≈ 1.0, eased for multi-line wrapping        */
+  --lh-snug:      1.3;
+  --lh-body:      1.6;       /* body-lg line-height                           */
+
+  /* Letter-spacing — display "tighter", labels "widest" per the DS. */
+  --tracking-display: -0.04em;
+  --tracking-tight:   -0.02em;
+  --tracking-wide:     0.1em;   /* tracking-widest, labels & nav             */
+  --tracking-wider:    0.18em;  /* microcopy — pushed for editorial air      */
+
+  /* --- Spacing — 0.25rem rhythm (Tailwind scale the DS is built on) -------- */
+  --space-2xs:  0.5rem;   /*  8px */
+  --space-xs:   0.75rem;  /* 12px */
+  --space-sm:   1rem;     /* 16px */
+  --space-md:   1.5rem;   /* 24px — px-6 */
+  --space-lg:   2rem;     /* 32px */
+  --space-xl:   3rem;     /* 48px — sm:px-12 */
+  --space-2xl:  4rem;     /* 64px — gap-16 */
+  --space-3xl:  6rem;     /* 96px */
+  --space-4xl:  8rem;     /* 128px */
+
+  /* Layout */
+  --page-max:    1400px;                          /* DS max-w-[1400px]        */
+  --page-pad-x:  clamp(1.5rem, 4vw, 3rem);        /* px-6 → sm:px-12          */
+  --header-h:    5.5rem;
+  --control-size: 2.75rem;                        /* button/icon height: 44px */
+  --icon-size:    1.25rem;                        /* 20px — even, DS rule     */
+
+  /* --- Radii — Tailwind radii used across the DS -------------------------- */
+  --radius-lg:   0.5rem;   /* rounded-lg  */
+  --radius-xl:   0.75rem;  /* rounded-xl  */
+  --radius-2xl:  1rem;     /* rounded-2xl */
+  --radius-3xl:  1.5rem;   /* rounded-3xl */
+  --radius-pill: 9999px;
+
+  --border-hairline: 1px;
+
+  /* --- Focus ring — DS focus is a gold ring (ring-2 ring-[#D4AF37]/40) ----- */
+  --focus-color:  rgba(var(--gold-rgb), 0.9);
+  --focus-width:  2px;
+  --focus-offset: 3px;
+
+  /* --- Elevation — composed from --ink-rgb -------------------------------- */
+  --shadow-sm:   0 1px 2px rgba(var(--ink-rgb), 0.05);
+  --shadow-dock: 0 14px 34px -18px rgba(var(--ink-rgb), 0.20);
+
+  /* --- Motion — default easing + duration from the "Motion specs" block.
+     Phase 1 uses these only for hover colour shifts and focus, no movement. */
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast:      0.3s;
+  --marquee-duration: 60s;  /* slow, ambient client ticker (DS drift-x cadence) */
+
+  /* --- Phase 2 · typographic-mark field ------------------------------------
+     The drifting background marks need named semantic roles for their colour
+     and atmospheric "far" depth tone, plus the refined serif they're set in.
+     Both colours compose the existing brand palette — no new colour, only
+     addressed. Kept faint at the usage site (low opacity) so it reads as a
+     watermark behind the copy. */
+  --glyph-color:      var(--text-primary);  /* nearer marks — ink           */
+  --glyph-color-far:  var(--text-faint);    /* receded marks — depth        */
+  /* Ghost lettering (from the DS .ghost-letter element): transparent fill +
+     a hairline text-stroke. Two tones — neutral ink and a sparing gold. */
+  --glyph-ghost-ink:  rgba(var(--ink-rgb), 0.18);
+  --glyph-ghost-gold: rgba(var(--gold-rgb), 0.32);
+  --font-serif:       'Cormorant Garamond', 'EB Garamond', Georgia, 'Times New Roman', serif;
+}

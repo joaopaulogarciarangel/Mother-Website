@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nexus Architecture</title>
+<!-- fonts (Google fonts: Inter & Google Sans Flex stylesheets) -->
+<link href="assets/css2_66f3f89ececa.css" rel="stylesheet"/>
+<link href="assets/css2_bd407d5ceb4b.css" rel="stylesheet"/>
+<!-- css -->
+<!-- typography.css: defines body Inter font + .font-google-sans-flex utility used across all headings -->
+<link rel="stylesheet" href="assets/css/typography.css"/>
+<!-- head-only js -->
+<!-- Tailwind runtime / utility CSS bundle (must load in head to apply utility classes) -->
+<script src="assets/resource_3fa48481346f.es"></script>
+<!-- Iconify web component used by every iconify-icon throughout the page -->
+<script src="assets/iconify-icon_e19829e7f0e8.js"></script>
+<!-- GSAP core animation library, used by scroll-animations.js -->
+<script src="assets/gsap_4a57399e4113.js"></script>
+<!-- GSAP ScrollTrigger plugin, drives every scroll-linked reveal/parallax effect -->
+<script src="assets/ScrollTrigger_8669edfeb171.js"></script>
+<!-- Google Analytics 4 loader -->
+<script async src="assets/js_19c0e2c2c8a8.js"></script>
+</head>
+<body class="bg-[#ece9e4] text-[#3b3631] antialiased selection:bg-[#8c7b66] selection:text-[#ece9e4]">
+
+<!-- header -->
+<header class="relative z-10 flex items-center justify-between px-6 py-5 border-b border-[#cdc9c1] lg:px-12">
+<nav class="flex items-center gap-8">
+<a class="text-sm font-medium hover:text-[#8c7b66] transition-colors font-sans" href="#">Escritórios</a>
+<a class="text-sm font-medium hover:text-[#8c7b66] transition-colors font-sans" href="#">Soluções</a>
+<a class="text-sm font-medium hover:text-[#8c7b66] transition-colors font-sans" href="#">Empreendimentos</a>
+<a class="text-sm font-medium hover:text-[#8c7b66] transition-colors font-sans" href="#">Visão</a>
+<a class="text-sm font-medium hover:text-[#8c7b66] transition-colors font-sans hidden sm:flex" href="#">Nossa História</a>
+</nav>
+<a class="flex items-center gap-1 text-sm font-semibold border-b border-[#3b3631] pb-0.5 hover:text-[#8c7b66] hover:border-[#8c7b66] transition-all font-sans hidden sm:flex" href="#contact">
+FALE CONOSCO <iconify-icon height="16" icon="solar:arrow-right-up-linear" style="stroke-width: 1.5px;" width="16"></iconify-icon>
+</a>
+</header>
+
+<!-- hero -->
+<section class="relative pt-12 pb-24 overflow-hidden z-10">
+<h1 class="gsap-fade-up absolute top-0 w-full text-center text-9xl tracking-tighter text-[#3b3631] select-none z-0 mt-8 opacity-10 font-google-sans-flex font-normal" style="font-size: 18vw; line-height: 0.8;">
+NEXUS<sup class="text-5xl align-top font-google-sans-flex font-normal">®</sup>
+</h1>
+<div class="image-anim-container relative z-10 mx-auto w-11/12 max-w-7xl mt-24 lg:mt-32 shadow-2xl bg-[#dfdcd5] h-[60vh] overflow-hidden">
+<img alt="Arquitetura Moderna" class="w-full h-full object-cover" src="assets/e4514c63-6bbd-4f90-a84b-21d568_0e16692701f2.jpg"/>
+</div>
+<div class="max-w-7xl mx-auto px-6 lg:px-12 mt-24">
+<h2 class="gsap-fade-up text-3xl lg:text-5xl tracking-tight leading-tight max-w-4xl font-google-sans-flex font-normal">
+Nos dedicamos integralmente aos nossos parceiros e às soluções que entregamos, oferecendo <span class="text-[#8c7b66] font-google-sans-flex font-normal">expertise incomparável.</span>
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 mt-24 items-start">
+<div class="gsap-fade-up md:col-span-3">
+<span class="inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase border border-[#cdc9c1] px-3 py-1 rounded-sm font-sans">
+<span class="w-1.5 h-1.5 bg-[#3b3631] rounded-full"></span> Nossa Identidade
+</span>
+</div>
+<div class="gsap-fade-up md:col-span-6 flex flex-col gap-6">
+<p class="text-base text-[#6b645c] leading-relaxed max-w-md font-sans">
+Somos uma consultoria imobiliária completa, especializada em ativos residenciais e comerciais. Com profundo conhecimento regional e uma filosofia centrada no parceiro, conduzimos compradores e investidores em todas as fases do ciclo imobiliário.
+</p>
+<div>
+<a class="inline-flex items-center gap-1 text-sm font-semibold border-b border-[#3b3631] pb-0.5 hover:text-[#8c7b66] hover:border-[#8c7b66] transition-all font-sans" href="#contact">
+CONECTE-SE CONOSCO <iconify-icon height="16" icon="solar:arrow-right-up-linear" style="stroke-width: 1.5px;" width="16"></iconify-icon>
+</a>
+</div>
+</div>
+<div class="gsap-fade-up md:col-span-3 text-right">
+<p class="text-7xl tracking-tighter font-google-sans-flex font-normal">750+</p>
+</div>
+</div>
+<div class="gsap-fade-up flex flex-wrap items-center justify-between gap-8 mt-32 text-xs font-semibold tracking-wider text-[#8c7b66] uppercase">
+<p class="font-sans">ALÉM DO MERCADO IMOBILIÁRIO CONVENCIONAL.</p>
+<div class="flex gap-4">
+<img alt="Detalhe 1" class="w-32 h-20 object-cover bg-[#dfdcd5]" src="assets/ab939642-9744-4d1b-9924-388870_78e1b50afa85.webp"/>
+<img alt="Detalhe 2" class="w-32 h-20 object-cover bg-[#dfdcd5]" src="assets/4367c447-b57a-4fe0-832f-8b5e61_98eefc1f65fa.webp"/>
+<img alt="Detalhe 3" class="w-32 h-20 object-cover bg-[#dfdcd5]" src="assets/b28eb2bd-1d0c-426c-b984-b9828c_675b00b88086.webp"/>
+</div>
+<p class="font-sans">CONSTRUÍMOS CONFIANÇA.</p>
+</div>
+</div>
+</section>
+
+<!-- spatial-experience -->
+<section class="relative bg-[#3b3631] text-[#ece9e4] pt-24 pb-32 z-10 overflow-hidden">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="gsap-fade-up flex flex-col md:flex-row justify-between items-start md:items-center mb-24 gap-6">
+<h2 class="text-4xl md:text-5xl tracking-tight uppercase max-w-2xl leading-tight font-google-sans-flex font-normal">
+Um portal para ambientes arquitetônicos profundos
+</h2>
+<span class="inline-flex items-center gap-2 text-xs font-medium tracking-wider uppercase border border-[#6b645c] px-3 py-1.5 rounded-full font-sans">
+<span class="w-1.5 h-1.5 bg-[#ece9e4] rounded-full"></span> Imóveis em Destaque
+</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
+<div class="flex flex-col gap-12">
+<h3 class="gsap-fade-up text-3xl tracking-tight text-[#a69c91] max-w-md leading-snug font-google-sans-flex font-normal">
+Transformamos projetos visionários <span class="text-[#ece9e4] font-google-sans-flex font-normal">em formas tangíveis com</span> execução impecável.
+</h3>
+<div class="gsap-fade-up relative max-w-sm">
+<iconify-icon class="absolute left-4 top-1/2 -translate-y-1/2 text-[#a69c91]" height="16" icon="solar:map-point-linear" style="stroke-width: 1.5px;" width="16"></iconify-icon>
+<input class="w-full bg-transparent border border-[#6b645c] rounded-full py-3 pl-12 pr-4 text-sm text-[#ece9e4] placeholder-[#a69c91] focus:outline-none focus:border-[#8c7b66] transition-colors" placeholder="Buscar região..." type="text"/>
+</div>
+<div class="gsap-fade-up flex items-center gap-8 mt-8">
+<div class="bg-[#322d28] border border-[#4a453f] rounded-lg p-4 flex flex-col gap-2"><span class="text-xs text-[#a69c91] font-medium font-sans">Parceiro Certificado</span>
+<div class="flex items-center gap-2 font-semibold text-lg tracking-tight font-sans">
+<iconify-icon height="20" icon="solar:hexagon-linear" style="stroke-width: 1.5px;" width="20"></iconify-icon>
+VANGUARD
+</div>
+</div>
+<div class="flex-1">
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 rounded-full border border-[#8c7b66]/50 bg-[#8c7b66]/20 text-[#ece9e4] text-xs font-medium font-sans">TÓQUIO</span>
+<span class="px-3 py-1 rounded-full border border-[#6b645c] text-[#a69c91] text-xs font-medium hover:border-[#8c7b66] transition-colors cursor-pointer font-sans">BERLIM</span>
+<span class="px-3 py-1 rounded-full border border-[#6b645c] text-[#a69c91] text-xs font-medium hover:border-[#8c7b66] transition-colors cursor-pointer font-sans">DUBAI</span>
+<span class="px-3 py-1 rounded-full border border-[#6b645c] text-[#a69c91] text-xs font-medium hover:border-[#8c7b66] transition-colors cursor-pointer font-sans">MIAMI</span>
+</div>
+<p class="text-sm text-[#a69c91] leading-relaxed mb-4 max-w-sm font-sans">
+Aplicando ampla inteligência regional e estratégia centrada no parceiro, orientamos investidores com fluidez.
+</p>
+<a class="inline-flex items-center gap-1 text-xs font-semibold text-[#8c7b66] border-b border-[#8c7b66]/50 pb-0.5 hover:border-[#8c7b66] transition-all uppercase tracking-wider font-sans" href="#">
+Explorar Detalhes <iconify-icon height="12" icon="solar:arrow-right-up-linear" style="stroke-width: 1.5px;" width="12"></iconify-icon>
+</a>
+</div>
+</div>
+</div>
+<div class="gsap-fade-up relative w-full aspect-square max-w-md ml-auto flex items-center justify-center opacity-70">
+<div class="grid grid-cols-12 gap-2 w-full h-full rotate-12 scale-110">
+<div class="col-span-12 h-1 border-b border-dashed border-[#544e47]"></div>
+<div class="col-span-12 h-1 border-b border-dashed border-[#544e47]"></div>
+<div class="col-span-12 h-1 border-b border-dashed border-[#544e47]"></div>
+<div class="col-span-12 h-1 border-b border-dashed border-[#544e47]"></div>
+<div class="col-span-12 h-1 border-b border-dashed border-[#544e47]"></div>
+<div class="absolute inset-0 bg-gradient-to-tr from-[#3b3631] via-transparent to-transparent"></div>
+<iconify-icon class="-translate-x-1/2 -translate-y-1/2 text-[#544e47] absolute top-1/2 left-1/2" height="96" icon="solar:square-double-alt-arrow-up-outline" style="stroke-width: 0.5px;" width="96"></iconify-icon>
+</div>
+</div>
+</div>
+<div class="gsap-fade-up grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="border border-[#4a453f] rounded-xl p-8 bg-[#322d28]/50 hover:bg-[#322d28] transition-colors group">
+<div class="flex justify-between items-start mb-6">
+<p class="text-5xl tracking-tighter group-hover:text-[#8c7b66] transition-colors font-google-sans-flex font-normal">2500<span class="text-2xl text-[#a69c91] font-google-sans-flex font-normal">m²</span></p>
+<iconify-icon class="text-[#a69c91] group-hover:text-[#8c7b66] transition-colors" height="20" icon="solar:arrow-right-up-linear" style="stroke-width: 1.5px;" width="20"></iconify-icon>
+</div>
+<p class="text-sm text-[#a69c91] font-sans">Nossos lofts amplos e exclusivos são projetados para maximizar a iluminação natural e a ventilação.</p>
+</div>
+<div class="border border-[#4a453f] rounded-xl p-8 bg-[#322d28]/50 hover:bg-[#322d28] transition-colors group">
+<div class="flex justify-between items-start mb-6">
+<p class="text-5xl tracking-tighter group-hover:text-[#8c7b66] transition-colors font-google-sans-flex font-normal">82<span class="text-4xl text-[#a69c91] font-google-sans-flex font-normal">%</span></p>
+<iconify-icon class="text-[#a69c91] group-hover:text-[#8c7b66] transition-colors" height="20" icon="solar:arrow-right-up-linear" style="stroke-width: 1.5px;" width="20"></iconify-icon>
+</div>
+<p class="text-sm text-[#a69c91] font-sans">A fachada dinâmica do edifício é inspirada em formas contemporâneas da arte minimalista.</p>
+</div>
+<div class="border border-[#4a453f] rounded-xl p-8 bg-[#322d28]/50 hover:bg-[#322d28] transition-colors group">
+<div class="flex justify-between items-start mb-6">
+<p class="group-hover:text-[#8c7b66] transition-colors text-5xl font-normal tracking-tighter font-google-sans-flex">99,5<span class="text-4xl text-[#a69c91] font-google-sans-flex font-normal">%</span></p>
+<iconify-icon class="text-[#a69c91] group-hover:text-[#8c7b66] transition-colors" height="20" icon="solar:arrow-right-up-linear" style="stroke-width: 1.5px;" width="20"></iconify-icon>
+</div>
+<p class="text-sm text-[#a69c91] font-sans">Dos parceiros atendidos nas primeiras 24 horas em diversos fusos horários internacionais.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- projects -->
+<section class="relative bg-[#3b3631] text-[#ece9e4] pb-32 z-10">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+<div class="gsap-fade-up flex flex-col gap-6">
+<span class="text-xs font-semibold tracking-widest text-[#a69c91] uppercase font-sans">[ SEDE EM ]</span>
+<div class="image-anim-container relative w-64 h-64 bg-[#322d28] overflow-hidden">
+<img alt="Sede" class="w-full h-full object-cover" src="assets/1ba198c4-eafe-4d01-8017-635376_d7185e465adc.webp"/>
+</div>
+<div class="flex justify-between text-xs tracking-wider text-[#a69c91] uppercase font-medium">
+<span class="font-sans">RESIDENCIAL</span>
+<span class="font-sans">850 M²</span>
+</div>
+<p class="text-base font-medium font-sans">Vertex Residences</p>
+</div>
+<div class="flex flex-col items-end text-right max-w-xl">
+<h2 class="gsap-fade-up text-4xl md:text-5xl tracking-tight uppercase mb-6 leading-tight font-google-sans-flex font-normal">
+CRIADO COM PROPÓSITO
+</h2>
+<p class="gsap-fade-up text-sm text-[#a69c91] leading-relaxed max-w-sm mb-12 font-sans">
+Descubra ativos exclusivos nos bairros mais cobiçados. De lofts urbanos contemporâneos a refúgios reservados, curamos espaços alinhados às suas aspirações.
+</p>
+<div class="gsap-fade-up flex flex-col gap-6 text-left w-64 mr-32">
+<div class="image-anim-container relative w-full h-64 bg-[#322d28] overflow-hidden">
+<img alt="Projeto 2" class="w-full h-full object-cover" src="assets/25941fa9-bf93-4893-80aa-717a65_e4a982032477.webp"/>
+</div>
+<div class="flex justify-between text-xs tracking-wider text-[#a69c91] uppercase font-medium">
+<span class="font-sans">COMERCIAL</span>
+<span class="font-sans">1200 M²</span>
+</div>
+<p class="text-base font-medium font-sans">Lumina Lofts</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
+<div class="gsap-fade-up md:col-span-4 flex flex-col gap-4">
+<p class="text-6xl text-[#8c7b66] tracking-tighter font-google-sans-flex font-normal">8</p>
+<p class="text-xs font-semibold tracking-wider text-[#a69c91] uppercase leading-relaxed max-w-[150px] font-sans">
+VISIONÁRIOS DO ESTÚDIO
+</p>
+</div>
+<div class="gsap-fade-up md:col-span-4 flex flex-col justify-end h-full pb-8">
+<h2 class="text-3xl tracking-tight uppercase leading-snug font-google-sans-flex font-normal">
+INCORPORA A <br/>ESSÊNCIA BRUTA
+</h2>
+<a class="inline-flex items-center gap-1 text-xs font-semibold border-b border-[#a69c91] pb-0.5 hover:text-[#8c7b66] hover:border-[#8c7b66] transition-all uppercase tracking-wider mt-6 w-fit text-[#a69c91] font-sans" href="#">
+VER PORTFÓLIO <iconify-icon height="12" icon="solar:arrow-right-up-linear" style="stroke-width: 1.5px;" width="12"></iconify-icon>
+</a>
+</div>
+<div class="gsap-fade-up md:col-span-4 flex flex-col gap-6">
+<div class="image-anim-container relative w-full aspect-[4/3] bg-[#322d28] overflow-hidden">
+<img alt="Projeto 3" class="w-full h-full object-cover" src="assets/c6c67a89-6280-428d-8244-e5c291_f59e691fc071.webp"/>
+</div>
+<div class="flex justify-between text-xs tracking-wider text-[#a69c91] uppercase font-medium">
+<span class="font-sans">PENTHOUSE</span>
+<span class="font-sans">3400 M²</span>
+</div>
+<p class="text-base font-medium font-sans">Aether Pavilion</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- testimonials -->
+<section class="relative bg-[#ece9e4] text-[#3b3631] py-32 z-10 border-t border-[#cdc9c1]">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="gsap-fade-up flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+<h2 class="text-4xl md:text-5xl tracking-tight uppercase leading-tight font-google-sans-flex font-normal max-w-xl">
+Endossos dos nossos parceiros
+</h2>
+<span class="text-xs font-semibold tracking-widest text-[#8c7b66] uppercase font-sans">[ PERSPECTIVAS DOS CLIENTES ]</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="gsap-fade-up border border-[#cdc9c1] rounded-xl p-8 bg-[#dfdcd5]/30 flex flex-col justify-between group hover:border-[#8c7b66] transition-colors duration-300">
+<div>
+<iconify-icon class="text-[#8c7b66] mb-8 opacity-40 group-hover:opacity-100 transition-opacity" height="32" icon="solar:quote-right-linear" style="stroke-width: 1.5px;" width="32"></iconify-icon>
+<p class="text-sm text-[#6b645c] leading-relaxed mb-10 font-sans">
+"A Nexus não apenas encontrou um imóvel para nós; orquestrou uma transição impecável para a nossa nova sede corporativa. A visão arquitetônica e a capacidade de curar espaços são realmente incomparáveis."
+</p>
+</div>
+<div class="flex items-center gap-4">
+<img alt="Cliente" class="w-10 h-10 rounded-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition-all duration-300" src="assets/photo-1506794778202-cad84cf45f_4f48dde83752.avif"/>
+<div>
+<p class="text-xs font-semibold text-[#3b3631] font-sans">Marcus V.</p>
+<p class="text-[10px] uppercase tracking-wider text-[#8c7b66] font-sans mt-0.5">CEO, Vanguard Logistics</p>
+</div>
+</div>
+</div>
+<div class="gsap-fade-up border border-[#cdc9c1] rounded-xl p-8 bg-[#dfdcd5]/30 flex flex-col justify-between group hover:border-[#8c7b66] transition-colors duration-300">
+<div>
+<iconify-icon class="text-[#8c7b66] mb-8 opacity-40 group-hover:opacity-100 transition-opacity" height="32" icon="solar:quote-right-linear" style="stroke-width: 1.5px;" width="32"></iconify-icon>
+<p class="text-sm text-[#6b645c] leading-relaxed mb-10 font-sans">
+"O nível de visão e inteligência de mercado oferecido foi excepcional. Eles transformaram o que costuma ser uma aquisição internacional complexa em uma experiência profundamente refinada e elegante."
+</p>
+</div>
+<div class="flex items-center gap-4">
+<img alt="Cliente" class="w-10 h-10 rounded-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition-all duration-300" src="assets/photo-1534528741775-53994a69da_634760837227.avif"/>
+<div>
+<p class="text-xs font-semibold text-[#3b3631] font-sans">Elena R.</p>
+<p class="text-[10px] uppercase tracking-wider text-[#8c7b66] font-sans mt-0.5">Sócia-Gerente, Astra</p>
+</div>
+</div>
+</div>
+<div class="gsap-fade-up border border-[#cdc9c1] rounded-xl p-8 bg-[#dfdcd5]/30 flex flex-col justify-between group hover:border-[#8c7b66] transition-colors duration-300">
+<div>
+<iconify-icon class="text-[#8c7b66] mb-8 opacity-40 group-hover:opacity-100 transition-opacity" height="32" icon="solar:quote-right-linear" style="stroke-width: 1.5px;" width="32"></iconify-icon>
+<p class="text-sm text-[#6b645c] leading-relaxed mb-10 font-sans">
+"Do planejamento espacial à execução final, o comprometimento é absoluto. Hoje atuamos em um espaço que reflete perfeitamente a identidade da nossa marca e otimiza o fluxo operacional do dia a dia."
+</p>
+</div>
+<div class="flex items-center gap-4">
+<img alt="Cliente" class="w-10 h-10 rounded-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition-all duration-300" src="assets/photo-1494790108377-be9c29b293_f5e8f7d60fe7.avif"/>
+<div>
+<p class="text-xs font-semibold text-[#3b3631] font-sans">Sarah J.</p>
+<p class="text-[10px] uppercase tracking-wider text-[#8c7b66] font-sans mt-0.5">Fundadora, Atelier Studio</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- contact -->
+<section class="relative bg-[#3b3631] text-[#ece9e4] py-32 z-10 border-t border-[#4a453f]" id="contact">
+<div class="max-w-7xl mx-auto px-6 lg:px-12">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+<div class="gsap-fade-up flex flex-col justify-between h-full">
+<div>
+<span class="text-xs font-semibold tracking-widest text-[#a69c91] uppercase font-sans block mb-6">[ INICIAR DIÁLOGO ]</span>
+<h2 class="text-4xl md:text-5xl tracking-tight uppercase leading-tight font-google-sans-flex font-normal mb-8 max-w-md">
+Vamos construir o futuro juntos.
+</h2>
+<p class="text-sm text-[#a69c91] leading-relaxed max-w-sm font-sans mb-12">
+Conecte-se com nossos arquitetos principais e diretores regionais para explorar soluções sob medida para o seu próximo projeto. Seja para adquirir um ativo histórico ou desenvolver um polo comercial, estamos prontos para guiá-lo.
+</p>
+</div>
+<div class="flex flex-col sm:flex-row gap-12 border-t border-[#4a453f] pt-10 mt-8 lg:mt-auto">
+<div class="flex flex-col gap-2">
+<span class="text-xs tracking-wider text-[#a69c91] uppercase font-semibold font-sans">Contato Geral</span>
+<a class="text-sm font-medium hover:text-[#8c7b66] transition-colors font-sans" href="mailto:hello@nexus.com">hello@nexus.com</a>
+</div>
+<div class="flex flex-col gap-2">
+<span class="text-xs tracking-wider text-[#a69c91] uppercase font-semibold font-sans">Linha Direta</span>
+<a class="text-sm font-medium hover:text-[#8c7b66] transition-colors font-sans" href="tel:+15551234567">+1 (555) 123-4567</a>
+</div>
+</div>
+</div>
+<div class="gsap-fade-up bg-[#322d28] rounded-2xl p-8 md:p-10 border border-[#4a453f]">
+<form class="flex flex-col gap-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="flex flex-col gap-2 relative">
+<label class="text-xs font-semibold tracking-wider text-[#a69c91] uppercase font-sans">Nome</label>
+<input class="bg-transparent border-b border-[#544e47] text-sm text-[#ece9e4] py-2 focus:outline-none focus:border-[#8c7b66] transition-colors" type="text"/>
+</div>
+<div class="flex flex-col gap-2 relative">
+<label class="text-xs font-semibold tracking-wider text-[#a69c91] uppercase font-sans">Sobrenome</label>
+<input class="bg-transparent border-b border-[#544e47] text-sm text-[#ece9e4] py-2 focus:outline-none focus:border-[#8c7b66] transition-colors" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-2 relative">
+<label class="text-xs font-semibold tracking-wider text-[#a69c91] uppercase font-sans">Endereço de E-mail</label>
+<input class="bg-transparent border-b border-[#544e47] text-sm text-[#ece9e4] py-2 focus:outline-none focus:border-[#8c7b66] transition-colors" type="email"/>
+</div>
+<div class="flex flex-col gap-2 relative">
+<label class="text-xs font-semibold tracking-wider text-[#a69c91] uppercase font-sans">Área de Interesse</label>
+<select class="bg-transparent border-b border-[#544e47] text-sm text-[#ece9e4] py-2 focus:outline-none focus:border-[#8c7b66] transition-colors appearance-none cursor-pointer rounded-none">
+<option class="bg-[#322d28]" disabled selected value="">Selecione uma opção...</option>
+<option class="bg-[#322d28]" value="residential">Imóveis Residenciais</option>
+<option class="bg-[#322d28]" value="commercial">Ativos Comerciais</option>
+<option class="bg-[#322d28]" value="development">Parcerias de Desenvolvimento</option>
+</select>
+<iconify-icon class="absolute right-0 bottom-3 text-[#a69c91] pointer-events-none" height="16" icon="solar:alt-arrow-down-linear" style="stroke-width: 1.5px;" width="16"></iconify-icon>
+</div>
+<div class="flex flex-col gap-2 relative mb-2">
+<label class="text-xs font-semibold tracking-wider text-[#a69c91] uppercase font-sans">Mensagem</label>
+<textarea class="bg-transparent border-b border-[#544e47] text-sm text-[#ece9e4] py-2 focus:outline-none focus:border-[#8c7b66] transition-colors resize-none" rows="3"></textarea>
+</div>
+<div class="flex items-center gap-3 mb-2">
+<div class="relative flex items-center justify-center w-4 h-4">
+<input class="peer appearance-none w-4 h-4 border border-[#544e47] rounded-sm checked:bg-[#8c7b66] checked:border-[#8c7b66] cursor-pointer transition-colors bg-transparent" id="terms" type="checkbox"/>
+<iconify-icon class="absolute text-[#ece9e4] opacity-0 peer-checked:opacity-100 pointer-events-none" height="12" icon="solar:check-read-linear" style="stroke-width: 2px;" width="12"></iconify-icon>
+</div>
+<label class="text-xs text-[#a69c91] font-sans cursor-pointer" for="terms">Concordo com os Termos e a Política de Privacidade</label>
+</div>
+<button class="bg-[#ece9e4] hover:bg-[#8c7b66] hover:text-[#ece9e4] text-[#3b3631] text-xs font-semibold tracking-wider uppercase py-4 rounded transition-colors font-sans w-full flex justify-center items-center gap-2" type="button">
+ENVIAR SOLICITAÇÃO <iconify-icon height="14" icon="solar:arrow-right-up-linear" style="stroke-width: 1.5px;" width="14"></iconify-icon>
+</button>
+</form>
+</div>
+</div>
+</div>
+</section>
+
+<!-- footer -->
+<footer class="relative bg-[#322d28] text-[#ece9e4] pt-24 pb-12 overflow-hidden z-10 border-t border-[#4a453f]">
+<div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
+<div class="gsap-fade-up flex justify-between items-center text-xs font-semibold tracking-wider text-[#a69c91] uppercase mb-16 border-b border-[#4a453f] pb-6">
+<span class="font-sans">FUNDADA EM '18</span>
+<span class="font-sans hidden md:inline">Excelência // Integração // Longevidade</span>
+<button class="hover:text-[#ece9e4] transition-colors font-sans">DIRETÓRIO</button>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center text-xs text-[#a69c91] font-medium gap-6 pt-4">
+<div class="flex flex-col gap-1 text-center md:text-left">
+<span class="font-sans">TODOS OS DIREITOS RESERVADOS.</span>
+<span class="font-sans">©2024 NEXUS GROUP</span>
+</div>
+<div class="text-center flex flex-col gap-1">
+<span class="font-sans">880 INNOVATION WAY, SUITE 400</span>
+<span class="font-sans">AUSTIN, TEXAS 78701</span>
+</div>
+<div class="flex flex-col items-center md:items-end gap-1">
+<div class="flex gap-4">
+<a class="hover:text-[#ece9e4] transition-colors font-sans" href="#">INSTAGRAM</a>
+<a class="hover:text-[#ece9e4] transition-colors font-sans" href="#">LINKEDIN</a>
+</div>
+<a class="hover:text-[#ece9e4] transition-colors font-sans" href="#">TERMOS E PRIVACIDADE</a>
+</div>
+</div>
+</div>
+<div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none pointer-events-none opacity-[0.03] transform translate-y-1/4">
+<h1 class="text-center tracking-tighter text-[#ece9e4] select-none font-google-sans-flex font-normal" style="font-size: 25vw;">
+NEXUS
+</h1>
+</div>
+</footer>
+
+<!-- js -->
+<!-- analytics.js: Google Analytics 4 dataLayer + gtag bootstrap (referenced GA loader is in head) -->
+<script src="assets/js/analytics.js"></script>
+<!-- scroll-animations.js: GSAP fade-up reveals + image column slide/blur parallax for .image-anim-container -->
+<script src="assets/js/scroll-animations.js"></script>
+</body>
+</html>

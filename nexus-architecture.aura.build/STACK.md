@@ -1,0 +1,8 @@
+- **Tailwind CSS** — utility-first CSS framework (loaded via `assets/resource_3fa48481346f.es`) used for all layout, color, spacing, and responsive styling
+- **Inter** — Google Font used as the primary `font-sans` body typeface
+- **Google Sans Flex** — Google Font used for display headings via the `.font-google-sans-flex` utility
+- **Iconify (iconify-icon web component)** — icon system used for every UI icon (Solar icon set: arrows, hexagon, map-point, quote, check, alt-arrow-down)
+- **GSAP** — animation engine driving all scroll reveals and parallax effects
+- **GSAP ScrollTrigger** — scroll-linked plugin used for fade-up reveals and the column slide/blur image animation
+- **Google Analytics 4 (gtag.js)** — page analytics with dataLayer bootstrap (property `G-2M6V79H761`)
+- **Aura build platform** — host platform for the original page (provides the Supabase token firewall script and image fallback handler)

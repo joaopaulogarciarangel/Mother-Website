@@ -1,0 +1,61 @@
+@media (pointer:fine) {
+  body {
+    cursor: none
+  }
+
+  .cursor-dot,
+  .cursor-circle {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: exclusion
+  }
+
+  .cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%
+  }
+
+  .cursor-circle {
+    width: 32px;
+    height: 32px;
+    border: 1px solid white;
+    border-radius: 50%;
+    transition: width 0.2s, height 0.2s, background-color 0.2s
+  }
+
+  body:hover .cursor-circle {
+    opacity: 1
+  }
+
+  .hover-active .cursor-circle {
+    width: 64px;
+    height: 64px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: transparent
+  }
+}
+
+@media (pointer:coarse) {
+
+  .cursor-dot,
+  .cursor-circle {
+    display: none !important
+  }
+
+  body {
+    cursor: auto
+  }
+}
+
+@media (min-width:768px) {
+  .mobile-stack {
+    flex-direction: row
+  }
+}

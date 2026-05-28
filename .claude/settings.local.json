@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Recurse 'C:\\\\Users\\\\jpgar\\\\OneDrive\\\\Documentos\\\\Projetos pessoais\\\\Site Maria Marta\\\\luxury-real-estate-22.aura.build' | ForEach-Object { $_.FullName })",
+      "PowerShell(Get-ChildItem -Recurse 'C:\\\\Users\\\\jpgar\\\\OneDrive\\\\Documentos\\\\Projetos pessoais\\\\Site Maria Marta\\\\nexus-architecture.aura.build' | ForEach-Object { $_.FullName })",
+      "Skill(frontend-design)",
+      "Bash(python3 -)",
+      "PowerShell(Test-Path *)",
+      "PowerShell(Get-Command *)",
+      "PowerShell(Join-Path *)",
+      "Bash(node -e ' *)",
+      "Bash(node _cdpcheck.js)",
+      "PowerShell(Copy-Item *)",
+      "Bash(node _diag.js)",
+      "Bash(python -c ' *)",
+      "Bash(mkdir -p assets/img)"
+    ]
+  }
+}
