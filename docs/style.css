@@ -1,0 +1,1858 @@
+/* ============================================================================
+   CINÉTICO TIPOGRÁFICO — Maria Marta Garcia
+   Direção: texto como protagonista, tipografia cinética, metáfora da revisão
+   ============================================================================ */
+
+/* --- Reset & Base ---------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:         #0a0a0a;
+  --paper:       #ffffff;
+  --cream:       #f5f1ea;
+  --gold:        #d4af37;
+  --gold-soft:   #c9a96b;
+  --gold-pale:   #f0e8c8;
+  --stone-50:    #fafaf9;
+  --stone-100:   #f5f4f1;
+  --stone-200:   #e7e5e0;
+  --stone-300:   #d4d2cb;
+  --stone-400:   #a09c92;
+  --stone-500:   #6b6760;
+  --stone-600:   #4d4843;
+  --stone-700:   #3b3631;
+  --stone-900:   #1a1815;
+
+  --font-serif:  'Cormorant Garamond', Georgia, serif;
+  --font-sans:   'Geist', system-ui, sans-serif;
+  --font-mono:   'Geist Mono', monospace;
+
+  --ease-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-circ:   cubic-bezier(0.65, 0, 0.35, 1);
+
+  --header-h:    5rem;
+  --page-pad:    clamp(1.5rem, 5vw, 4rem);
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+  /* Accessibility: ensure content always visible even without JS */
+}
+
+/* Content never hidden without JS ------------------------------------------ */
+/* JS adds .motion-ready to <html>; only then do pre-hide classes apply.
+   We only touch opacity here so GSAP can handle transform freely. */
+.will-reveal {
+  opacity: 1;
+}
+.motion-ready .will-reveal {
+  opacity: 0;
+}
+
+/* --- Skip Link ------------------------------------------------------------- */
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 4px;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* --- Visualmente oculto, presente para leitores de tela --------------------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Focus Ring (gold) ----------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* --- Seleção dourada — até selecionar texto é passar o marca-texto ---------- */
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}
+.manifesto ::selection,
+.depoimento ::selection {
+  background: var(--gold-pale);
+  color: var(--ink);
+}
+
+/* ============================================================================
+   CURSOR CUSTOM
+   ============================================================================ */
+.cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 12px; height: 12px;
+  background: var(--ink);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s var(--ease-expo), height 0.3s var(--ease-expo), background 0.3s ease;
+  mix-blend-mode: multiply;
+}
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 36px; height: 36px;
+  border: 1.5px solid rgba(10,10,10,0.35);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9997;
+  transform: translate(-50%, -50%);
+  transition: width 0.5s var(--ease-expo), height 0.5s var(--ease-expo), border-color 0.3s ease;
+}
+body.cursor-hover .cursor       { width: 48px; height: 48px; background: var(--gold); }
+body.cursor-hover .cursor-ring  { width: 64px; height: 64px; border-color: rgba(212,175,55,0.5); }
+
+@media (hover: none) {
+  .cursor, .cursor-ring { display: none; }
+}
+
+/* ============================================================================
+   NOISE GRAIN OVERLAY (fixed, pointer-events: none)
+   ============================================================================ */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9995;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* ============================================================================
+   PÁGINA-FUNDO — MODO TINTA
+   Camada fixa atrás de tudo: papel (cream) + tinta (ink). O app.js (§21)
+   anima SÓ a opacity da .pagina-fundo__tinta (compositável) — nunca
+   background-color. Sem .motion-ready a camada some e as seções mantêm
+   seus fundos originais (conteúdo íntegro sem JS / reduced-motion).
+   ============================================================================ */
+.pagina-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--cream);
+}
+.pagina-fundo__tinta {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  opacity: 0;
+}
+html:not(.motion-ready) .pagina-fundo { display: none; }
+
+/* Seções que mergulham: fundo transparente SÓ com motion (a tinta assume).
+   Marquee, stats, estante e cta-section MANTÊM fundos opacos — "cadernos
+   encartados" que blindam as bordas onde há texto escuro vizinho. */
+.motion-ready .hero,
+.motion-ready .manifesto,
+.motion-ready .sobre,
+.motion-ready .diffs,
+.motion-ready .depoimento {
+  background: transparent;
+}
+
+/* ============================================================================
+   FÓLIO — título corrente vertical do capítulo (§22 do app.js, scramble)
+   stone-400 (#a09c92) é legível sobre cream E sobre ink.
+   ============================================================================ */
+.folio {
+  position: fixed;
+  left: 1.2rem;
+  bottom: 2.5rem;
+  z-index: 400;
+  writing-mode: vertical-rl;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stone-400);
+  pointer-events: none;
+  user-select: none;
+}
+html:not(.motion-ready) .folio { display: none; }
+@media (max-width: 960px) {
+  .folio { display: none; }
+}
+
+/* ============================================================================
+   HEADER
+   ============================================================================ */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--page-pad);
+  transition: transform 0.55s var(--ease-expo), background 0.5s ease, backdrop-filter 0.5s ease;
+}
+.site-header.scrolled {
+  background: rgba(245,241,234,0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+/* Header que respira — some ao rolar pra baixo, volta ao subir (§23 do app.js) */
+.site-header.oculto { transform: translateY(-100%); }
+.site-header.oculto:focus-within { transform: none; } /* navegação por teclado */
+
+.wordmark {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1;
+}
+.wordmark em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.site-nav a {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--stone-600);
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;
+  transition: color 0.3s ease;
+  position: relative;
+}
+.site-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0.75rem; right: 0.75rem;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--ease-circ);
+}
+.site-nav a:hover { color: var(--ink); }
+.site-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.nav-sep {
+  color: var(--stone-300);
+  font-size: 0.65rem;
+  user-select: none;
+}
+
+/* Hamburger mobile */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 32px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.hamburger-btn span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--ink);
+  transition: transform 0.4s var(--ease-expo), opacity 0.3s ease;
+  transform-origin: center;
+}
+.hamburger-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger-btn.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Mobile overlay */
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 490;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  opacity: 0;
+  pointer-events: none;
+  /* visibility tira os links da ordem de tabulação quando fechado
+     (pointer-events não bloqueia teclado); o delay preserva o fade-out */
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+}
+.mobile-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transition-delay: 0s;
+}
+.mobile-overlay a {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 400;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  position: relative;
+  overflow: hidden;
+}
+.mobile-overlay a span {
+  display: block;
+  transform: translateY(100%);
+  transition: transform 0.6s var(--ease-expo);
+}
+.mobile-overlay.open a span { transform: translateY(0); }
+.mobile-overlay.open a:nth-child(2) span { transition-delay: 0.05s; }
+.mobile-overlay.open a:nth-child(3) span { transition-delay: 0.10s; }
+.mobile-overlay.open a:nth-child(4) span { transition-delay: 0.15s; }
+.mobile-overlay.open a:nth-child(5) span { transition-delay: 0.20s; }
+
+/* ============================================================================
+   HERO — "O TEXTO NASCE"
+   ============================================================================ */
+.hero {
+  min-height: 100dvh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+  background: var(--cream);
+}
+
+/* Ghost letters background */
+.hero__bg-letters {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+}
+.hero__ghost {
+  position: absolute;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(212,175,55,0.18);
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  user-select: none;
+  pointer-events: none;
+}
+.hero__ghost--1 {
+  font-size: clamp(14rem, 30vw, 32rem);
+  top: -5%;
+  left: -4%;
+  opacity: 0.6;
+}
+.hero__ghost--2 {
+  font-size: clamp(8rem, 18vw, 22rem);
+  bottom: 10%;
+  right: -2%;
+  opacity: 0.5;
+  -webkit-text-stroke: 1px rgba(10,10,10,0.08);
+}
+
+/* Inner layout */
+.hero__inner {
+  position: relative;
+  z-index: 10;
+  padding: 0 var(--page-pad);
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Eyebrow tag */
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+}
+.hero__eyebrow-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse-dot 2.5s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* Main title — Cormorant gigante */
+.hero__title {
+  font-family: var(--font-serif);
+  font-size: clamp(3.5rem, 9vw, 11rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+.hero__title-line {
+  display: block;
+  overflow: hidden;
+}
+.hero__title-line > span {
+  display: block;
+  /* GSAP will animate from translateY(100%) */
+}
+.hero__title--italic {
+  font-style: italic;
+  color: var(--stone-700);
+}
+.hero__title--gold {
+  color: var(--gold);
+}
+
+/* Caret — o manuscrito ainda está vivo, a capa continua sendo digitada */
+.hero__caret {
+  display: inline-block;
+  width: 0.05em;
+  height: 0.78em;
+  margin-left: 0.04em;
+  background: var(--gold);
+  vertical-align: baseline;
+  animation: caret-blink 1.1s steps(2, start) infinite;
+}
+@keyframes caret-blink { 50% { opacity: 0; } }
+/* A tl do hero (§4 do app.js) acende o caret em ~1.35s */
+.motion-ready .hero__caret { opacity: 0; }
+
+/* Verb row — "Preparar · Revisar · Traduzir" */
+.hero__verbs {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(1rem, 3vw, 3rem);
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  margin-top: 1rem;
+  overflow: hidden;
+}
+.hero__verb {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.2vw, 2rem);
+  font-weight: 500;
+  color: var(--stone-500);
+  transition: color 0.3s ease;
+  position: relative;
+}
+.hero__verb::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease-expo);
+}
+.hero__verb:hover { color: var(--ink); }
+.hero__verb:hover::after { transform: scaleX(1); }
+.hero__verb-sep {
+  color: var(--stone-300);
+  font-style: normal;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  user-select: none;
+}
+
+/* Lead text */
+.hero__lead {
+  max-width: 56ch;
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  line-height: 1.65;
+  color: var(--stone-600);
+  margin-bottom: 2.5rem;
+}
+
+/* CTA row */
+.hero__cta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+/* Microcopy */
+.hero__microcopy {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stone-400);
+}
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  right: var(--page-pad);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+}
+.scroll-hint__line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scroll-line 2s ease-in-out infinite;
+}
+@keyframes scroll-line {
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+.scroll-hint__label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--stone-400);
+  writing-mode: vertical-rl;
+}
+
+/* ============================================================================
+   MARQUEE — EDITORAS
+   ============================================================================ */
+.marquee-section {
+  overflow: hidden;
+  border-top: 1px solid var(--stone-200);
+  border-bottom: 1px solid var(--stone-200);
+  padding: 0;
+  background: var(--paper);
+  position: relative;
+}
+
+/* Two tracks at different speeds / directions */
+.marquee-track-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.marquee-row {
+  display: flex;
+  overflow: hidden;
+  padding: 0.9rem 0;
+}
+.marquee-row + .marquee-row {
+  border-top: 1px solid var(--stone-100);
+}
+
+.marquee-inner {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+  width: max-content;
+  will-change: transform;
+}
+/* Speed via CSS custom property set inline by JS */
+.marquee-inner--fwd  { animation: marquee-fwd  var(--dur, 45s) linear infinite; }
+.marquee-inner--back { animation: marquee-back var(--dur, 55s) linear infinite; }
+
+@keyframes marquee-fwd  { from { transform: translateX(0); }    to { transform: translateX(-50%); } }
+@keyframes marquee-back { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 2rem;
+}
+.marquee-name {
+  font-family: var(--font-serif);
+  font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--stone-600);
+  white-space: nowrap;
+}
+.marquee-sep {
+  color: var(--gold);
+  font-size: 0.65rem;
+  opacity: 0.7;
+}
+
+.marquee-row--alt .marquee-name {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--stone-400);
+}
+
+/* ============================================================================
+   MANIFESTO / SCROLL PIN SECTION
+   ============================================================================ */
+.manifesto {
+  position: relative;
+  min-height: 100dvh;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+.manifesto__inner {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--page-pad);
+  overflow: hidden;
+}
+
+.manifesto__stage {
+  position: relative;
+  max-width: 900px;
+  width: 100%;
+  text-align: center;
+}
+/* When JS is active, give the stage a fixed height for absolute children */
+.motion-ready .manifesto__stage {
+  min-height: clamp(18rem, 40vh, 32rem);
+}
+
+/* Without JS (.motion-ready absent): all phrases stack visibly */
+.manifesto__phrase {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 0;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* With JS: absolute positioned, hidden until .active */
+.motion-ready .manifesto__phrase {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+.motion-ready .manifesto__phrase.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.manifesto__text {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 5.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+}
+.manifesto__text em {
+  font-style: italic;
+  color: var(--gold);
+}
+.manifesto__text .struck {
+  text-decoration: line-through;
+  text-decoration-color: rgba(212,175,55,0.7);
+  text-decoration-thickness: 2px;
+  color: var(--stone-500);
+}
+.manifesto__text .corrected {
+  color: var(--gold);
+  font-style: italic;
+}
+
+/* Revisão ao vivo da frase 2 (§6 do app.js) — risco dourado próprio no lugar
+   do line-through; sem .motion-ready o tachado nativo + corrected ficam intactos */
+.motion-ready .struck {
+  text-decoration: none;
+  position: relative;
+}
+.strike-line {
+  position: absolute;
+  left: 0; right: 0;
+  top: 54%;
+  height: 2px;
+  background: rgba(212, 175, 55, 0.85);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.motion-ready .manifesto__phrase .corrected { opacity: 0; }
+
+/* Gold underline — virou squiggle de revisor (svg); a §6 do app.js desenha
+   na primeira ativação da frase. Sem .motion-ready já vem desenhado. */
+.gold-underline {
+  position: relative;
+  display: inline-block;
+}
+
+/* Revisor marks decoration */
+.revision-mark {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: rgba(212,175,55,0.5);
+  pointer-events: none;
+  user-select: none;
+}
+.revision-mark--tl { top: 12%; left: 8%; }
+.revision-mark--tr { top: 18%; right: 6%; }
+.revision-mark--bl { bottom: 15%; left: 10%; }
+.revision-mark--br { bottom: 10%; right: 8%; }
+
+/* Fração de fólio — "1 ⁄ 5" no lugar dos dots (a §6 do app.js pulsa o numerador).
+   Só faz sentido com as frases rotacionando — oculta sem .motion-ready. */
+.manifesto__fracao {
+  position: absolute;
+  right: -3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: rgba(212,175,55,0.65);
+}
+.fracao-atual { display: inline-block; } /* alvo do micro-pulse (y/autoAlpha) */
+html:not(.motion-ready) .manifesto__fracao { display: none; }
+
+/* ============================================================================
+   SOBRE — PORTRAIT + BIO
+   ============================================================================ */
+.sobre {
+  background: var(--cream);
+  padding: clamp(5rem, 10vw, 9rem) var(--page-pad);
+  overflow: hidden;
+  position: relative; /* âncora da .marginalia */
+}
+
+.sobre__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: start;
+}
+
+/* Photo column */
+.sobre__photo-wrap {
+  position: relative;
+  aspect-ratio: 3/4;
+  max-width: 440px;
+}
+.sobre__photo-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.sobre__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  filter: grayscale(15%);
+  transition: filter 0.6s ease;
+}
+.sobre__photo-frame:hover .sobre__photo { filter: grayscale(0%); }
+
+/* Decorative gold lines */
+.sobre__deco-line {
+  position: absolute;
+  pointer-events: none;
+}
+.sobre__deco-line--h {
+  bottom: -1.5rem;
+  left: 1.5rem; right: -1.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+.sobre__deco-line--v {
+  top: 1.5rem; bottom: -1.5rem;
+  right: -1.5rem;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+}
+
+/* Bio column */
+.sobre__content { padding-top: 1rem; }
+
+.sobre__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+.sobre__eyebrow::before {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 1px;
+  background: var(--gold);
+}
+
+.sobre__title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 4vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 1.75rem;
+  /* sem overflow:hidden — clipava o squiggle sob "Maria Marta" */
+}
+.sobre__title em {
+  font-style: italic;
+  color: var(--stone-600);
+}
+
+.sobre__bio {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--stone-600);
+  margin-bottom: 2.5rem;
+  max-width: 52ch;
+}
+
+.sobre__meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 3rem;
+  margin-bottom: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--stone-200);
+}
+.sobre__meta-col h3 {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stone-400);
+  margin-bottom: 0.85rem;
+}
+.sobre__meta-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.sobre__meta-col li {
+  font-size: 0.9rem;
+  color: var(--stone-700);
+  padding-left: 1rem;
+  position: relative;
+}
+.sobre__meta-col li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+/* ============================================================================
+   CONTADOR / STAT ROW
+   ============================================================================ */
+.stats {
+  background: var(--paper);
+  border-top: 1px solid var(--stone-200);
+  border-bottom: 1px solid var(--stone-200);
+  padding: clamp(3rem, 6vw, 5rem) var(--page-pad);
+  overflow: hidden;
+}
+.stats__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.stat-item {
+  text-align: center;
+  position: relative;
+}
+.stat-item + .stat-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 20%; bottom: 20%;
+  width: 1px;
+  background: var(--stone-200);
+}
+.stat-num {
+  font-family: var(--font-serif);
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.stat-num .suffix {
+  font-size: 0.5em;
+  color: var(--gold);
+  vertical-align: super;
+  font-style: italic;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--stone-500);
+}
+
+/* ============================================================================
+   ESTANTE — TRAVESSIA HORIZONTAL DO PORTFÓLIO
+   Base mobile-first: track nativo com scroll-snap (funciona 100% sem JS).
+   .estante--pinada (adicionada pelo app.js §17) converte em travessia pinada.
+   ============================================================================ */
+.estante {
+  background: var(--cream);
+  border-top: 1px solid var(--stone-200);
+  padding: clamp(5rem, 10vw, 9rem) 0 clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Número fantasma "32" — mesma estética de .hero__ghost */
+.estante__ghost {
+  position: absolute;
+  top: clamp(1rem, 4vw, 3rem);
+  right: -2%;
+  font-family: var(--font-serif);
+  font-size: clamp(10rem, 20vw, 24rem);
+  font-weight: 400;
+  line-height: 0.85;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(212,175,55,0.18);
+  pointer-events: none;
+  user-select: none;
+}
+
+.estante__header {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--page-pad);
+  position: relative;
+  z-index: 2;
+}
+
+/* Contagem — reusa o padrão .stat-num/.stat-val dos stats (§8 do app.js) */
+.estante__contagem {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.estante__contagem .stat-num {
+  display: inline-block;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  margin-bottom: 0;
+}
+.estante__contagem-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--stone-500);
+}
+
+/* Viewport acima do ghost (que é positioned e pintaria sobre o track) */
+.estante__viewport {
+  position: relative;
+  z-index: 1;
+}
+
+/* Track nativo — scroll-snap, sem barra visível */
+.estante__track {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  overflow-x: auto;
+  /* proximity, não mandatory: os marcos largos não têm snap-align e o
+     mandatory sempre puxaria para uma capa — o marco nunca pararia em vista */
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 2.5rem var(--page-pad);
+}
+.estante__track::-webkit-scrollbar { display: none; }
+
+.livro {
+  scroll-snap-align: center;
+  flex: 0 0 clamp(180px, 16vw, 280px); /* nunca acima de 300px — PNGs têm 270–410px */
+}
+
+/* Corpo físico do livro — vinco, corte de páginas e sombra, zero JS */
+.livro__capa {
+  position: relative;
+  border-radius: 1px;
+  box-shadow: 0 14px 22px -8px rgba(10,10,10,0.22), 0 2px 6px rgba(10,10,10,0.08);
+  /* Capas mais estreitas que o slot ficam no tamanho natural (nitidez) —
+     o corpo encolhe junto para vinco/corte/sombra abraçarem a imagem */
+  max-width: max-content;
+  margin-inline: auto;
+}
+.livro__capa img {
+  width: auto;
+  max-width: 100%; /* nunca acima do natural: upscale borra os PNGs */
+  height: auto;
+  display: block;
+  border-radius: 1px;
+}
+/* Vinco de lombada */
+.livro__capa::before {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; left: 0;
+  width: 7%;
+  background: linear-gradient(90deg, rgba(0,0,0,0.14), transparent);
+  pointer-events: none;
+}
+/* Corte de páginas */
+.livro__capa::after {
+  content: '';
+  position: absolute;
+  top: 1%; bottom: 1%; right: 0;
+  width: 6px;
+  background: repeating-linear-gradient(90deg, #fff 0 1px, var(--stone-200) 1px 2px);
+  pointer-events: none;
+}
+
+/* Nota de rodapé do livro — título + editora */
+.livro__nota {
+  border-left: 2px solid var(--gold);
+  padding-left: 0.6rem;
+  margin-top: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.45s var(--ease-expo), transform 0.45s var(--ease-expo);
+}
+/* :focus-within cobre a figure focável (tabindex="0") e qualquer filho */
+.livro:hover .livro__nota,
+.livro:focus .livro__nota,
+.livro:focus-within .livro__nota {
+  opacity: 1;
+  transform: translateY(0);
+}
+.livro__nota-titulo {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.livro__nota-editora {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--stone-500);
+}
+/* Touch: nota sempre visível (não há hover) */
+@media (hover: none) {
+  .livro__nota { opacity: 1; transform: none; }
+}
+
+/* Marcos tipográficos entre grupos */
+.estante__marco {
+  flex-shrink: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 400;
+  color: var(--stone-500); /* ~4,9:1 sobre cream — stone-300 falhava WCAG (1,34:1) */
+  white-space: nowrap;
+  align-self: center;
+  padding: 0 clamp(1rem, 3vw, 3rem);
+}
+.estante__marco span {
+  color: var(--gold);
+  opacity: 0.6;
+}
+
+/* Slot vago — convite ao próximo livro */
+.livro--vago {
+  border: 1px dashed var(--gold);
+  background: transparent;
+  aspect-ratio: 0.7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  text-align: center;
+  padding: 1.5rem;
+}
+.livro--vago__frase {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.livro--vago__frase em {
+  color: var(--gold);
+}
+/* O botão precisa caber dentro da borda tracejada do slot (~130px internos
+   no mobile) — o nowrap herdado de .btn faria ele vazar ~50px por lado */
+.livro--vago .btn {
+  white-space: normal;
+  text-align: center;
+  padding: 0.9rem 1.1rem;
+  letter-spacing: 0.06em;
+}
+
+/* Hint de deslize (some no primeiro scroll / modo pinado) */
+.estante__hint {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--stone-400);
+  padding: 0 var(--page-pad);
+  margin-top: 1rem;
+}
+
+/* Modo pinado — classe adicionada pelo app.js §17 (desktop + hover + motion) */
+.estante--pinada .estante__viewport {
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.estante--pinada .estante__track {
+  overflow: visible;
+  scroll-snap-type: none;
+  width: max-content;
+  will-change: transform;
+}
+/* perspective só afeta os transforms 3D dos FILHOS DIRETOS — precisa estar
+   no .livro (pai da .livro__capa que o tilt da §17 rotaciona), não no track */
+.estante--pinada .livro { perspective: 800px; }
+.estante--pinada .estante__hint { display: none; }
+
+/* ============================================================================
+   DIFERENCIAIS — BENTO GRID
+   ============================================================================ */
+.diffs {
+  background: var(--cream);
+  padding: clamp(5rem, 10vw, 9rem) var(--page-pad);
+  overflow: hidden;
+  position: relative; /* âncora da .marginalia */
+}
+.diffs__inner { max-width: 1200px; margin: 0 auto; }
+
+.section-header {
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.section-title em {
+  font-style: italic;
+  color: var(--stone-500);
+}
+
+/* Bento asymmetric grid */
+.diffs__grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: min-content;
+  gap: 1px;
+  background: var(--stone-200);
+  border: 1px solid var(--stone-200);
+}
+
+.diff-card {
+  background: var(--paper);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  position: relative;
+  overflow: hidden;
+  transition: background 0.4s ease;
+}
+/* Asymmetric placement */
+.diff-card:nth-child(1) { grid-column: span 5; }
+.diff-card:nth-child(2) { grid-column: span 7; }
+.diff-card:nth-child(3) { grid-column: span 4; }
+.diff-card:nth-child(4) { grid-column: span 4; }
+.diff-card:nth-child(5) { grid-column: span 4; }
+.diff-card:nth-child(6) { grid-column: span 12; }
+
+.diff-card:hover { background: var(--stone-50); }
+
+.diff-card__num {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--stone-400);
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  display: block;
+  transition: color 0.3s ease;
+}
+/* Selo "rev. ✓" — o scramble do num é da §19 do app.js; a cor é CSS puro */
+.diff-card:hover .diff-card__num { color: var(--gold); }
+
+.diff-card__icon {
+  display: block;
+  width: 2rem; height: 2rem;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+}
+.diff-card__icon svg { width: 100%; height: 100%; }
+
+.diff-card__title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 0.85rem;
+}
+
+.diff-card__text {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--stone-500);
+  max-width: 40ch;
+}
+
+/* Last card is full width — show differently */
+.diff-card:nth-child(6) {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(2rem, 4vw, 4rem);
+}
+.diff-card:nth-child(6) .diff-card__text { max-width: 60ch; }
+
+/* Gold sweep on hover */
+.diff-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 70%, rgba(212,175,55,0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.diff-card:hover::before { opacity: 1; }
+
+/* ============================================================================
+   DEPOIMENTO / CITAÇÃO
+   ============================================================================ */
+.depoimento {
+  background: var(--ink);
+  padding: clamp(5rem, 10vw, 9rem) var(--page-pad);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Aspa gigante de fundo — elemento real (parallax na §26 do app.js);
+   mesmos estilos do antigo .depoimento::before */
+.depo-aspas {
+  position: absolute;
+  top: -0.1em; left: 0.05em;
+  font-family: var(--font-serif);
+  font-size: clamp(18rem, 35vw, 42rem);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(212,175,55,0.1);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.1em;
+}
+
+.depoimento__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+blockquote.depo-text {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 3vw, 2.4rem);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  margin-bottom: 3rem;
+}
+
+.depo-author {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+.depo-avatar {
+  width: 3.5rem; height: 3.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(212,175,55,0.4);
+  filter: grayscale(20%);
+}
+.depo-meta { display: flex; flex-direction: column; gap: 0.25rem; }
+.depo-name {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--paper);
+  letter-spacing: 0.01em;
+}
+.depo-role {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  color: var(--stone-400);
+}
+
+/* ============================================================================
+   CTA / CONTATO FINAL
+   ============================================================================ */
+.cta-section {
+  background: var(--paper);
+  padding: clamp(6rem, 12vw, 11rem) var(--page-pad);
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Radial gold glow */
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw; height: 60vw;
+  background: radial-gradient(circle, rgba(212,175,55,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-section__inner {
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.cta-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 1.5rem;
+}
+
+.cta-headline {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 6vw, 6rem);
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+.cta-headline em {
+  font-style: italic;
+  color: var(--stone-500);
+}
+
+.cta-sub {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--stone-500);
+  max-width: 44ch;
+  margin: 0 auto 3rem;
+}
+
+.cta-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Social links */
+.cta-social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+.cta-social a {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--stone-400);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  position: relative;
+}
+.cta-social a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--ease-circ);
+}
+.cta-social a:hover { color: var(--ink); }
+.cta-social a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* ============================================================================
+   MARCAS DE REVISÃO — corrige, squiggle, carimbo, marginalia
+   Componentes transversais da metáfora: o site se revisa diante do leitor.
+   Sem .motion-ready (sem JS ou reduced-motion) só o estado final correto
+   aparece — PT-BR impecável garantido.
+   ============================================================================ */
+
+/* Corrige — palavra "errada" riscada a ouro, correção revelada ao lado */
+.corrige {
+  position: relative;
+  white-space: nowrap;
+}
+.corrige__erro {
+  display: none;
+  text-decoration: none; /* o risco é nosso, não o line-through do <s> */
+  color: inherit;
+  position: relative;
+}
+.motion-ready .corrige__erro { display: inline; }
+.corrige__risco {
+  position: absolute;
+  left: 0; right: 0;
+  top: 52%;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.corrige__certo,
+.cta-headline em .corrige__certo { /* 2º seletor vence o .cta-headline em */
+  color: var(--gold);
+  font-style: italic;
+}
+.motion-ready .corrige__certo {
+  display: inline-block;
+  clip-path: inset(0 100% 0 0);
+}
+
+/* Squiggle — sublinhado ondulado de revisor (pathLength=1 dispensa medição) */
+.u-squiggle,
+.gold-underline {
+  position: relative;
+  display: inline-block;
+}
+.u-squiggle { white-space: nowrap; }
+.u-squiggle--hover { white-space: normal; } /* títulos longos podem quebrar */
+.squiggle {
+  position: absolute;
+  left: 0;
+  bottom: -0.12em;
+  width: 100%;
+  height: 0.14em;
+  overflow: visible;
+}
+.motion-ready .squiggle path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+/* Carimbo APROVADO — fecho narrativo do CTA (visível estático por padrão) */
+.carimbo {
+  position: absolute;
+  top: -1.2rem;
+  right: clamp(0rem, 4vw, 3rem);
+  padding: 0.5rem 0.9rem;
+  border: 2px double var(--gold);
+  color: var(--gold);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transform: rotate(-6deg);
+  pointer-events: none;
+}
+.motion-ready .carimbo { opacity: 0; } /* a §11 do app.js carimba no scroll */
+
+/* Marginalia viva — anotações de revisora nas margens de .sobre e .diffs */
+.marginalia {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--stone-400);
+  pointer-events: none;
+  user-select: none;
+}
+.marginalia--tl { left: 1.5rem;  top: 15%; }
+.marginalia--tr { right: 1.5rem; top: 20%; }
+.marginalia--bl { left: 1.5rem;  bottom: 25%; }
+.marginalia--br { right: 1.5rem; bottom: 20%; }
+@media (max-width: 1200px) {
+  .marginalia { display: none; }
+}
+
+/* ============================================================================
+   BUTTONS
+   ============================================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.9rem 1.75rem;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s ease, background 0.3s ease, transform 0.3s var(--ease-expo), box-shadow 0.3s ease;
+  white-space: nowrap;
+}
+.btn:active { transform: scale(0.97); }
+
+/* Primary — gold fill */
+.btn-primary {
+  background: var(--gold);
+  color: var(--ink);
+  border-radius: 0;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s var(--ease-circ);
+  z-index: 0;
+}
+.btn-primary:hover::before { transform: scaleX(1); transform-origin: left; }
+.btn-primary:hover { color: var(--gold); }
+.btn-primary span, .btn-primary svg { position: relative; z-index: 1; }
+
+/* Secondary — outline */
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: 0;
+}
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s var(--ease-circ);
+  z-index: 0;
+}
+.btn-secondary:hover::before { transform: scaleX(1); transform-origin: left; }
+.btn-secondary:hover { color: var(--paper); }
+.btn-secondary span, .btn-secondary svg { position: relative; z-index: 1; }
+
+/* Ghost button on dark bg */
+.btn-ghost {
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 0;
+}
+.btn-ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(212,175,55,0.07);
+}
+
+/* Arrow icon inside buttons */
+.btn-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem; height: 1.4rem;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.12);
+  transition: transform 0.35s var(--ease-expo), background 0.3s ease;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.btn:hover .btn-arrow { transform: translate(3px, -2px); background: rgba(0,0,0,0.2); }
+
+/* ============================================================================
+   FOOTER
+   ============================================================================ */
+.site-footer {
+  background: var(--stone-900);
+  padding: clamp(3rem, 6vw, 5rem) var(--page-pad) 2rem;
+}
+.site-footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.footer-brand {}
+.footer-wordmark {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--paper);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.footer-wordmark em { font-style: italic; color: var(--gold); }
+.footer-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--stone-500);
+}
+.footer-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+.footer-social {
+  display: flex;
+  gap: 1.5rem;
+}
+.footer-social a {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--stone-500);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.footer-social a:hover { color: var(--gold); }
+
+.footer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--stone-500);
+}
+.footer-badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  animation: pulse-dot 2.5s ease-in-out infinite;
+}
+
+/* Colofão — o site termina como terminam os livros bem-feitos */
+.colofao {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 0 2rem;
+  text-align: center;
+}
+.colofao__asterismo {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+.colofao__texto {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: var(--stone-500);
+}
+.colofao__linha {
+  display: block;
+  width: 8rem;
+  height: 1px;
+  background: var(--gold);
+  margin: 1.25rem auto 0;
+}
+.motion-ready .colofao__linha { transform: scaleX(0); } /* §15 estende no scroll */
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: var(--stone-600);
+}
+
+/* ============================================================================
+   REDUCED MOTION — override
+   ============================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .scroll-hint__line { animation: none; }
+  .hero__eyebrow-dot { animation: none; }
+  .hero__caret { animation: none; }
+  .footer-badge-dot { animation: none; }
+  .marquee-inner--fwd, .marquee-inner--back { animation: none; }
+  .cursor, .cursor-ring { display: none; }
+  .grain { display: none; }
+  .livro__nota { opacity: 1; transform: none; }
+  /* Redundância defensiva — já ocultos via html:not(.motion-ready) */
+  .folio, .pagina-fundo { display: none; }
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+@media (max-width: 960px) {
+  /* 5 links + separadores (~530px) + wordmark não cabem entre 641–960px —
+     o hamburger assume aqui, alinhado ao breakpoint do pin da estante */
+  .site-nav { display: none; }
+  .hamburger-btn { display: flex; }
+  .sobre__inner { grid-template-columns: 1fr; }
+  .sobre__photo-wrap { max-width: 320px; }
+  .diffs__grid { grid-template-columns: repeat(6, 1fr); }
+  .diff-card:nth-child(1),
+  .diff-card:nth-child(2),
+  .diff-card:nth-child(3),
+  .diff-card:nth-child(4),
+  .diff-card:nth-child(5) { grid-column: span 3; }
+  .diff-card:nth-child(6) { grid-column: span 6; flex-direction: column; gap: 1rem; }
+  .stats__inner { grid-template-columns: repeat(3,1fr); }
+  .manifesto__fracao { right: 0.75rem; }
+}
+
+@media (max-width: 640px) {
+  .diffs__grid { grid-template-columns: 1fr; background: transparent; border: none; gap: 1px; }
+  .diff-card:nth-child(n) { grid-column: span 1; }
+  .diff-card:nth-child(6) { flex-direction: column; }
+  .stats__inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .stat-item + .stat-item::before { display: none; }
+  .hero__verbs { flex-direction: column; gap: 0.5rem; }
+  .manifesto__inner { padding: 1.5rem; }
+  .manifesto__text { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+  .carimbo { top: -2rem; right: 0; font-size: 0.55rem; }
+}

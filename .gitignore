@@ -1,0 +1,13 @@
+# Tooling local (Claude Code / MCP)
+.claude/
+.agents/
+.mcp.json
+skills-lock.json
+
+# Material de trabalho (não é produção)
+portfolio_capas_livros.docx
+RELATORIO_skills_2026.md
+
+# Variantes de design não publicadas — só a cinetico-tipografico sobe
+melhorias/*
+!melhorias/cinetico-tipografico/

@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Maria Marta Garcia — Preparadora, Revisora e Tradutora</title>
+  <meta name="description" content="Preparação, revisão e tradução de textos editoriais, acadêmicos e didáticos. Há mais de uma década a serviço do texto do outro." />
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="canonical" href="https://joaopaulogarciarangel.github.io/Mother-Website/" />
+
+  <!-- Open Graph / compartilhamento (WhatsApp, LinkedIn) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:title" content="Maria Marta Garcia — Preparadora, Revisora e Tradutora" />
+  <meta property="og:description" content="Preparação, revisão e tradução de textos editoriais, acadêmicos e didáticos. 14 anos a serviço do texto do outro — Edusp, Sextante, GEN, Unicamp e mais." />
+  <meta property="og:url" content="https://joaopaulogarciarangel.github.io/Mother-Website/" />
+  <meta property="og:image" content="https://joaopaulogarciarangel.github.io/Mother-Website/assets/img/maria-marta.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="1200" />
+  <meta name="twitter:card" content="summary" />
+
+  <!-- Fonts: Cormorant Garamond (serif editorial), Geist (sans), Geist Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!--
+    Motion gate: add .motion-ready to <html> so CSS can pre-hide targets
+    BEFORE first paint. Dropped if GSAP fails to load (see app.js).
+    Skipped under prefers-reduced-motion — content always visible without JS.
+  -->
+  <script>
+    (function () {
+      try {
+        /* DO NOT add motion-ready here — let app.js do it after GSAP confirms load */
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Skip link -->
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- Custom cursor (hidden on touch devices via CSS) -->
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Film grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Página-fundo — papel (cream) + camada de tinta (ink). O site mergulha
+       no escuro entre seções (modo tinta, §21 do app.js anima só a opacity
+       da tinta). Oculta sem .motion-ready — fundos originais ficam intactos. -->
+  <div class="pagina-fundo" aria-hidden="true"><div class="pagina-fundo__tinta"></div></div>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header" role="banner">
+    <a class="wordmark" href="#inicio" aria-label="Maria Marta Garcia — página inicial">
+      Maria Marta <em>Garcia</em>
+    </a>
+
+    <nav class="site-nav" aria-label="Navegação principal">
+      <a href="#sobre">Sobre</a>
+      <span class="nav-sep" aria-hidden="true">·</span>
+      <a href="#estante">Portfólio</a>
+      <span class="nav-sep" aria-hidden="true">·</span>
+      <a href="#diferenciais">Serviços</a>
+      <span class="nav-sep" aria-hidden="true">·</span>
+      <a href="#depoimento">Depoimento</a>
+      <span class="nav-sep" aria-hidden="true">·</span>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <button class="hamburger-btn" id="hamburger-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-overlay">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <!-- Fólio de livro — título corrente do capítulo (§22 do app.js troca com
+       scramble). Decorativo, oculto sem .motion-ready e abaixo de 960px. -->
+  <div class="folio" aria-hidden="true">§ 01 · Capa</div>
+
+  <!-- Mobile overlay nav -->
+  <nav class="mobile-overlay" id="mobile-overlay" aria-label="Navegação principal (móvel)">
+    <a href="#sobre"><span>Sobre</span></a>
+    <a href="#estante"><span>Portfólio</span></a>
+    <a href="#diferenciais"><span>Serviços</span></a>
+    <a href="#depoimento"><span>Depoimento</span></a>
+    <a href="#contato"><span>Contato</span></a>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <main id="conteudo">
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+
+      <!-- Decorative ghost letters -->
+      <div class="hero__bg-letters" aria-hidden="true">
+        <span class="hero__ghost hero__ghost--1">M</span>
+        <span class="hero__ghost hero__ghost--2">G</span>
+      </div>
+
+      <div class="hero__inner">
+        <!-- Eyebrow tag with scramble -->
+        <div class="hero__eyebrow">
+          <span class="hero__eyebrow-dot" aria-hidden="true"></span>
+          <span class="hero__eyebrow-text" data-text="Há 14 anos a serviço do texto do outro" data-scramble>
+            Há 14 anos a serviço do texto do outro
+          </span>
+        </div>
+
+        <!-- Title — três linhas -->
+        <h1 class="hero__title" id="hero-title">
+          <span class="hero__title-line">
+            <span>Preparadora,</span>
+          </span>
+          <span class="hero__title-line hero__title--italic">
+            <span>Revisora&nbsp;&amp;</span>
+          </span>
+          <span class="hero__title-line">
+            <span class="hero__title--gold">Tradutora.<span class="hero__caret" aria-hidden="true"></span></span>
+          </span>
+        </h1>
+
+        <!-- Verb row -->
+        <div class="hero__verbs" aria-label="Especialidades">
+          <span class="hero__verb">Preparar</span>
+          <span class="hero__verb-sep" aria-hidden="true">·</span>
+          <span class="hero__verb">Revisar</span>
+          <span class="hero__verb-sep" aria-hidden="true">·</span>
+          <span class="hero__verb">Traduzir</span>
+        </div>
+
+        <!-- Lead -->
+        <p class="hero__lead">
+          Há mais de uma década <span class="corrige"><s class="corrige__erro" aria-hidden="true">consertando<span class="corrige__risco" aria-hidden="true"></span></s> <span class="corrige__certo">preparando</span></span> textos para editoras, universidades e empresas — do artigo científico ao livro didático.
+        </p>
+
+        <!-- CTA -->
+        <div class="hero__cta">
+          <a class="btn btn-primary"
+             href="https://wa.me/5522998241977?text=Ol%C3%A1%2C%20Maria%20Marta!%20Vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20uma%20proposta."
+             target="_blank" rel="noopener" aria-label="Solicitar proposta via WhatsApp">
+            <span>Solicitar proposta</span>
+            <span class="btn-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="btn btn-secondary" href="#diferenciais">
+            <span>Ver serviços</span>
+          </a>
+        </div>
+
+        <!-- Microcopy -->
+        <p class="hero__microcopy" aria-label="Mercados e idiomas">
+          Acadêmico · Didático · Editorial · Publicitário · PT · EN · ESP
+        </p>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="scroll-hint" aria-hidden="true">
+        <span class="scroll-hint__line"></span>
+        <span class="scroll-hint__label">Scroll</span>
+      </div>
+    </section>
+
+    <!-- ===================== MARQUEE — EDITORAS ===================== -->
+    <section class="marquee-section" aria-label="Editoras e birôs com quem já trabalhei">
+      <!-- Os marquees ficam aria-hidden (texto em movimento, duplicado);
+           esta lista estática é a versão para leitores de tela -->
+      <p class="sr-only">
+        FTD, Sextante, Edusp, Editora da Unicamp, GEN | Grupo Editorial Nacional,
+        Editora Gota, Editora Synergia, Texto e Forma, Oficina Editorial,
+        Palavras Educação, Editora Mandarina e Eliana Moura Estúdio Editorial.
+        Especialidades: PNLD, BNCC, ABNT, DELE, tradução PT⇄ESP, material didático,
+        não-ficção, acadêmico e publicitário.
+      </p>
+      <div class="marquee-track-wrap">
+
+        <!-- Row 1 — forward, serif -->
+        <div class="marquee-row">
+          <div class="marquee-inner marquee-inner--fwd" style="--dur: 40s" aria-hidden="true">
+            <!-- Copy A -->
+            <span class="marquee-item"><span class="marquee-name">FTD</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Sextante</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Edusp</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Editora da Unicamp</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">GEN | Grupo Editorial Nacional</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Editora Gota</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Editora Synergia</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Texto e Forma</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Oficina Editorial</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Palavras Educação</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Editora Mandarina</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Eliana Moura Estúdio Editorial</span><span class="marquee-sep">·</span></span>
+            <!-- Copy B (duplicate for seamless loop) -->
+            <span class="marquee-item"><span class="marquee-name">FTD</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Sextante</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Edusp</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Editora da Unicamp</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">GEN | Grupo Editorial Nacional</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Editora Gota</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Editora Synergia</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Texto e Forma</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Oficina Editorial</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Palavras Educação</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Editora Mandarina</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Eliana Moura Estúdio Editorial</span><span class="marquee-sep">·</span></span>
+          </div>
+        </div>
+
+        <!-- Row 2 — reverse, mono caps -->
+        <div class="marquee-row marquee-row--alt">
+          <div class="marquee-inner marquee-inner--back" style="--dur: 55s" aria-hidden="true">
+            <span class="marquee-item"><span class="marquee-name">PNLD</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">BNCC</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">ABNT</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">DELE</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">PT⇄ESP</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Word · PDF</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Controle de Alterações</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Material Didático</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">EF I &amp; EF II</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Ensino Médio</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">EJA</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Não-Ficção</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Acadêmico</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Publicitário</span><span class="marquee-sep">·</span></span>
+            <!-- Duplicate for loop -->
+            <span class="marquee-item"><span class="marquee-name">PNLD</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">BNCC</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">ABNT</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">DELE</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">PT⇄ESP</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Word · PDF</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Controle de Alterações</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Material Didático</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">EF I &amp; EF II</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Ensino Médio</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">EJA</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Não-Ficção</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Acadêmico</span><span class="marquee-sep">·</span></span>
+            <span class="marquee-item"><span class="marquee-name">Publicitário</span><span class="marquee-sep">·</span></span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================== MANIFESTO (PINNED SCROLL STORYTELLING) ===================== -->
+    <!--
+      This section contains 5 phrases that rotate as the user scrolls.
+      Each phrase is a meditation on what editorial work means — the "revisão" metaphor.
+      The section needs extra height; JS sets it to N * 100dvh.
+      The inner sticky container pins while phrases cycle.
+    -->
+    <section class="manifesto" id="manifesto" aria-label="Manifesto editorial">
+      <div class="manifesto__inner">
+
+        <!-- Revision marks (decoration) -->
+        <span class="revision-mark revision-mark--tl" aria-hidden="true">§ 1.2 — revisar</span>
+        <span class="revision-mark revision-mark--tr" aria-hidden="true">↵ sic</span>
+        <span class="revision-mark revision-mark--bl" aria-hidden="true">cf. nota 3</span>
+        <span class="revision-mark revision-mark--br" aria-hidden="true">[sic]</span>
+
+        <div class="manifesto__stage">
+
+          <!-- Fração de fólio — "1 ⁄ 5"; a §6 do app.js atualiza o numerador -->
+          <span class="manifesto__fracao" aria-hidden="true"><span class="fracao-atual">1</span> ⁄ 5</span>
+
+          <!-- Phrase 1 -->
+          <div class="manifesto__phrase active" aria-label="Frase 1 de 5">
+            <p class="manifesto__text">
+              O bom trabalho editorial começa pelo<br>
+              <em>respeito ao texto do outro.</em>
+            </p>
+          </div>
+
+          <!-- Phrase 2 — "revisão" metaphor: tachado que vira a versão correta -->
+          <div class="manifesto__phrase" aria-label="Frase 2 de 5">
+            <p class="manifesto__text">
+              Não se trata de<br>
+              <span class="struck">corrigir<span class="strike-line" aria-hidden="true"></span></span>&nbsp;<span class="corrected">revelar</span><br>
+              o que o texto já queria ser.
+            </p>
+          </div>
+
+          <!-- Phrase 3 -->
+          <div class="manifesto__phrase" aria-label="Frase 3 de 5">
+            <p class="manifesto__text">
+              Termina quando o leitor<br>nem percebe que<br>
+              <span class="gold-underline"><em>alguém passou por ali.</em><svg class="squiggle" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 3 Q5 0 10 3 T20 3 T30 3 T40 3 T50 3 T60 3 T70 3 T80 3 T90 3 T100 3" fill="none" stroke="var(--gold)" stroke-width="1.5"/></svg></span>
+            </p>
+          </div>
+
+          <!-- Phrase 4 -->
+          <div class="manifesto__phrase" aria-label="Frase 4 de 5">
+            <p class="manifesto__text">
+              14 anos.<br>
+              <em>Cada vírgula conta.</em><br>
+              Cada pausa importa.
+            </p>
+          </div>
+
+          <!-- Phrase 5 -->
+          <div class="manifesto__phrase" aria-label="Frase 5 de 5">
+            <p class="manifesto__text">
+              Do artigo científico<br>ao livro didático —<br>
+              <em>o mesmo rigor,</em><br>o mesmo cuidado.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SOBRE ===================== -->
+    <section class="sobre" id="sobre" aria-labelledby="sobre-title">
+
+      <!-- Marginalia viva — anotações de revisora nas margens (decoração) -->
+      <span class="marginalia marginalia--tr" aria-hidden="true">itál. ✓</span>
+      <span class="marginalia marginalia--bl" aria-hidden="true">cf. original</span>
+
+      <div class="sobre__inner">
+
+        <!-- Portrait -->
+        <div class="sobre__photo-wrap will-reveal">
+          <div class="sobre__photo-frame">
+            <img
+              class="sobre__photo"
+              src="assets/img/maria-marta.jpg"
+              width="1200" height="1200"
+              loading="lazy"
+              decoding="async"
+              alt="Retrato de Maria Marta Garcia, preparadora, revisora e tradutora editorial"
+            />
+          </div>
+          <span class="sobre__deco-line sobre__deco-line--h" aria-hidden="true"></span>
+          <span class="sobre__deco-line sobre__deco-line--v" aria-hidden="true"></span>
+        </div>
+
+        <!-- Bio -->
+        <div class="sobre__content">
+          <span class="sobre__eyebrow" data-scramble>Sobre mim</span>
+
+          <h2 class="sobre__title will-reveal" id="sobre-title">
+            Olá, sou a<br><span class="u-squiggle"><em>Maria Marta</em><svg class="squiggle" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 3 Q5 0 10 3 T20 3 T30 3 T40 3 T50 3 T60 3 T70 3 T80 3 T90 3 T100 3" fill="none" stroke="var(--gold)" stroke-width="1.5"/></svg></span>
+          </h2>
+
+          <p class="sobre__bio will-reveal">
+            Sou preparadora, revisora e tradutora há 14 anos. Comecei na área acadêmica em 2012, revisando e traduzindo artigos científicos no nível de mestrado e doutorado. Desde 2021, atuo no mercado editorial brasileiro, preparando obras didáticas, de não-ficção e publicitárias para algumas das principais editoras do país. Bilíngue PT⇄ESP, com certificação DELE pelo Instituto Cervantes.
+          </p>
+
+          <div class="sobre__meta will-reveal">
+            <div class="sobre__meta-col">
+              <h3>Serviços</h3>
+              <ul>
+                <li>Preparação de originais</li>
+                <li>Revisão de texto</li>
+                <li>Revisão de prova</li>
+                <li>Tradução PT⇄ESP</li>
+              </ul>
+            </div>
+            <div class="sobre__meta-col">
+              <h3>Áreas</h3>
+              <ul>
+                <li>Material didático</li>
+                <li>Não-ficção</li>
+                <li>Acadêmico</li>
+                <li>Publicitário</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="hero__cta will-reveal">
+            <a class="btn btn-primary"
+               href="https://wa.me/5522998241977?text=Ol%C3%A1%2C%20Maria%20Marta!%20Vim%20pelo%20site%20e%20gostaria%20de%20conversar%20sobre%20um%20trabalho."
+               target="_blank" rel="noopener" aria-label="Falar com Maria Marta no WhatsApp">
+              <span>Falar no WhatsApp</span>
+              <span class="btn-arrow" aria-hidden="true">↗</span>
+            </a>
+            <!-- "Baixar currículo" removido: era href="#" placeholder e o PDF
+                 não existe no projeto — reintroduzir quando o arquivo existir,
+                 ex.: <a class="btn btn-secondary" href="assets/cv-maria-marta-garcia.pdf" download> -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================== STATS ===================== -->
+    <section class="stats" aria-label="Números da trajetória">
+      <div class="stats__inner">
+
+        <div class="stat-item will-reveal">
+          <span class="stat-num" data-value="14" data-suffix="+" aria-label="14 anos de experiência">
+            <span class="stat-val">14</span><span class="suffix" aria-hidden="true">+</span>
+          </span>
+          <span class="stat-label">Anos de experiência</span>
+        </div>
+
+        <div class="stat-item will-reveal">
+          <span class="stat-num" data-value="12" data-suffix="+" aria-label="Mais de 12 editoras parceiras">
+            <span class="stat-val">12</span><span class="suffix" aria-hidden="true">+</span>
+          </span>
+          <span class="stat-label">Editoras parceiras</span>
+        </div>
+
+        <div class="stat-item will-reveal">
+          <span class="stat-num" data-value="3" aria-label="3 idiomas">
+            <span class="stat-val">3</span>
+          </span>
+          <span class="stat-label">Idiomas (PT · EN · ESP)</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================== ESTANTE — PORTFÓLIO ===================== -->
+    <!--
+      Travessia horizontal pelas 32 obras reais do portfólio.
+      Sem JS: track nativo com scroll-snap (deslize horizontal em qualquer tela).
+      Com JS + desktop + hover + sem reduced-motion: pin + scrub (§17 do app.js
+      adiciona .estante--pinada e converte o track em travessia pinada).
+    -->
+    <section class="estante" id="estante" aria-labelledby="estante-title">
+
+      <!-- Número fantasma (mesma estética de .hero__ghost) -->
+      <span class="estante__ghost" aria-hidden="true">32</span>
+
+      <div class="estante__header">
+        <span class="section-eyebrow" data-scramble>Portfólio — A estante</span>
+        <h2 class="section-title will-reveal" id="estante-title">
+          Livros que passaram<br><span class="u-squiggle"><em>por estas mãos.</em><svg class="squiggle" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 3 Q5 0 10 3 T20 3 T30 3 T40 3 T50 3 T60 3 T70 3 T80 3 T90 3 T100 3" fill="none" stroke="var(--gold)" stroke-width="1.5"/></svg></span>
+        </h2>
+        <p class="estante__contagem">
+          <span class="stat-num" data-value="32" aria-label="32 obras nesta estante">
+            <span class="stat-val">32</span>
+          </span>
+          <span class="estante__contagem-label">obras nesta estante · 12+ casas editoriais</span>
+        </p>
+      </div>
+
+      <div class="estante__viewport">
+        <div class="estante__track">
+
+          <!-- Grupo 1 — Edusp -->
+          <h3 class="estante__marco">Edusp <span aria-hidden="true">·</span> 13 obras</h3>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-11.png" width="349" height="471" loading="lazy" decoding="async" alt="Capa de Coleção Principia: Princípios Matemáticos de Filosofia Natural — Livros I, II e III, Edusp">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Coleção Principia: Princípios Matemáticos de Filosofia Natural — Livros I, II e III</span>
+              <span class="livro__nota-editora">Edusp</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-12.png" width="321" height="469" loading="lazy" decoding="async" alt="Capa de Fundamentos de acústica ambiental, Edusp">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Fundamentos de acústica ambiental</span>
+              <span class="livro__nota-editora">Edusp</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-13.png" width="332" height="493" loading="lazy" decoding="async" alt="Capa de Um coração de cachorro e outras novelas, Edusp">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Um coração de cachorro e outras novelas</span>
+              <span class="livro__nota-editora">Edusp</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-14.png" width="247" height="336" loading="lazy" decoding="async" alt="Capa de Temporalização dos discursos políticos no processo de independência do Brasil, 1820-22, Edusp">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Temporalização dos discursos políticos no processo de independência do Brasil, 1820-22</span>
+              <span class="livro__nota-editora">Edusp</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-15.png" width="186" height="253" loading="lazy" decoding="async" alt="Capa de Lógica e filosofia da linguagem, Edusp">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Lógica e filosofia da linguagem</span>
+              <span class="livro__nota-editora">Edusp</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-16.png" width="333" height="480" loading="lazy" decoding="async" alt="Capa de A literatura brasileira: origens e unidade (1500-1960), Edusp">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">A literatura brasileira: origens e unidade (1500-1960)</span>
+              <span class="livro__nota-editora">Edusp</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-17.png" width="326" height="482" loading="lazy" decoding="async" alt="Capa de História e perspectivas da cronobiologia no Brasil e na América Latina, Edusp">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">História e perspectivas da cronobiologia no Brasil e na América Latina</span>
+              <span class="livro__nota-editora">Edusp</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-18.png" width="343" height="476" loading="lazy" decoding="async" alt="Capa de Bases do eletromagnetismo 2: ondas e relatividade, Edusp">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Bases do eletromagnetismo 2: ondas e relatividade</span>
+              <span class="livro__nota-editora">Edusp</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-19.png" width="305" height="479" loading="lazy" decoding="async" alt="Capa de Sociologia dos Intelectuais, Edusp">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Sociologia dos Intelectuais</span>
+              <span class="livro__nota-editora">Edusp</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-20.png" width="408" height="574" loading="lazy" decoding="async" alt="Capa de Coleção Cátedra José Bonifácio 2022, Edusp">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Coleção Cátedra José Bonifácio 2022</span>
+              <span class="livro__nota-editora">Edusp</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-21.png" width="185" height="269" loading="lazy" decoding="async" alt="Capa de Coleção Cátedra José Bonifácio 2023, Edusp">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Coleção Cátedra José Bonifácio 2023</span>
+              <span class="livro__nota-editora">Edusp</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-22.png" width="415" height="603" loading="lazy" decoding="async" alt="Capa de Coleção Cátedra José Bonifácio 2024, Edusp">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Coleção Cátedra José Bonifácio 2024</span>
+              <span class="livro__nota-editora">Edusp</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-23.png" width="169" height="267" loading="lazy" decoding="async" alt="Capa de Coleção Cátedra José Bonifácio 2025, Edusp">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Coleção Cátedra José Bonifácio 2025</span>
+              <span class="livro__nota-editora">Edusp</span>
+            </figcaption>
+          </figure>
+
+          <!-- Grupo 2 — Editora Gota -->
+          <h3 class="estante__marco">Editora Gota <span aria-hidden="true">·</span> 4 obras</h3>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-06.png" width="283" height="371" loading="lazy" decoding="async" alt="Capa de “A filha da Dona Lecy”: a trajetória de Leci Brandão, Editora Gota">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">“A filha da Dona Lecy”: a trajetória de Leci Brandão</span>
+              <span class="livro__nota-editora">Editora Gota</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-07.png" width="305" height="408" loading="lazy" decoding="async" alt="Capa de Criminalização do aborto: seletividade, exclusão e extermínio racial, Editora Gota">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Criminalização do aborto: seletividade, exclusão e extermínio racial</span>
+              <span class="livro__nota-editora">Editora Gota</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-08.png" width="310" height="412" loading="lazy" decoding="async" alt="Capa de Vitimizando para proteger, Editora Gota">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Vitimizando para proteger</span>
+              <span class="livro__nota-editora">Editora Gota</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-09.png" width="351" height="483" loading="lazy" decoding="async" alt="Capa de Interpretação comunitária e migração no Brasil, Editora Gota">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Interpretação comunitária e migração no Brasil</span>
+              <span class="livro__nota-editora">Editora Gota</span>
+            </figcaption>
+          </figure>
+
+          <!-- Grupo 3 — Sextante & outras casas -->
+          <h3 class="estante__marco">Sextante &amp; outras casas <span aria-hidden="true">·</span> 6 obras</h3>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-01.png" width="270" height="409" loading="lazy" decoding="async" alt="Capa de A arte da escuta, Sextante">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">A arte da escuta</span>
+              <span class="livro__nota-editora">Sextante</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-02.png" width="316" height="427" loading="lazy" decoding="async" alt="Capa de As cinco habilidades das pessoas excepcionais, Sextante">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">As cinco habilidades das pessoas excepcionais</span>
+              <span class="livro__nota-editora">Sextante</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-03.png" width="408" height="500" loading="lazy" decoding="async" alt="Capa de Tratado latino-americano de feridas, GEN | Grupo Editorial Nacional">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Tratado latino-americano de feridas</span>
+              <span class="livro__nota-editora">GEN | Grupo Editorial Nacional</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-04.png" width="271" height="396" loading="lazy" decoding="async" alt="Capa de Envelhecimento, saúde e cognição humana, Editora da Unicamp">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Envelhecimento, saúde e cognição humana</span>
+              <span class="livro__nota-editora">Editora da Unicamp</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-05.png" width="281" height="425" loading="lazy" decoding="async" alt="Capa de O fim de Naaracaiuá, Editora N2i">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">O fim de Naaracaiuá</span>
+              <span class="livro__nota-editora">Editora N2i</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-10.png" width="383" height="534" loading="lazy" decoding="async" alt="Capa de Campus Sustentable: un modelo de innovación en la gestión energética para América Latina y el Caribe, Editora Synergia">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Campus Sustentable: un modelo de innovación en la gestión energética para América Latina y el Caribe</span>
+              <span class="livro__nota-editora">Editora Synergia</span>
+            </figcaption>
+          </figure>
+
+          <!-- Grupo 4 — Autores independentes -->
+          <h3 class="estante__marco">Autores independentes <span aria-hidden="true">·</span> 9 obras</h3>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-24.png" width="405" height="535" loading="lazy" decoding="async" alt="Capa de Desenvolvimento regional fluminense, edição independente">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Desenvolvimento regional fluminense</span>
+              <span class="livro__nota-editora">Independente</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-25.png" width="333" height="478" loading="lazy" decoding="async" alt="Capa de Governança e desenvolvimento urbano: uma agenda para o Norte Fluminense, edição independente">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Governança e desenvolvimento urbano: uma agenda para o Norte Fluminense</span>
+              <span class="livro__nota-editora">Independente</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-26.png" width="227" height="314" loading="lazy" decoding="async" alt="Capa de Cidade-empresa: presença na paisagem urbana brasileira, edição independente">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Cidade-empresa: presença na paisagem urbana brasileira</span>
+              <span class="livro__nota-editora">Independente</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-27.png" width="339" height="480" loading="lazy" decoding="async" alt="Capa de Tempos, ideias e lugares: escritos em planejamento urbano e regional, edição independente">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Tempos, ideias e lugares: escritos em planejamento urbano e regional</span>
+              <span class="livro__nota-editora">Independente</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-28.png" width="213" height="322" loading="lazy" decoding="async" alt="Capa de O desafio da abundância: 10 anos do Boletim Petróleo, Royalties e Região, edição independente">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">O desafio da abundância: 10 anos do Boletim Petróleo, Royalties e Região</span>
+              <span class="livro__nota-editora">Independente</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-29.png" width="360" height="507" loading="lazy" decoding="async" alt="Capa de Estudos sobre pequenas e médias cidades latino-americanas, edição independente">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Estudos sobre pequenas e médias cidades latino-americanas</span>
+              <span class="livro__nota-editora">Independente</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-30.png" width="370" height="521" loading="lazy" decoding="async" alt="Capa de Eu sou a falência!, edição independente">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Eu sou a falência!</span>
+              <span class="livro__nota-editora">Independente</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-31.png" width="277" height="446" loading="lazy" decoding="async" alt="Capa de O mundo como uma novidade, edição independente">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">O mundo como uma novidade</span>
+              <span class="livro__nota-editora">Independente</span>
+            </figcaption>
+          </figure>
+
+          <figure class="livro" tabindex="0">
+            <div class="livro__capa">
+              <img src="assets/capas/capa-32.png" width="280" height="438" loading="lazy" decoding="async" alt="Capa de Um surfista no mundo corporativo, edição independente">
+            </div>
+            <figcaption class="livro__nota">
+              <span class="livro__nota-titulo">Um surfista no mundo corporativo</span>
+              <span class="livro__nota-editora">Independente</span>
+            </figcaption>
+          </figure>
+
+          <!-- Slot vago — o próximo livro é o do cliente -->
+          <div class="livro livro--vago">
+            <p class="livro--vago__frase">Seu livro pode ser o<br><em>próximo desta estante.</em></p>
+            <a class="btn btn-primary"
+               href="https://wa.me/5522998241977?text=Ol%C3%A1%2C%20Maria%20Marta!%20Vi%20a%20estante%20do%20site%20e%20quero%20que%20meu%20livro%20seja%20o%20pr%C3%B3ximo."
+               target="_blank" rel="noopener" aria-label="Solicitar proposta via WhatsApp">
+              <span>Solicitar proposta</span>
+              <span class="btn-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      <p class="estante__hint" aria-hidden="true">deslize →</p>
+
+    </section>
+
+    <!-- ===================== DIFERENCIAIS ===================== -->
+    <section class="diffs" id="diferenciais" aria-labelledby="diffs-title">
+
+      <!-- Marginalia viva — anotações de revisora nas margens (decoração) -->
+      <span class="marginalia marginalia--tl" aria-hidden="true">↵ nova seção</span>
+      <span class="marginalia marginalia--br" aria-hidden="true">vírgula ✓</span>
+
+      <div class="diffs__inner">
+
+        <div class="section-header">
+          <div>
+            <span class="section-eyebrow" data-scramble>Por que me escolher</span>
+            <h2 class="section-title will-reveal" id="diffs-title">
+              Seis <span class="u-squiggle"><em>diferenciais</em><svg class="squiggle" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 3 Q5 0 10 3 T20 3 T30 3 T40 3 T50 3 T60 3 T70 3 T80 3 T90 3 T100 3" fill="none" stroke="var(--gold)" stroke-width="1.5"/></svg></span><br>que fazem a diferença
+            </h2>
+          </div>
+        </div>
+
+        <div class="diffs__grid">
+
+          <!-- Card 1 -->
+          <article class="diff-card will-reveal">
+            <span class="diff-card__num" data-num="01" data-rev="01 · rev. ✓" aria-hidden="true">01</span>
+            <span class="diff-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+                <path d="m9 12 2 2 4-4" />
+              </svg>
+            </span>
+            <h3 class="diff-card__title"><span class="u-squiggle u-squiggle--hover">Domínio de PNLD/BNCC<svg class="squiggle" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 3 Q5 0 10 3 T20 3 T30 3 T40 3 T50 3 T60 3 T70 3 T80 3 T90 3 T100 3" fill="none" stroke="var(--gold)" stroke-width="1.5"/></svg></span></h3>
+            <p class="diff-card__text">Trabalho com material didático submetido ao PNLD desde 2021. Conheço na prática os critérios do edital, as exigências de adequação à BNCC e os protocolos editoriais que tornam uma obra aprovável.</p>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="diff-card will-reveal">
+            <span class="diff-card__num" data-num="02" data-rev="02 · rev. ✓" aria-hidden="true">02</span>
+            <span class="diff-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                <polyline points="2 17 12 22 22 17" />
+                <polyline points="2 12 12 17 22 12" />
+              </svg>
+            </span>
+            <h3 class="diff-card__title"><span class="u-squiggle u-squiggle--hover">Adequação por faixa etária<svg class="squiggle" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 3 Q5 0 10 3 T20 3 T30 3 T40 3 T50 3 T60 3 T70 3 T80 3 T90 3 T100 3" fill="none" stroke="var(--gold)" stroke-width="1.5"/></svg></span></h3>
+            <p class="diff-card__text">Cada etapa de ensino exige uma voz diferente. Calibrar registro, vocabulário e complexidade sintática entre Educação Infantil, Anos Iniciais, Anos Finais, Ensino Médio e EJA é parte central do meu trabalho.</p>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="diff-card will-reveal">
+            <span class="diff-card__num" data-num="03" data-rev="03 · rev. ✓" aria-hidden="true">03</span>
+            <span class="diff-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="8" height="8" x="3" y="3" rx="2" />
+                <path d="M7 11v4a2 2 0 0 0 2 2h4" />
+                <rect width="8" height="8" x="13" y="13" rx="2" />
+              </svg>
+            </span>
+            <h3 class="diff-card__title"><span class="u-squiggle u-squiggle--hover">Fluência no fluxo editorial<svg class="squiggle" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 3 Q5 0 10 3 T20 3 T30 3 T40 3 T50 3 T60 3 T70 3 T80 3 T90 3 T100 3" fill="none" stroke="var(--gold)" stroke-width="1.5"/></svg></span></h3>
+            <p class="diff-card__text">Atuo em todas as etapas do fluxo: preparação em Word com controle de alterações, revisão em PDF com marcações profissionais e entrega nos padrões exigidos por editoras e birôs. Formação em design editorial.</p>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="diff-card will-reveal">
+            <span class="diff-card__num" data-num="04" data-rev="04 · rev. ✓" aria-hidden="true">04</span>
+            <span class="diff-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m5 8 6 6" /><path d="m4 14 6-6 2-3" />
+                <path d="M2 5h12" /><path d="M7 2h1" />
+                <path d="m22 22-5-10-5 10" /><path d="M14 18h6" />
+              </svg>
+            </span>
+            <h3 class="diff-card__title"><span class="u-squiggle u-squiggle--hover">Bilíngue PT⇄ESP<svg class="squiggle" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 3 Q5 0 10 3 T20 3 T30 3 T40 3 T50 3 T60 3 T70 3 T80 3 T90 3 T100 3" fill="none" stroke="var(--gold)" stroke-width="1.5"/></svg></span></h3>
+            <p class="diff-card__text">Atuo como revisora e tradutora no par PT⇄ESP com certificação DELE pelo Instituto Cervantes. Reviso materiais didáticos de espanhol para Ensino Fundamental e traduzo obras técnicas e científicas.</p>
+          </article>
+
+          <!-- Card 5 -->
+          <article class="diff-card will-reveal">
+            <span class="diff-card__num" data-num="05" data-rev="05 · rev. ✓" aria-hidden="true">05</span>
+            <span class="diff-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
+                <path d="M22 10v6" /><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
+              </svg>
+            </span>
+            <h3 class="diff-card__title"><span class="u-squiggle u-squiggle--hover">Rigor acadêmico e ABNT<svg class="squiggle" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 3 Q5 0 10 3 T20 3 T30 3 T40 3 T50 3 T60 3 T70 3 T80 3 T90 3 T100 3" fill="none" stroke="var(--gold)" stroke-width="1.5"/></svg></span></h3>
+            <p class="diff-card__text">Mais de uma década revisando artigos científicos, dissertações e teses. Domínio das normas ABNT, precisão terminológica e a disciplina exigida por publicações acadêmicas indexadas.</p>
+          </article>
+
+          <!-- Card 6 — full width -->
+          <article class="diff-card will-reveal">
+            <div>
+              <span class="diff-card__num" data-num="06" data-rev="06 · rev. ✓" aria-hidden="true">06</span>
+              <span class="diff-card__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.962 0z" />
+                  <path d="M20 3v4" /><path d="M22 5h-4" />
+                  <path d="M4 17v2" /><path d="M5 18H3" />
+                </svg>
+              </span>
+              <h3 class="diff-card__title"><span class="u-squiggle u-squiggle--hover">IA aplicada à produção editorial<svg class="squiggle" viewBox="0 0 100 6" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 3 Q5 0 10 3 T20 3 T30 3 T40 3 T50 3 T60 3 T70 3 T80 3 T90 3 T100 3" fill="none" stroke="var(--gold)" stroke-width="1.5"/></svg></span></h3>
+            </div>
+            <p class="diff-card__text">Mantenho formação continuada em ferramentas de inteligência artificial aplicadas à produção de conteúdo. A IA acelera fluxos, mas não substitui o olhar humano sobre o texto — é nessa fronteira que entrego mais valor.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DEPOIMENTO ===================== -->
+    <section class="depoimento" id="depoimento" aria-label="Recomendação de Carlos Henrique Rodrigues Pereira">
+
+      <!-- Aspa gigante — era .depoimento::before; virou elemento real para o parallax (§26) -->
+      <span class="depo-aspas" aria-hidden="true">“</span>
+
+      <div class="depoimento__inner">
+        <figure>
+          <blockquote class="depo-text will-reveal">
+            Ótima capacidade analítica, um senso crítico invejável e muito amor pelo que faz. Maria Marta Garcia consegue dar uma aula de gramática em cada uma das suas revisões. Marta é uma profissional exemplar, muito bem-humorada e que sempre traz muito conhecimento para a sua equipe. Eu sou muito grato por ter a oportunidade de trabalhar com ela!
+          </blockquote>
+          <figcaption class="depo-author will-reveal">
+            <img
+              class="depo-avatar"
+              src="assets/img/carlos-henrique.jpg"
+              width="600" height="600"
+              loading="lazy"
+              decoding="async"
+              alt="Carlos Henrique Rodrigues Pereira"
+            />
+            <div class="depo-meta">
+              <span class="depo-name">Carlos Henrique Rodrigues Pereira</span>
+              <span class="depo-role">Softwares Customizados para Escritórios de Advocacia &amp; Legal Techs @ RUDU</span>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===================== CTA / CONTATO ===================== -->
+    <section class="cta-section" id="contato" aria-labelledby="cta-title">
+      <div class="cta-section__inner">
+        <span class="cta-label" data-scramble>Vamos trabalhar juntos</span>
+
+        <h2 class="cta-headline" id="cta-title">
+          Seu texto<br>merece <em><span class="corrige"><s class="corrige__erro" aria-hidden="true">atenção.<span class="corrige__risco" aria-hidden="true"></span></s> <span class="corrige__certo">cuidado.</span></span></em>
+        </h2>
+
+        <!-- Carimbo de aprovação — fecho narrativo (visível estático sem JS) -->
+        <span class="carimbo" aria-hidden="true">Aprovado <em>·</em> sem ressalvas</span>
+
+        <p class="cta-sub">
+          Acredito que o bom trabalho editorial começa pelo respeito ao texto do outro e termina quando o leitor nem percebe que alguém passou por ali.
+        </p>
+
+        <div class="cta-buttons">
+          <a class="btn btn-primary"
+             href="https://wa.me/5522998241977?text=Ol%C3%A1%2C%20Maria%20Marta!%20Vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20uma%20proposta."
+             target="_blank" rel="noopener" aria-label="Solicitar proposta via WhatsApp">
+            <span>Solicitar proposta</span>
+            <span class="btn-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="btn btn-secondary"
+             href="https://www.linkedin.com/in/maria-marta-garcia-557869169/"
+             target="_blank" rel="noopener" aria-label="Ver perfil no LinkedIn">
+            <span>LinkedIn</span>
+          </a>
+        </div>
+
+        <nav class="cta-social" aria-label="Redes sociais">
+          <a href="https://www.instagram.com/maria_marta_garcia/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.linkedin.com/in/maria-marta-garcia-557869169/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://wa.me/5522998241977?text=Ol%C3%A1%2C%20Maria%20Marta!%20Vim%20pelo%20site%20e%20gostaria%20de%20conversar%20sobre%20um%20trabalho." target="_blank" rel="noopener">WhatsApp</a>
+        </nav>
+      </div>
+    </section>
+
+  </main><!-- /main -->
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__inner">
+      <div class="footer-brand">
+        <a class="footer-wordmark" href="#inicio">Maria Marta <em>Garcia</em></a>
+        <p class="footer-tagline">Preparadora · Revisora · Tradutora</p>
+      </div>
+      <div class="footer-meta">
+        <span class="footer-badge">
+          <span class="footer-badge-dot" aria-hidden="true"></span>
+          Disponível para novos projetos
+        </span>
+        <nav class="footer-social" aria-label="Redes sociais e contato">
+          <a href="https://www.instagram.com/maria_marta_garcia/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.linkedin.com/in/maria-marta-garcia-557869169/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://wa.me/5522998241977?text=Ol%C3%A1%2C%20Maria%20Marta!%20Vim%20pelo%20site%20e%20gostaria%20de%20conversar%20sobre%20um%20trabalho." target="_blank" rel="noopener">WhatsApp</a>
+        </nav>
+      </div>
+    </div>
+    <!-- Colofão — o site termina como terminam os livros bem-feitos -->
+    <div class="colofao">
+      <span class="colofao__asterismo" aria-hidden="true">⁂</span>
+      <p class="colofao__texto">Composto em Cormorant Garamond, Geist &amp; Geist Mono · Revisado, naturalmente, pela própria · MMXXVI</p>
+      <span class="colofao__linha" aria-hidden="true"></span>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2026 Maria Marta Garcia. Todos os direitos reservados.</p>
+      <p class="footer-copy">Acadêmico · Didático · Editorial · Publicitário</p>
+    </div>
+  </footer>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <!--
+    GSAP 3.13 via jsDelivr — SplitText e ScrambleText são free/MIT desde a aquisição Webflow.
+    Carregamos em ordem correta; app.js é defer para não bloquear render.
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js"></script>
+  <script defer src="app.js"></script>
+
+</body>
+</html>
